@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Metadata } from 'next';
+import { getEditions } from '@/lib/kit';
 import NewsletterForm from './NewsletterForm';
 import styles from './page.module.css';
 
@@ -9,66 +10,16 @@ export const metadata: Metadata = {
     'Weekly performance insights. Practical applications. No fluff. Join 1,000+ subscribers.',
 };
 
-const editions = [
-  {
-    slug: 'the-overthinking-trap',
-    date: 'March 28, 2026',
-    title: 'The Overthinking Trap',
-    desc: 'How paralysis by analysis kills momentum and what to do instead.',
-    tag: 'Mindset',
-  },
-  {
-    slug: 'why-most-goals-fail',
-    date: 'March 21, 2026',
-    title: 'Why Most Goals Fail (And What to Do Instead)',
-    desc: 'The missing element in goal-setting that separates achievers from dreamers.',
-    tag: 'Framework',
-  },
-  {
-    slug: 'between-stimulus-and-response',
-    date: 'March 14, 2026',
-    title: 'Between Stimulus and Response',
-    desc: 'The space where all your power lives. How to expand it.',
-    tag: 'Mindset',
-  },
-  {
-    slug: 'the-power-of-reframing',
-    date: 'March 7, 2026',
-    title: 'The Power of Reframing',
-    desc: 'Your circumstances don\'t change. Your relationship to them does.',
-    tag: 'Performance',
-  },
-  {
-    slug: 'self-awareness-is-not-improvement',
-    date: 'February 28, 2026',
-    title: 'Self-Awareness Is Not Self-Improvement',
-    desc: 'Know thyself. But knowing and doing are two very different things.',
-    tag: 'Framework',
-  },
-  {
-    slug: 'the-competence-confidence-gap',
-    date: 'February 21, 2026',
-    title: 'The Competence-Confidence Gap',
-    desc: 'Why the most capable people often feel the least confident. And what to do about it.',
-    tag: 'Mindset',
-  },
-  {
-    slug: 'deliberate-practice',
-    date: 'February 14, 2026',
-    title: 'Deliberate Practice vs Just Showing Up',
-    desc: 'Not all practice is equal. The gap between repetition and improvement.',
-    tag: 'Performance',
-  },
-  {
-    slug: 'your-operating-system',
-    date: 'February 7, 2026',
-    title: 'Your Operating System',
-    desc: 'You run on patterns you didn\'t choose. Here\'s how to see them.',
-    tag: 'Framework',
-  },
-];
+// Dynamic page - fetches from Kit.com API at request time
+// Cached via ISR: revalidates every hour so new newsletters show up automatically
+export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 
-export default function NewsletterPage() {
+export default async function NewsletterPage() {
+  const editions = await getEditions();
+  const latest = editions[0];
+  const past = editions.slice(1);
+
   return (
     <>
       {/* HERO - Compact, punchy */}
@@ -107,49 +58,64 @@ export default function NewsletterPage() {
       </section>
 
       {/* LATEST ISSUE - Featured */}
-      <section className={styles.latest}>
-        <div className={styles.latestInner}>
-          <p className={styles.latestLabel}>Latest Issue</p>
-          <Link href={`/newsletter/${editions[0].slug}`} className={styles.latestCard}>
-            <div className={styles.latestMeta}>
-              <span className={styles.latestTag}>{editions[0].tag}</span>
-              <span className={styles.latestDate}>{editions[0].date}</span>
-            </div>
-            <h2 className={styles.latestTitle}>{editions[0].title}</h2>
-            <p className={styles.latestDesc}>{editions[0].desc}</p>
-            <span className={styles.latestRead}>Read this issue &rarr;</span>
-          </Link>
-        </div>
-      </section>
+      {latest && (
+        <section className={styles.latest}>
+          <div className={styles.latestInner}>
+            <p className={styles.latestLabel}>Latest Issue</p>
+            <Link href={`/newsletter/${latest.slug}`} className={styles.latestCard}>
+              <div className={styles.latestMeta}>
+                <span className={styles.latestTag}>{latest.tag}</span>
+                <span className={styles.latestDate}>{latest.date}</span>
+              </div>
+              <h2 className={styles.latestTitle}>{latest.title}</h2>
+              <p className={styles.latestDesc}>{latest.desc}</p>
+              <span className={styles.latestRead}>Read this issue &rarr;</span>
+            </Link>
+          </div>
+        </section>
+      )}
 
       {/* ARCHIVE - Clean list */}
-      <section className={styles.archive}>
-        <div className={styles.archiveInner}>
-          <div className={styles.archiveHeader}>
-            <h2 className={styles.archiveHeading}>Past Issues</h2>
-            <p className={styles.archiveCount}>{editions.length} editions</p>
+      {past.length > 0 && (
+        <section className={styles.archive}>
+          <div className={styles.archiveInner}>
+            <div className={styles.archiveHeader}>
+              <h2 className={styles.archiveHeading}>Past Issues</h2>
+              <p className={styles.archiveCount}>{editions.length} editions</p>
+            </div>
+            <div className={styles.archiveList}>
+              {past.map((edition) => (
+                <Link
+                  key={edition.id}
+                  href={`/newsletter/${edition.slug}`}
+                  className={styles.archiveItem}
+                >
+                  <div className={styles.archiveItemLeft}>
+                    <span className={styles.archiveItemTag}>{edition.tag}</span>
+                    <h3 className={styles.archiveItemTitle}>{edition.title}</h3>
+                    <p className={styles.archiveItemDesc}>{edition.desc}</p>
+                  </div>
+                  <div className={styles.archiveItemRight}>
+                    <span className={styles.archiveItemDate}>{edition.date}</span>
+                    <span className={styles.archiveItemArrow}>&rarr;</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
-          <div className={styles.archiveList}>
-            {editions.slice(1).map((edition) => (
-              <Link
-                key={edition.slug}
-                href={`/newsletter/${edition.slug}`}
-                className={styles.archiveItem}
-              >
-                <div className={styles.archiveItemLeft}>
-                  <span className={styles.archiveItemTag}>{edition.tag}</span>
-                  <h3 className={styles.archiveItemTitle}>{edition.title}</h3>
-                  <p className={styles.archiveItemDesc}>{edition.desc}</p>
-                </div>
-                <div className={styles.archiveItemRight}>
-                  <span className={styles.archiveItemDate}>{edition.date}</span>
-                  <span className={styles.archiveItemArrow}>&rarr;</span>
-                </div>
-              </Link>
-            ))}
+        </section>
+      )}
+
+      {/* EMPTY STATE - No newsletters yet */}
+      {editions.length === 0 && (
+        <section className={styles.archive}>
+          <div className={styles.archiveInner}>
+            <p className={styles.emptyState}>
+              First issue coming soon. Subscribe above to be the first to receive it.
+            </p>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* BOTTOM CTA */}
       <section className={styles.bottomCta}>

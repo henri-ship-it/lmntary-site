@@ -362,6 +362,13 @@
   line-height: 1.5;
 }
 
+.emptyState {
+  text-align: center;
+  font-size: 16px;
+  color: var(--color-text-secondary);
+  padding: 48px 0;
+}
+
 .archiveItemRight {
   display: flex;
   flex-direction: column;
