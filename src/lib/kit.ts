@@ -168,6 +168,13 @@ function cleanEmailContent(html: string): string {
     .replace(/<figure[^>]*>[\s\S]*?<img[^>]*width=["']?(?:[1-9]|[1-7]\d|80)["']?[^>]*embed\.filekitcdn\.com[^>]*>[\s\S]*?<\/figure>/gi, '')
     // Remove tracking pixels
     .replace(/<img[^>]*(?:width=["']?1["']?|height=["']?1["']?|tracking|beacon|open\.convertkit)[^>]*>/gi, '')
+    // Remove Unsubscribe / Preferences footer links and surrounding section
+    .replace(/<[^>]*>[\s]*(?:Unsubscribe|Preferences|Update your profile|Powered by Kit)[\s]*<\/[^>]+>/gi, '')
+    .replace(/Unsubscribe\s*[·|•]\s*Preferences/gi, '')
+    .replace(/Unsubscribe/gi, '')
+    .replace(/Preferences/gi, '')
+    // Remove "Powered by" links
+    .replace(/<a[^>]*kit\.com[^>]*>[\s\S]*?<\/a>/gi, '')
     .trim();
 }
 

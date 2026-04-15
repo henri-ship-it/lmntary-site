@@ -72,7 +72,6 @@ export default function ArticleSidebar({ related }: { related: RelatedEdition[] 
           <div className={styles.sidebarRelatedLabel}>More Issues</div>
           {related.map((r) => (
             <Link key={r.slug} href={`/newsletter/${r.slug}`} className={styles.sidebarRelatedItem}>
-              <span className={styles.sidebarRelatedTag}>{r.tag}</span>
               <span className={styles.sidebarRelatedTitle}>{r.title}</span>
             </Link>
           ))}

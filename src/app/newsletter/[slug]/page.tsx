@@ -43,7 +43,6 @@ export default async function NewsletterArticlePage({ params }: { params: Promis
         <div className={styles.articleHeaderInner}>
           <Link href="/newsletter" className={styles.backLink}>&larr; Mindset Matters</Link>
           <div className={styles.articleMeta}>
-            <span className={styles.articleTag}>{edition.tag}</span>
             <span className={styles.articleDate}>{edition.date}</span>
             <span className={styles.articleReadTime}>{readTime}</span>
           </div>
