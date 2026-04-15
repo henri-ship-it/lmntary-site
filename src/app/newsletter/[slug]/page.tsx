@@ -36,6 +36,10 @@ export default async function NewsletterArticlePage({ params }: { params: Promis
   const related = await getRelatedEditions(slug, 3);
   const readTime = estimateReadTime(edition.content);
 
+  // Build share URLs
+  const articleUrl = `https://lmntary-site.vercel.app/newsletter/${slug}`;
+  const shareText = encodeURIComponent(edition.title);
+
   return (
     <div className={styles.articleLayout}>
       {/* ARTICLE HEADER */}
@@ -52,13 +56,71 @@ export default async function NewsletterArticlePage({ params }: { params: Promis
 
       {/* MAIN CONTENT + SIDEBAR */}
       <div className={styles.articleBody}>
-        <article
-          className={styles.articleContent}
-          dangerouslySetInnerHTML={{ __html: edition.content }}
-        />
+        <div className={styles.articleMain}>
+          <article
+            className={styles.articleContent}
+            dangerouslySetInnerHTML={{ __html: edition.content }}
+          />
+
+          {/* ARTICLE FOOTER - Author + Divider */}
+          <div className={styles.articleFooter}>
+            <div className={styles.articleAuthor}>
+              <div className={styles.articleAuthorAvatar}>CB</div>
+              <div>
+                <div className={styles.articleAuthorName}>Chris Bodman</div>
+                <div className={styles.articleAuthorRole}>Performance Psychologist</div>
+              </div>
+            </div>
+          </div>
+
+          {/* BOTTOM CTA - "Go deeper" like Justin Welsh */}
+          <div className={styles.bottomCta}>
+            <div className={styles.bottomCtaLeft}>
+              <h2 className={styles.bottomCtaHeading}>Go further with Limitless</h2>
+              <p className={styles.bottomCtaDesc}>
+                These insights are drawn from Limitless, a 16-week structured performance psychology programme. Three tiers designed to meet you where you are.
+              </p>
+            </div>
+            <div className={styles.bottomCtaRight}>
+              <div className={styles.bottomCtaTier}>
+                <div className={styles.bottomCtaTierName}>Self-Led</div>
+                <div className={styles.bottomCtaTierDesc}>Full programme access. Work at your own pace.</div>
+              </div>
+              <div className={styles.bottomCtaTier}>
+                <div className={styles.bottomCtaTierName}>Guided</div>
+                <div className={styles.bottomCtaTierDesc}>Programme + bi-weekly group coaching calls.</div>
+              </div>
+              <div className={styles.bottomCtaTier}>
+                <div className={styles.bottomCtaTierName}>1:1</div>
+                <div className={styles.bottomCtaTierDesc}>Private sessions with Chris. Full support.</div>
+              </div>
+              <Link href="/programmes" className={`btn btn--primary ${styles.bottomCtaBtn}`}>
+                Explore Limitless
+              </Link>
+            </div>
+          </div>
+
+          {/* BOTTOM SUBSCRIBE */}
+          <div className={styles.bottomSubscribe}>
+            <div className={styles.bottomSubscribeLeft}>
+              <h2 className={styles.bottomSubscribeHeading}>Start here.</h2>
+            </div>
+            <div className={styles.bottomSubscribeRight}>
+              <ArticleSidebar
+                related={related.map(r => ({ slug: r.slug, tag: r.tag, title: r.title }))}
+                variant="inline-subscribe"
+              />
+            </div>
+          </div>
+        </div>
 
         {/* STICKY SIDEBAR */}
-        <ArticleSidebar related={related.map(r => ({ slug: r.slug, tag: r.tag, title: r.title }))} />
+        <ArticleSidebar
+          related={related.map(r => ({ slug: r.slug, tag: r.tag, title: r.title }))}
+          shareUrl={articleUrl}
+          shareText={edition.title}
+          variant="sidebar"
+        />
       </div>
 
       {/* RELATED EDITIONS (mobile: below article) */}
@@ -68,7 +130,6 @@ export default async function NewsletterArticlePage({ params }: { params: Promis
           <div className={styles.relatedGrid}>
             {related.map((r) => (
               <Link key={r.id} href={`/newsletter/${r.slug}`} className={styles.relatedCard}>
-                <span className={styles.relatedCardTag}>{r.tag}</span>
                 <span className={styles.relatedCardTitle}>{r.title}</span>
               </Link>
             ))}
