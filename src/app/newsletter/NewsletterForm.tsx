@@ -4,7 +4,7 @@ import { useState, FormEvent } from 'react';
 import styles from './page.module.css';
 
 interface NewsletterFormProps {
-  location: 'hero' | 'bottom' | 'inline';
+  location: 'hero' | 'bottom' | 'inline' | 'sidebar';
 }
 
 export default function NewsletterForm({ location }: NewsletterFormProps) {
