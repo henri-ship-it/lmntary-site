@@ -47,6 +47,31 @@ export async function GET() {
     }
   }
 
+  // Test fetching a single broadcast by ID to see all available fields
+  if (apiSecret && results.v3?.sampleBroadcasts?.[0]?.id) {
+    try {
+      const testId = results.v3.sampleBroadcasts[0].id;
+      const res = await fetch(
+        `https://api.convertkit.com/v3/broadcasts/${testId}?api_secret=${apiSecret}`,
+        { headers: { Accept: 'application/json' } }
+      );
+      const body = await res.json().catch(() => null);
+      const b = body?.broadcast || body;
+      results.v3_single = {
+        status: res.status,
+        allKeys: Object.keys(b),
+        published_at: b.published_at,
+        sent_at: b.sent_at,
+        subject: b.subject,
+        hasContent: !!b.content,
+        hasBody: !!b.body,
+        contentPreview: (b.content || b.body || '').slice(0, 200),
+      };
+    } catch (err: any) {
+      results.v3_single = { error: err.message };
+    }
+  }
+
   // Test V4
   if (apiKey) {
     try {
