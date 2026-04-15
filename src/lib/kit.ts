@@ -22,35 +22,53 @@ export interface Edition {
 const KIT_API_SECRET = process.env.KIT_API_SECRET || '';
 
 /**
- * Fetch the list of all broadcast IDs from V3 API
+ * Fetch ALL broadcast IDs from V3 API (paginated)
+ * V3 returns 50 per page by default, sorted oldest first.
+ * We paginate through all pages to get every broadcast.
  */
 async function fetchBroadcastIds(): Promise<number[]> {
   if (!KIT_API_SECRET) return [];
 
-  try {
-    const url = `https://api.convertkit.com/v3/broadcasts?api_secret=${KIT_API_SECRET}`;
-    console.log('[Kit] Fetching broadcast list...');
+  const allIds: number[] = [];
+  let page = 1;
+  let hasMore = true;
 
-    const res = await fetch(url, {
-      headers: { Accept: 'application/json' },
-      next: { revalidate: 3600 },
-    });
+  while (hasMore) {
+    try {
+      const url = `https://api.convertkit.com/v3/broadcasts?api_secret=${KIT_API_SECRET}&page=${page}&per_page=50`;
+      console.log(`[Kit] Fetching broadcast list page ${page}...`);
 
-    if (!res.ok) {
-      const body = await res.text();
-      console.error(`[Kit] List API error ${res.status}: ${body}`);
-      return [];
+      const res = await fetch(url, {
+        headers: { Accept: 'application/json' },
+        next: { revalidate: 3600 },
+      });
+
+      if (!res.ok) {
+        const body = await res.text();
+        console.error(`[Kit] List API error ${res.status}: ${body}`);
+        break;
+      }
+
+      const data = await res.json();
+      const broadcasts = data.broadcasts || [];
+      console.log(`[Kit] Page ${page}: ${broadcasts.length} broadcasts`);
+
+      if (broadcasts.length === 0) {
+        hasMore = false;
+      } else {
+        allIds.push(...broadcasts.map((b: any) => b.id));
+        page++;
+        // Safety: stop after 20 pages (1000 broadcasts max)
+        if (page > 20) hasMore = false;
+      }
+    } catch (err) {
+      console.error('[Kit] List fetch failed:', err);
+      break;
     }
-
-    const data = await res.json();
-    const broadcasts = data.broadcasts || [];
-    console.log(`[Kit] Found ${broadcasts.length} broadcast IDs`);
-
-    return broadcasts.map((b: any) => b.id);
-  } catch (err) {
-    console.error('[Kit] List fetch failed:', err);
-    return [];
   }
+
+  console.log(`[Kit] Total broadcast IDs found: ${allIds.length}`);
+  return allIds;
 }
 
 /**
@@ -154,6 +172,31 @@ function cleanEmailContent(html: string): string {
 }
 
 /**
+ * Decode all HTML entities (named and numeric)
+ */
+function decodeHtmlEntities(str: string): string {
+  return str
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&apos;/g, "'")
+    .replace(/&rsquo;/g, '\u2019')
+    .replace(/&lsquo;/g, '\u2018')
+    .replace(/&rdquo;/g, '\u201D')
+    .replace(/&ldquo;/g, '\u201C')
+    .replace(/&mdash;/g, '\u2014')
+    .replace(/&ndash;/g, '\u2013')
+    .replace(/&hellip;/g, '\u2026')
+    // Decode hex entities like &#x27; &#x2019; etc.
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCharCode(parseInt(hex, 16)))
+    // Decode decimal entities like &#39; &#8217; etc.
+    .replace(/&#(\d+);/g, (_, dec) => String.fromCharCode(parseInt(dec, 10)));
+}
+
+/**
  * Extract a description/preview from HTML content
  */
 function extractDescription(content: string, maxLength = 160): string {
@@ -165,17 +208,14 @@ function extractDescription(content: string, maxLength = 160): string {
     .replace(/<!--[\s\S]*?-->/g, '')
     // Remove all HTML tags
     .replace(/<[^>]+>/g, '')
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
+    // Decode all HTML entities
     .replace(/\s+/g, ' ')
     .trim();
 
-  if (text.length <= maxLength) return text;
-  const truncated = text.slice(0, maxLength);
+  const decoded = decodeHtmlEntities(text);
+
+  if (decoded.length <= maxLength) return decoded;
+  const truncated = decoded.slice(0, maxLength);
   const lastSpace = truncated.lastIndexOf(' ');
   return truncated.slice(0, lastSpace > 0 ? lastSpace : maxLength) + '...';
 }
