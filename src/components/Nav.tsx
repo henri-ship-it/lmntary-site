@@ -21,12 +21,12 @@ export default function Nav() {
         <ul className={`${styles.links} ${isOpen ? styles.linksActive : ''}`}>
           <li>
             <a href="/programmes" onClick={handleLinkClick}>
-              Programmes
+              Programme
             </a>
           </li>
           <li>
-            <a href="/insights" onClick={handleLinkClick}>
-              Insights
+            <a href="/newsletter" onClick={handleLinkClick}>
+              Newsletter
             </a>
           </li>
           <li>

@@ -13,9 +13,9 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Programmes Column */}
+          {/* Programme Column */}
           <div>
-            <div className={styles.colTitle}>Programmes</div>
+            <div className={styles.colTitle}>Programme</div>
             <ul className={styles.colLinks}>
               <li>
                 <a href="/programmes">Limitless Core</a>
@@ -37,13 +37,7 @@ export default function Footer() {
             <div className={styles.colTitle}>Insights</div>
             <ul className={styles.colLinks}>
               <li>
-                <a href="/insights">Newsletter</a>
-              </li>
-              <li>
-                <a href="/insights">Case Studies</a>
-              </li>
-              <li>
-                <a href="/newsletter">Mindset Matters Live</a>
+                <a href="/newsletter">Newsletter</a>
               </li>
             </ul>
           </div>
@@ -53,10 +47,7 @@ export default function Footer() {
             <div className={styles.colTitle}>Company</div>
             <ul className={styles.colLinks}>
               <li>
-                <a href="/about">About Chris</a>
-              </li>
-              <li>
-                <a href="/about">About LMNTARY</a>
+                <a href="/about">About</a>
               </li>
               <li>
                 <a href="/case-studies">Case Studies</a>
@@ -95,7 +86,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className={styles.bottom}>
-          <div className={styles.copy}>© 2026 LMNTARY Performance</div>
+          <div className={styles.copy}>&copy; 2026 LMNTARY Performance</div>
           <div className={styles.social}>
             <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
               LinkedIn

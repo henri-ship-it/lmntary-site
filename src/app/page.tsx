@@ -10,8 +10,7 @@ export default function Home() {
         <div className={`container container--narrow`}>
           <p className={styles.heroEyebrow}>Performance Psychology</p>
           <h1 className={styles.heroHeading}>
-            TRAIN YOUR MIND LIKE<br />
-            YOU TRAIN YOUR BODY.
+            TRAIN YOUR MIND LIKE YOU TRAIN YOUR BODY.
           </h1>
           <p className={styles.heroSub}>
             Understand how you operate. See what's holding you back. Build from there. 20+ years of applied performance psychology, distilled into a system that works.
@@ -21,8 +20,17 @@ export default function Home() {
               Get Your Profile
             </Link>
             <Link href="/programmes" className="btn btn--secondary">
-              Explore Programmes
+              Explore Programme
             </Link>
+          </div>
+          {/* MINDSET MATTERS in Hero */}
+          <div className={styles.heroNewsletter}>
+            <p className={styles.heroNewsletterLabel}>Join Mindset Matters</p>
+            <p className={styles.heroNewsletterDesc}>Weekly performance insights. 1,000+ subscribers.</p>
+            <NewsletterSignup
+              wrapperClass={styles.heroNewsletterForm}
+              inputClass={styles.heroNewsletterInput}
+            />
           </div>
         </div>
       </section>
@@ -45,10 +53,6 @@ export default function Home() {
       {/* MANIFESTO */}
       <section className={styles.manifesto}>
         <div className={styles.manifestoInner}>
-          <p className={styles.manifestoLead}>
-            Between stimulus and response lies a space. Most people never learn it exists.
-          </p>
-
           <div className={styles.manifestoBody}>
             <p>
               Performance psychology often gets lost in theory and jargon. The most common question we get? <strong>"What does a performance psychologist actually do?"</strong>
@@ -83,7 +87,7 @@ export default function Home() {
             <span className={styles.diagnosticDetail}><span>●</span> Completely free</span>
           </div>
           <Link href="/diagnostic" className="btn btn--primary">
-            Take the Diagnostic →
+            Take the Diagnostic
           </Link>
         </div>
       </section>
@@ -193,9 +197,9 @@ export default function Home() {
         <div className={`${styles.testimonialsFeatured} container`}>
           <div className={styles.testimonialsVideo}>
             <div className={styles.testimonialsVideoPlaceholder}>
-              <div className={styles.testimonialsVideoPlay}>▶</div>
+              <div className={styles.testimonialsVideoPlay}>&#9654;</div>
               <div className={styles.testimonialsVideoName}>Jack Barber</div>
-              <div className={styles.testimonialsVideoProgramme}>Mental clarity: 4 → 9. Life fulfilment: 7 → 10.</div>
+              <div className={styles.testimonialsVideoProgramme}>Mental clarity: 4 &#8594; 9. Life fulfilment: 7 &#8594; 10.</div>
             </div>
           </div>
         </div>
@@ -226,41 +230,42 @@ export default function Home() {
 
         <div className={styles.testimonialsCta}>
           <Link href="/case-studies" className="btn btn--ghost">
-            Read all case studies →
+            Read all case studies
           </Link>
         </div>
       </section>
 
-      {/* INSIGHTS PREVIEW */}
-      <section className={styles.insights}>
-        <div className={styles.insightsHeader}>
-          <h2 className={styles.insightsHeading}>Insights</h2>
-          <Link href="/insights" className={styles.insightsLink}>
-            View all →
-          </Link>
-        </div>
-        <div className={styles.insightsGrid}>
-          <Link href="/insights/flow-state" className={styles.insightCard}>
-            <div className={styles.insightCardTag}>Performance</div>
-            <div className={styles.insightCardTitle}>The Myth of Motivation: Why Flow States Matter More</div>
-            <p className={styles.insightCardDesc}>
-              Motivation gets you started. Flow keeps you going. Here's how to engineer the conditions for deep work.
+      {/* MINDSET MATTERS NEWSLETTER (replaces Insights) */}
+      <section className={styles.newsletterSection}>
+        <div className={styles.newsletterSectionInner}>
+          <div className={styles.newsletterSectionContent}>
+            <p className={styles.newsletterSectionEyebrow}>Weekly Newsletter</p>
+            <h2 className={styles.newsletterSectionHeading}>Mindset Matters</h2>
+            <p className={styles.newsletterSectionDesc}>
+              Performance psychology in practice. One insight, one framework, one action step. Every week. Join 1,000+ subscribers.
             </p>
-          </Link>
-          <Link href="/insights/pressure" className={styles.insightCard}>
-            <div className={styles.insightCardTag}>Mindset</div>
-            <div className={styles.insightCardTitle}>Turbulence Isn't a Problem. It's a Gift.</div>
-            <p className={styles.insightCardDesc}>
-              The best performers don't avoid pressure. They reframe it. A framework for turning discomfort into advantage.
-            </p>
-          </Link>
-          <Link href="/insights/self-awareness" className={styles.insightCard}>
-            <div className={styles.insightCardTag}>Framework</div>
-            <div className={styles.insightCardTitle}>Know Thyself Before You Build Thyself</div>
-            <p className={styles.insightCardDesc}>
-              Self-awareness is the foundation of every performance breakthrough. Here's how to map your blind spots.
-            </p>
-          </Link>
+            <NewsletterSignup
+              wrapperClass={styles.newsletterSectionForm}
+              inputClass={styles.newsletterSectionInput}
+            />
+          </div>
+          <div className={styles.newsletterSectionPreview}>
+            <div className={styles.newsletterSectionStat}>
+              <div className={styles.newsletterSectionStatNumber}>1,000+</div>
+              <div className={styles.newsletterSectionStatLabel}>Subscribers</div>
+            </div>
+            <div className={styles.newsletterSectionStat}>
+              <div className={styles.newsletterSectionStatNumber}>67%</div>
+              <div className={styles.newsletterSectionStatLabel}>Open rate</div>
+            </div>
+            <div className={styles.newsletterSectionStat}>
+              <div className={styles.newsletterSectionStatNumber}>Weekly</div>
+              <div className={styles.newsletterSectionStatLabel}>Every Sunday</div>
+            </div>
+            <Link href="/newsletter" className={styles.newsletterSectionLink}>
+              Read past issues
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -269,57 +274,30 @@ export default function Home() {
         <div className={styles.shopHeader}>
           <h2 className={styles.shopHeading}>Shop</h2>
           <Link href="/shop" className={styles.shopLink}>
-            View all →
+            View all
           </Link>
         </div>
         <div className={styles.shopGrid}>
           <Link href="/shop#journal" className={styles.shopCard}>
-            <div className={styles.shopCardImage}>📓</div>
+            <div className={styles.shopCardImage}>&#128211;</div>
             <div className={styles.shopCardTitle}>Stitchbound Journal Set</div>
             <div className={styles.shopCardPrice}>£50</div>
           </Link>
           <Link href="/shop#posters" className={styles.shopCard}>
-            <div className={styles.shopCardImage}>◻</div>
+            <div className={styles.shopCardImage}>&#9723;</div>
             <div className={styles.shopCardTitle}>Performance Posters</div>
             <div className={styles.shopCardPrice}>From £30</div>
           </Link>
           <Link href="/shop#calendar" className={styles.shopCard}>
-            <div className={styles.shopCardImage}>📅</div>
+            <div className={styles.shopCardImage}>&#128197;</div>
             <div className={styles.shopCardTitle}>Wall Calendar 2027</div>
             <div className={styles.shopCardPrice}>£25</div>
           </Link>
           <Link href="/shop#book" className={styles.shopCard}>
-            <div className={styles.shopCardImage}>📕</div>
+            <div className={styles.shopCardImage}>&#128213;</div>
             <div className={styles.shopCardTitle}>The Coffee Table Book</div>
             <div className={styles.shopCardPrice}>Coming soon</div>
           </Link>
-        </div>
-      </section>
-
-      {/* ELEVATE (Corporate) */}
-      <section className={styles.elevate}>
-        <div className={styles.elevateInner}>
-          <div className={styles.elevateLabel}>For Teams & Organisations</div>
-          <div className={styles.elevateTitle}>Limitless Elevate</div>
-          <p className={styles.elevateDesc}>
-            Corporate performance programmes delivered digitally, hybrid, or in-person. Scoped and priced on request.
-          </p>
-          <Link href="/about#contact" className="btn btn--secondary">
-            Get in touch →
-          </Link>
-        </div>
-      </section>
-
-      {/* NEWSLETTER */}
-      <section className={styles.newsletter}>
-        <div className={`container container--narrow`}>
-          <h2 className={styles.newsletterHeading}>Mindset Matters</h2>
-          <p className={styles.newsletterDesc}>Weekly performance insights. Practical applications. No fluff.</p>
-          <NewsletterSignup
-            wrapperClass={styles.newsletterForm}
-            inputClass={styles.newsletterInput}
-            noteClass={styles.newsletterNote}
-          />
         </div>
       </section>
     </>

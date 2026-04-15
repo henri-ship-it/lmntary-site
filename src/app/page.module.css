@@ -17,12 +17,15 @@
 
 .heroHeading {
   font-family: var(--font-display);
-  font-size: clamp(36px, 6vw, 64px);
+  font-size: clamp(36px, 5vw, 56px);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: -0.01em;
-  line-height: 1.05;
+  line-height: 1.1;
   margin-bottom: 28px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .heroHeading .serif-italic {
@@ -44,6 +47,54 @@
   justify-content: center;
   gap: 16px;
   flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+
+/* Hero Newsletter CTA */
+.heroNewsletter {
+  max-width: 480px;
+  margin: 0 auto;
+  padding-top: 40px;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.heroNewsletterLabel {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+
+.heroNewsletterDesc {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin-bottom: 16px;
+}
+
+.heroNewsletterForm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.heroNewsletterInput {
+  flex: 1;
+  min-width: 200px;
+  padding: 12px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.heroNewsletterInput:focus {
+  border-color: var(--color-text);
 }
 
 /* ===========================
@@ -366,7 +417,7 @@
    =========================== */
 .limitlessIntro {
   text-align: center;
-  max-width: 640px;
+  max-width: 780px;
   margin: 0 auto 56px;
   padding: 0 24px;
 }
@@ -533,90 +584,119 @@
 }
 
 /* ===========================
-   INSIGHTS PREVIEW
+   NEWSLETTER SECTION (replaces Insights)
    =========================== */
-.insights {
+.newsletterSection {
   padding: var(--section-padding);
 }
 
-.insightsHeader {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: 40px;
-  max-width: var(--container-max);
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 24px;
-}
-
-.insightsHeading {
-  font-size: 30px;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-}
-
-.insightsLink {
-  font-size: 14px;
-  color: var(--color-text-secondary);
-  transition: color 0.2s;
-}
-
-.insightsLink:hover {
-  color: var(--color-text);
-}
-
-.insightsGrid {
+.newsletterSectionInner {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
   max-width: var(--container-max);
   margin: 0 auto;
   padding: 0 24px;
 }
 
-@media (max-width: 900px) {
-  .insightsGrid {
+@media (max-width: 800px) {
+  .newsletterSectionInner {
     grid-template-columns: 1fr;
-  }
-  .insightsHeader {
-    flex-direction: column;
-    gap: 8px;
+    gap: 40px;
   }
 }
 
-.insightCard {
-  display: block;
-  padding: 32px 0;
-  border-top: 1px solid var(--color-border);
-  transition: opacity 0.2s;
-}
+.newsletterSectionContent {}
 
-.insightCard:hover {
-  opacity: 0.7;
-}
-
-.insightCardTag {
+.newsletterSectionEyebrow {
   font-family: var(--font-display);
-  font-size: 11px;
+  font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.15em;
   color: var(--color-text-secondary);
   margin-bottom: 12px;
 }
 
-.insightCardTitle {
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 1.35;
-  margin-bottom: 8px;
-  letter-spacing: -0.2px;
+.newsletterSectionHeading {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 16px;
 }
 
-.insightCardDesc {
-  font-size: 14px;
+.newsletterSectionDesc {
+  font-size: 17px;
   color: var(--color-text-secondary);
-  line-height: 1.5;
+  line-height: 1.6;
+  margin-bottom: 28px;
+  font-weight: 300;
+}
+
+.newsletterSectionForm {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.newsletterSectionInput {
+  flex: 1;
+  min-width: 200px;
+  padding: 14px 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.newsletterSectionInput:focus {
+  border-color: var(--color-text);
+}
+
+.newsletterSectionPreview {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  padding: 40px;
+  background: var(--color-surface);
+  border-radius: 16px;
+  border: 1px solid var(--color-border-light);
+}
+
+.newsletterSectionStat {
+  text-align: center;
+}
+
+.newsletterSectionStatNumber {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.newsletterSectionStatLabel {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.newsletterSectionLink {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border-light);
+  transition: color 0.15s;
+}
+
+.newsletterSectionLink:hover {
+  color: var(--color-accent);
 }
 
 /* ===========================
@@ -712,90 +792,4 @@
   color: var(--color-text-secondary);
 }
 
-/* ===========================
-   ELEVATE (minimal, lower)
-   =========================== */
-.elevate {
-  padding: 64px 24px;
-  border-top: 1px solid var(--color-border-light);
-}
-
-.elevateInner {
-  max-width: 640px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.elevateLabel {
-  font-family: var(--font-display);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--color-text-secondary);
-  margin-bottom: 8px;
-}
-
-.elevateTitle {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  letter-spacing: -0.2px;
-}
-
-.elevateDesc {
-  font-size: 15px;
-  color: var(--color-text-secondary);
-  margin-bottom: 20px;
-}
-
-/* ===========================
-   NEWSLETTER SIGNUP
-   =========================== */
-.newsletter {
-  padding: var(--section-padding);
-  text-align: center;
-}
-
-.newsletterHeading {
-  font-size: 30px;
-  font-weight: 700;
-  margin-bottom: 12px;
-  letter-spacing: -0.5px;
-}
-
-.newsletterDesc {
-  font-size: 16px;
-  color: var(--color-text-secondary);
-  margin-bottom: 32px;
-}
-
-.newsletterForm {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  max-width: 440px;
-  margin: 0 auto 16px;
-  flex-wrap: wrap;
-}
-
-.newsletterInput {
-  flex: 1;
-  min-width: 240px;
-  padding: 14px 20px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-pill);
-  font-family: var(--font-body);
-  font-size: 14px;
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-.newsletterInput:focus {
-  border-color: var(--color-text);
-}
-
-.newsletterNote {
-  font-size: 13px;
-  color: var(--color-text-secondary);
-}
+/* (Elevate and old newsletter sections removed) */
