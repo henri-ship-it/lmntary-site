@@ -48,7 +48,6 @@ export default async function NewsletterArticlePage({ params }: { params: Promis
             <span className={styles.articleReadTime}>{readTime}</span>
           </div>
           <h1 className={styles.articleTitle}>{edition.title}</h1>
-          <p className={styles.articleLead}>{edition.desc}</p>
         </div>
       </header>
 
