@@ -21,10 +21,25 @@ export async function GET() {
         { headers: { Accept: 'application/json' } }
       );
       const body = await res.json().catch(() => null);
+      const broadcasts = body?.broadcasts || [];
+      // Show all fields of first 3 broadcasts so we can see status + content fields
+      const sample = broadcasts.slice(0, 3).map((b: any) => ({
+        id: b.id,
+        subject: b.subject,
+        status: b.status,
+        published_at: b.published_at,
+        sent_at: b.sent_at,
+        created_at: b.created_at,
+        hasContent: !!b.content,
+        hasBody: !!b.body,
+        hasEmailContent: !!b.email_content,
+        contentPreview: (b.content || b.body || b.email_content || '').slice(0, 100),
+        allKeys: Object.keys(b),
+      }));
       results.v3 = {
         status: res.status,
-        broadcastCount: body?.broadcasts?.length ?? 0,
-        firstBroadcast: body?.broadcasts?.[0] || null,
+        broadcastCount: broadcasts.length,
+        sampleBroadcasts: sample,
         error: body?.error || body?.message || null,
       };
     } catch (err: any) {
