@@ -1,7 +1,11 @@
 /**
  * Kit.com (ConvertKit) API integration
- * Supports both V3 (api_secret) and V4 (Bearer token)
- * Fetches published broadcasts for the newsletter pages
+ * Uses V3 API (api_secret) to fetch published broadcasts
+ *
+ * Strategy:
+ * 1. GET /v3/broadcasts → returns list with only {id, created_at, subject}
+ * 2. GET /v3/broadcasts/:id → returns full broadcast with content, published_at, etc.
+ * 3. Filter for published broadcasts only (published_at is not null)
  */
 
 export interface Edition {
@@ -16,18 +20,16 @@ export interface Edition {
 }
 
 const KIT_API_SECRET = process.env.KIT_API_SECRET || '';
-const KIT_API_KEY = process.env.KIT_API_KEY || '';
 
 /**
- * Fetch broadcasts using V3 API (uses api_secret as query param)
- * V3 endpoint: GET https://api.convertkit.com/v3/broadcasts?api_secret=XXX
+ * Fetch the list of all broadcast IDs from V3 API
  */
-async function fetchBroadcastsV3(): Promise<any[]> {
+async function fetchBroadcastIds(): Promise<number[]> {
   if (!KIT_API_SECRET) return [];
 
   try {
     const url = `https://api.convertkit.com/v3/broadcasts?api_secret=${KIT_API_SECRET}`;
-    console.log('[Kit V3] Fetching broadcasts...');
+    console.log('[Kit] Fetching broadcast list...');
 
     const res = await fetch(url, {
       headers: { Accept: 'application/json' },
@@ -36,90 +38,65 @@ async function fetchBroadcastsV3(): Promise<any[]> {
 
     if (!res.ok) {
       const body = await res.text();
-      console.error(`[Kit V3] API error ${res.status}: ${body}`);
+      console.error(`[Kit] List API error ${res.status}: ${body}`);
       return [];
     }
 
     const data = await res.json();
-    console.log(`[Kit V3] Response keys: ${Object.keys(data).join(', ')}`);
-
-    // V3 returns { broadcasts: [...] }
     const broadcasts = data.broadcasts || [];
-    console.log(`[Kit V3] Got ${broadcasts.length} broadcasts`);
+    console.log(`[Kit] Found ${broadcasts.length} broadcast IDs`);
 
-    if (broadcasts.length > 0) {
-      console.log(`[Kit V3] First broadcast keys: ${Object.keys(broadcasts[0]).join(', ')}`);
-    }
-
-    return broadcasts;
+    return broadcasts.map((b: any) => b.id);
   } catch (err) {
-    console.error('[Kit V3] Fetch failed:', err);
+    console.error('[Kit] List fetch failed:', err);
     return [];
   }
 }
 
 /**
- * Fetch broadcasts using V4 API (uses Bearer token)
+ * Fetch a single broadcast by ID (returns full data with content)
  */
-async function fetchBroadcastsV4(): Promise<any[]> {
-  if (!KIT_API_KEY) return [];
+async function fetchBroadcastById(id: number): Promise<any | null> {
+  try {
+    const url = `https://api.convertkit.com/v3/broadcasts/${id}?api_secret=${KIT_API_SECRET}`;
+    const res = await fetch(url, {
+      headers: { Accept: 'application/json' },
+      next: { revalidate: 3600 },
+    });
 
-  const allBroadcasts: any[] = [];
-  let cursor: string | null = null;
-  let hasMore = true;
+    if (!res.ok) return null;
 
-  while (hasMore) {
-    try {
-      let url = `https://api.kit.com/v4/broadcasts?per_page=50`;
-      if (cursor) {
-        url += `&after=${encodeURIComponent(cursor)}`;
-      }
-
-      const res = await fetch(url, {
-        headers: {
-          Authorization: `Bearer ${KIT_API_KEY}`,
-          Accept: 'application/json',
-        },
-        next: { revalidate: 3600 },
-      });
-
-      if (!res.ok) {
-        const body = await res.text();
-        console.error(`[Kit V4] API error ${res.status}: ${body}`);
-        break;
-      }
-
-      const data = await res.json();
-      const broadcasts = data.broadcasts || data.data || [];
-      const pagination = data.pagination || {};
-
-      allBroadcasts.push(...broadcasts);
-
-      if (pagination.has_next_page && pagination.end_cursor) {
-        cursor = pagination.end_cursor;
-      } else {
-        hasMore = false;
-      }
-    } catch (err) {
-      console.error('[Kit V4] Fetch failed:', err);
-      break;
-    }
+    const data = await res.json();
+    return data.broadcast || data;
+  } catch {
+    return null;
   }
-
-  return allBroadcasts;
 }
 
 /**
- * Fetch broadcasts - tries V3 first (more reliable), falls back to V4
+ * Fetch all broadcasts with full content, in parallel batches
  */
-async function fetchBroadcasts(): Promise<any[]> {
-  // Try V3 first (simpler, more reliable)
-  const v3 = await fetchBroadcastsV3();
-  if (v3.length > 0) return v3;
+async function fetchFullBroadcasts(): Promise<any[]> {
+  const ids = await fetchBroadcastIds();
+  if (ids.length === 0) return [];
 
-  // Fall back to V4
-  const v4 = await fetchBroadcastsV4();
-  return v4;
+  console.log(`[Kit] Fetching ${ids.length} individual broadcasts...`);
+
+  // Fetch in batches of 10 to avoid hammering the API
+  const batchSize = 10;
+  const allBroadcasts: any[] = [];
+
+  for (let i = 0; i < ids.length; i += batchSize) {
+    const batch = ids.slice(i, i + batchSize);
+    const results = await Promise.all(batch.map(fetchBroadcastById));
+    allBroadcasts.push(...results.filter(Boolean));
+  }
+
+  // Filter for published broadcasts only
+  const published = allBroadcasts.filter((b) => b.published_at);
+  console.log(`[Kit] ${published.length} published out of ${allBroadcasts.length} total`);
+
+  return published;
 }
 
 /**
@@ -179,17 +156,17 @@ function formatDate(dateStr: string): string {
 }
 
 /**
- * Transform a raw broadcast (any shape) into an Edition
+ * Transform a raw broadcast into an Edition
  */
 function transformBroadcast(b: any): Edition | null {
   const title = b.subject || b.title || b.name || '';
   if (!title) return null;
 
-  const content = b.content || b.body || b.email_content || '';
-  const dateStr = b.published_at || b.sent_at || b.send_at || b.created_at || '';
+  const content = b.content || b.body || '';
+  const dateStr = b.published_at || b.sent_at || b.send_at || '';
   if (!dateStr) return null;
 
-  const desc = b.preview_text || b.description || extractDescription(content);
+  const desc = b.description || extractDescription(content);
 
   return {
     id: b.id,
@@ -207,8 +184,8 @@ function transformBroadcast(b: any): Edition | null {
  * Get all newsletter editions, sorted newest first
  */
 export async function getEditions(): Promise<Edition[]> {
-  const broadcasts = await fetchBroadcasts();
-  console.log(`[Kit] Total broadcasts fetched: ${broadcasts.length}`);
+  const broadcasts = await fetchFullBroadcasts();
+  console.log(`[Kit] Total published broadcasts: ${broadcasts.length}`);
 
   const editions = broadcasts
     .map(transformBroadcast)
