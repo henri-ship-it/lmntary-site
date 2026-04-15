@@ -1,0 +1,263 @@
+/* ===========================
+   PAGE HERO / HEADER
+   =========================== */
+.pageHero {
+  padding: 160px 24px 100px;
+  text-align: center;
+}
+
+.pageHeroHeading {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  margin-bottom: 28px;
+}
+
+.pageHeroSub {
+  font-size: clamp(17px, 2vw, 20px);
+  color: var(--color-text-secondary);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.55;
+  font-weight: 300;
+}
+
+/* ===========================
+   FEATURED VIDEO SECTION
+   =========================== */
+.featuredVideo {
+  padding: 80px 24px;
+  background: var(--color-surface);
+}
+
+.featuredVideoContainer {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.featuredVideoCard {
+  background: var(--color-dark);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  border: 1px solid rgba(4, 223, 191, 0.1);
+}
+
+.featuredVideoPlayer {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  background: var(--color-dark);
+  overflow: hidden;
+}
+
+.featuredVideoPlaceholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+.featuredVideoPlayBtn {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  font-size: 32px;
+  transition: border-color 0.2s;
+}
+
+.featuredVideoPlaceholder:hover .featuredVideoPlayBtn {
+  border-color: var(--color-accent);
+}
+
+.featuredVideoContent {
+  padding: 48px 40px;
+}
+
+.featuredVideoMetric {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-accent);
+  margin-bottom: 20px;
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+}
+
+.featuredVideoName {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: 8px;
+}
+
+.featuredVideoContext {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+/* ===========================
+   CASE STUDIES GRID
+   =========================== */
+.caseStudies {
+  padding: var(--section-padding);
+}
+
+.caseStudiesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .caseStudiesGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.caseStudyCard {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: var(--color-bg);
+}
+
+.caseStudyCard:hover {
+  border-color: var(--color-text);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
+}
+
+.caseStudyCardQuote {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--color-text);
+  margin-bottom: 32px;
+  position: relative;
+  padding-left: 20px;
+}
+
+.caseStudyCardQuote::before {
+  content: '"';
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 32px;
+  line-height: 0;
+  vertical-align: -8px;
+  margin-right: 6px;
+  color: var(--color-accent);
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.caseStudyCardAuthor {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.caseStudyCardTitle {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: var(--font-display);
+}
+
+.caseStudyCardDivider {
+  width: 24px;
+  height: 1px;
+  background: var(--color-border);
+  margin-bottom: 20px;
+}
+
+.caseStudyCardImpact {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* ===========================
+   BOTTOM CTA SECTION
+   =========================== */
+.ctaSection {
+  padding: 100px 24px;
+  background: var(--color-dark);
+  color: var(--color-white);
+  text-align: center;
+}
+
+.ctaSectionInner {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.ctaSectionHeading {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  margin-bottom: 32px;
+}
+
+.ctaSectionActions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ===========================
+   SCROLL ANIMATIONS
+   =========================== */
+@media (prefers-reduced-motion: no-preference) {
+  .caseStudyCard,
+  .featuredVideoCard {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  .caseStudyCard:nth-child(1) { animation-delay: 0.1s; }
+  .caseStudyCard:nth-child(2) { animation-delay: 0.15s; }
+  .caseStudyCard:nth-child(3) { animation-delay: 0.2s; }
+  .caseStudyCard:nth-child(4) { animation-delay: 0.25s; }
+  .caseStudyCard:nth-child(5) { animation-delay: 0.3s; }
+  .caseStudyCard:nth-child(6) { animation-delay: 0.35s; }
+  .caseStudyCard:nth-child(7) { animation-delay: 0.4s; }
+  .caseStudyCard:nth-child(8) { animation-delay: 0.45s; }
+
+  .featuredVideoCard { animation-delay: 0.05s; }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

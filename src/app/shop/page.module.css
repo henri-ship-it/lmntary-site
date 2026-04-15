@@ -1,0 +1,169 @@
+/* ===========================
+   HERO / HEADER
+   =========================== */
+.hero {
+  padding: 160px 24px 100px;
+  text-align: center;
+}
+
+.heroHeading {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  margin-bottom: 28px;
+}
+
+.heroSub {
+  font-size: clamp(17px, 2vw, 20px);
+  color: var(--color-text-secondary);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.55;
+  font-weight: 300;
+}
+
+/* ===========================
+   PRODUCTS GRID
+   =========================== */
+.products {
+  padding: var(--section-padding);
+}
+
+.productsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 48px;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .productsGrid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+.productCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.productCardImage {
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  color: var(--color-text-secondary);
+  margin-bottom: 32px;
+}
+
+.productCardTitle {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2.5vw, 24px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.productCardDesc {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+.productCardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.productCardPrice {
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* ===========================
+   CLOSING STATEMENT
+   =========================== */
+.shopClosing {
+  padding: 80px 24px;
+  text-align: center;
+  border-top: 1px solid var(--color-border-light);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.shopClosingText {
+  max-width: 640px;
+  margin: 0 auto;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--color-text);
+  font-weight: 400;
+}
+
+/* ===========================
+   NEWSLETTER SIGNUP
+   =========================== */
+.newsletter {
+  padding: var(--section-padding);
+  text-align: center;
+}
+
+.newsletterHeading {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+}
+
+.newsletterDesc {
+  font-size: 16px;
+  color: var(--color-text-secondary);
+  margin-bottom: 32px;
+}
+
+.newsletterForm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: 440px;
+  margin: 0 auto 16px;
+  flex-wrap: wrap;
+}
+
+.newsletterInput {
+  flex: 1;
+  min-width: 240px;
+  padding: 14px 20px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.newsletterInput:focus {
+  border-color: var(--color-text);
+}
+
+.newsletterNote {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}

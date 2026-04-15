@@ -1,0 +1,214 @@
+/* ===========================
+   HERO
+   =========================== */
+.hero {
+  padding: 160px 24px 100px;
+  text-align: center;
+  margin-top: 56px;
+}
+
+.heroEyebrow {
+  font-family: var(--font-display);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-text-secondary);
+  margin-bottom: 24px;
+}
+
+.heroHeading {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  margin-bottom: 28px;
+}
+
+.heroSub {
+  font-size: clamp(17px, 2vw, 20px);
+  color: var(--color-text-secondary);
+  max-width: 640px;
+  margin: 0 auto 44px;
+  line-height: 1.55;
+  font-weight: 300;
+}
+
+/* ===========================
+   FILTER TABS
+   =========================== */
+.filters {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 40px 24px;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.filterPill {
+  padding: 10px 22px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  background: transparent;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: capitalize;
+}
+
+.filterPill:hover {
+  border-color: var(--color-text);
+}
+
+.filterPill.active {
+  background: var(--color-dark);
+  color: var(--color-white);
+  border-color: var(--color-dark);
+}
+
+/* ===========================
+   CONTENT CARDS GRID
+   =========================== */
+.insightsSection {
+  padding: var(--section-padding);
+}
+
+.insightsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 48px;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .insightsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .insightsGrid {
+    gap: 32px;
+  }
+}
+
+.insightCard {
+  display: block;
+  padding: 32px 0;
+  border-top: 1px solid var(--color-border);
+  transition: opacity 0.2s;
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+.insightCard:hover {
+  opacity: 0.7;
+}
+
+.insightCard.hidden {
+  display: none;
+}
+
+.insightCardTag {
+  font-family: var(--font-display);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-secondary);
+  margin-bottom: 12px;
+}
+
+.insightCardTitle {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.35;
+  margin-bottom: 12px;
+  letter-spacing: -0.2px;
+}
+
+.insightCardDesc {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.insightCardDate {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  opacity: 0.7;
+}
+
+/* ===========================
+   NEWSLETTER CTA
+   =========================== */
+.newsletter {
+  padding: var(--section-padding);
+  background: var(--color-white);
+}
+
+.newsletterInner {
+  max-width: var(--container-narrow);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.newsletterHeading {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin-bottom: 16px;
+}
+
+.newsletterDesc {
+  font-size: 17px;
+  color: var(--color-text-secondary);
+  margin-bottom: 40px;
+  line-height: 1.55;
+  font-weight: 300;
+}
+
+.newsletterForm {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.newsletterInput {
+  flex: 1;
+  min-width: 200px;
+  max-width: 320px;
+  padding: 14px 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.newsletterInput:focus {
+  outline: none;
+  border-color: var(--color-text);
+}
+
+.newsletterInput::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.newsletterNote {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}

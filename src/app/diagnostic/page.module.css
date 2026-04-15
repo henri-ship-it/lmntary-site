@@ -1,0 +1,315 @@
+/* ===========================
+   HERO
+   =========================== */
+.hero {
+  padding: 160px 24px 100px;
+  text-align: center;
+  background-color: var(--color-dark);
+  color: var(--color-white);
+}
+
+.heroEyebrow {
+  font-family: var(--font-display);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-accent);
+  margin-bottom: 24px;
+}
+
+.heroHeading {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  margin-bottom: 28px;
+}
+
+.heroSub {
+  font-size: clamp(17px, 2vw, 20px);
+  color: rgba(255, 255, 255, 0.65);
+  max-width: 520px;
+  margin: 0 auto 44px;
+  line-height: 1.55;
+  font-weight: 300;
+}
+
+.heroActions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hero :global(.btn--primary) {
+  padding: 16px 36px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ===========================
+   HOW IT WORKS
+   =========================== */
+.howItWorks {
+  padding: var(--section-padding);
+  background-color: var(--color-white);
+}
+
+.howItWorksGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .howItWorksGrid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+.step {
+  text-align: center;
+}
+
+.number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-border);
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: 24px;
+}
+
+.stepTitle {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 12px;
+  color: var(--color-text);
+}
+
+.stepDesc {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* ===========================
+   STYLES SECTION
+   =========================== */
+.stylesSection {
+  padding: var(--section-padding);
+  background-color: var(--color-surface);
+}
+
+.stylesSectionHeader {
+  text-align: center;
+  margin-bottom: 64px;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.stylesSectionHeading {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+  margin-bottom: 16px;
+  color: var(--color-text);
+}
+
+.stylesSectionSub {
+  font-size: 17px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.stylesSectionGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .stylesSectionGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.styleCard {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 40px 32px;
+  background-color: var(--color-white);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.styleCard:hover {
+  border-color: var(--color-text);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.styleCardName {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+  color: var(--color-text);
+}
+
+.styleCardTagline {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin-bottom: 12px;
+}
+
+.styleCardDesc {
+  font-size: 15px;
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+/* ===========================
+   WHAT YOU'LL LEARN
+   =========================== */
+.learnSection {
+  padding: var(--section-padding);
+  background-color: var(--color-white);
+}
+
+.learnSectionContainer {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.learnSectionHeading {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+  margin-bottom: 48px;
+  text-align: center;
+  color: var(--color-text);
+}
+
+.learnSectionList {
+  list-style: none;
+}
+
+.learnItem {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 32px;
+  align-items: flex-start;
+}
+
+.learnItem:last-child {
+  margin-bottom: 0;
+}
+
+.checkmark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  color: var(--color-dark);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.learnText {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--color-text);
+  font-weight: 300;
+}
+
+/* ===========================
+   CREDIBILITY SECTION
+   =========================== */
+.credibility {
+  padding: var(--section-padding);
+  background-color: var(--color-surface);
+  text-align: center;
+}
+
+.credibilityContainer {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.credibilityHeading {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 20px;
+  color: var(--color-text);
+}
+
+.credibilityText {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  font-weight: 300;
+}
+
+/* ===========================
+   BOTTOM CTA
+   =========================== */
+.bottomCta {
+  padding: var(--section-padding);
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  text-align: center;
+}
+
+.bottomCtaContainer {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.bottomCtaHeading {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+  margin-bottom: 32px;
+  color: var(--color-white);
+}
+
+.bottomCta :global(.btn--primary) {
+  padding: 16px 36px;
+  font-size: 15px;
+  font-weight: 600;
+}
