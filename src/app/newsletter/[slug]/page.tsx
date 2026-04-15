@@ -73,27 +73,14 @@ export default async function NewsletterArticlePage({ params }: { params: Promis
             </div>
           </div>
 
-          {/* BOTTOM CTA - "Go deeper" like Justin Welsh */}
+          {/* BOTTOM CTA - Go Deeper with Limitless */}
           <div className={styles.bottomCta}>
-            <div className={styles.bottomCtaLeft}>
+            <div className={styles.bottomCtaContent}>
+              <p className={styles.bottomCtaEyebrow}>Go Deeper</p>
               <h2 className={styles.bottomCtaHeading}>Go further with Limitless</h2>
               <p className={styles.bottomCtaDesc}>
-                These insights are drawn from Limitless, a 16-week structured performance psychology programme. Three tiers designed to meet you where you are.
+                The frameworks in this newsletter are drawn from Limitless, a 16-week performance psychology programme built on 20+ years of applied research. Four modules covering self-awareness, mindset, habits, and performance under pressure. Understand how you operate, see what&apos;s holding you back, and build a system that works.
               </p>
-            </div>
-            <div className={styles.bottomCtaRight}>
-              <div className={styles.bottomCtaTier}>
-                <div className={styles.bottomCtaTierName}>Self-Led</div>
-                <div className={styles.bottomCtaTierDesc}>Full programme access. Work at your own pace.</div>
-              </div>
-              <div className={styles.bottomCtaTier}>
-                <div className={styles.bottomCtaTierName}>Guided</div>
-                <div className={styles.bottomCtaTierDesc}>Programme + bi-weekly group coaching calls.</div>
-              </div>
-              <div className={styles.bottomCtaTier}>
-                <div className={styles.bottomCtaTierName}>1:1</div>
-                <div className={styles.bottomCtaTierDesc}>Private sessions with Chris. Full support.</div>
-              </div>
               <Link href="/programmes" className={`btn btn--primary ${styles.bottomCtaBtn}`}>
                 Explore Limitless
               </Link>
@@ -101,17 +88,19 @@ export default async function NewsletterArticlePage({ params }: { params: Promis
           </div>
 
           {/* BOTTOM SUBSCRIBE */}
-          <div className={styles.bottomSubscribe}>
-            <div className={styles.bottomSubscribeLeft}>
-              <h2 className={styles.bottomSubscribeHeading}>Start here.</h2>
-            </div>
-            <div className={styles.bottomSubscribeRight}>
+          <section className={styles.bottomSubscribe}>
+            <div className={styles.bottomSubscribeContent}>
+              <p className={styles.bottomSubscribeEyebrow}>Never miss an issue</p>
+              <h2 className={styles.bottomSubscribeHeading}>Get Mindset Matters delivered every Sunday.</h2>
+              <p className={styles.bottomSubscribeDesc}>
+                One insight, one framework, one action step. Performance psychology you can actually use, straight to your inbox. Join 1,000+ subscribers.
+              </p>
               <ArticleSidebar
                 related={related.map(r => ({ slug: r.slug, tag: r.tag, title: r.title }))}
                 variant="inline-subscribe"
               />
             </div>
-          </div>
+          </section>
         </div>
 
         {/* STICKY SIDEBAR */}

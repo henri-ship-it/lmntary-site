@@ -139,25 +139,8 @@ export default function ArticleSidebar({ related, shareUrl, shareText, variant }
         <div className={styles.sidebarProgramme}>
           <div className={styles.sidebarProgrammeLabel}>Go Deeper</div>
           <p className={styles.sidebarProgrammeText}>
-            These insights are drawn from Limitless. 16 weeks of structured performance psychology.
+            These insights are drawn from Limitless, a 16-week performance psychology programme built on 20+ years of applied research. Understand how you operate and build a system that works.
           </p>
-          <div className={styles.sidebarProgrammeTiers}>
-            <div className={styles.sidebarProgrammeTier}>
-              <span className={styles.tierName}>Self-Led</span>
-              <span className={styles.tierDot}></span>
-              <span className={styles.tierDesc}>Your own pace</span>
-            </div>
-            <div className={styles.sidebarProgrammeTier}>
-              <span className={styles.tierName}>Guided</span>
-              <span className={styles.tierDot}></span>
-              <span className={styles.tierDesc}>Group coaching</span>
-            </div>
-            <div className={styles.sidebarProgrammeTier}>
-              <span className={styles.tierName}>1:1</span>
-              <span className={styles.tierDot}></span>
-              <span className={styles.tierDesc}>Private sessions</span>
-            </div>
-          </div>
           <Link href="/programmes" className={styles.sidebarProgrammeLink}>
             Explore Limitless &rarr;
           </Link>

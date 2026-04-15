@@ -4,15 +4,17 @@
 .pageLayout {
   display: grid;
   grid-template-columns: 1fr 300px;
-  gap: 0;
+  gap: 0 40px;
   max-width: 1120px;
   margin: 0 auto;
+  padding: 0 24px;
   align-items: start;
 }
 
 @media (max-width: 960px) {
   .pageLayout {
     grid-template-columns: 1fr;
+    padding: 0;
   }
 }
 
@@ -25,7 +27,7 @@
    =========================== */
 .stickySidebar {
   display: block;
-  padding: 100px 24px 48px 0;
+  padding: 48px 0 48px 0;
 }
 
 @media (max-width: 960px) {
@@ -37,6 +39,8 @@
 .stickySidebarInner {
   position: sticky;
   top: 80px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
 }
 
 .stickySidebarCard {
@@ -497,31 +501,42 @@
 }
 
 /* ===========================
-   BOTTOM CTA
+   BOTTOM CTA - Full width subscribe section
    =========================== */
 .bottomCta {
-  padding: 80px 24px;
+  padding: 96px 24px;
   background: var(--color-surface);
   text-align: center;
+  border-top: 1px solid var(--color-border-light);
 }
 
 .bottomCtaInner {
-  max-width: 560px;
+  max-width: 640px;
   margin: 0 auto;
 }
 
+.bottomCtaEyebrow {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
 .bottomCtaHeading {
-  font-size: 26px;
+  font-size: clamp(24px, 3.5vw, 32px);
   font-weight: 700;
   letter-spacing: -0.03em;
-  margin-bottom: 12px;
+  line-height: 1.2;
+  margin-bottom: 16px;
 }
 
 .bottomCtaDesc {
-  font-size: 15px;
+  font-size: 16px;
   color: var(--color-text-secondary);
-  margin-bottom: 32px;
-  line-height: 1.6;
+  margin-bottom: 36px;
+  line-height: 1.65;
 }
 
 /* ===========================
