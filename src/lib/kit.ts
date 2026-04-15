@@ -3,22 +3,6 @@
  * Fetches published broadcasts for the newsletter pages
  */
 
-export interface Broadcast {
-  id: number;
-  created_at: string;
-  subject: string;
-  description: string | null;
-  content: string;
-  public: boolean;
-  published_at: string | null;
-  send_at: string | null;
-  thumbnail_alt: string | null;
-  thumbnail_url: string | null;
-  email_address: string | null;
-  email_layout_template: string | null;
-  preview_text: string | null;
-}
-
 export interface Edition {
   id: number;
   slug: string;
@@ -34,59 +18,73 @@ const KIT_API_KEY = process.env.KIT_API_KEY || '';
 const KIT_API_BASE = 'https://api.kit.com/v4';
 
 /**
- * Fetch all published broadcasts from Kit.com
+ * Fetch all broadcasts from Kit.com V4 API
+ * V4 uses cursor-based pagination (after/before), not page numbers
  */
-async function fetchBroadcasts(): Promise<Broadcast[]> {
+async function fetchBroadcasts(): Promise<any[]> {
   if (!KIT_API_KEY) {
-    console.warn('KIT_API_KEY not set, returning empty broadcasts');
+    console.warn('[Kit] KIT_API_KEY not set, returning empty broadcasts');
     return [];
   }
 
-  const allBroadcasts: Broadcast[] = [];
-  let page = 1;
+  const allBroadcasts: any[] = [];
+  let cursor: string | null = null;
   let hasMore = true;
 
   while (hasMore) {
     try {
-      const res = await fetch(
-        `${KIT_API_BASE}/broadcasts?page=${page}&per_page=50&sort_order=desc`,
-        {
-          headers: {
-            Authorization: `Bearer ${KIT_API_KEY}`,
-            Accept: 'application/json',
-          },
-          next: { revalidate: 3600 }, // Revalidate every hour
-        }
-      );
+      let url = `${KIT_API_BASE}/broadcasts?per_page=50`;
+      if (cursor) {
+        url += `&after=${encodeURIComponent(cursor)}`;
+      }
+
+      console.log(`[Kit] Fetching: ${url}`);
+
+      const res = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${KIT_API_KEY}`,
+          Accept: 'application/json',
+        },
+        next: { revalidate: 3600 },
+      });
 
       if (!res.ok) {
-        console.error(`Kit.com API error: ${res.status} ${res.statusText}`);
+        const body = await res.text();
+        console.error(`[Kit] API error ${res.status}: ${body}`);
         break;
       }
 
       const data = await res.json();
-      const broadcasts: Broadcast[] = data.broadcasts || [];
 
-      if (broadcasts.length === 0) {
-        hasMore = false;
+      // Log the response structure so we can debug
+      console.log(`[Kit] Response keys: ${Object.keys(data).join(', ')}`);
+
+      // V4 returns { broadcasts: [...], pagination: { ... } }
+      const broadcasts = data.broadcasts || data.data || [];
+      const pagination = data.pagination || {};
+
+      console.log(`[Kit] Got ${broadcasts.length} broadcasts`);
+
+      if (broadcasts.length > 0) {
+        // Log first broadcast keys to understand the shape
+        console.log(`[Kit] Broadcast keys: ${Object.keys(broadcasts[0]).join(', ')}`);
+      }
+
+      allBroadcasts.push(...broadcasts);
+
+      // Cursor-based pagination
+      if (pagination.has_next_page && pagination.end_cursor) {
+        cursor = pagination.end_cursor;
       } else {
-        allBroadcasts.push(...broadcasts);
-        // If we got fewer than 50, we're on the last page
-        if (broadcasts.length < 50) {
-          hasMore = false;
-        }
-        page++;
+        hasMore = false;
       }
     } catch (err) {
-      console.error('Kit.com API fetch failed:', err);
+      console.error('[Kit] Fetch failed:', err);
       break;
     }
   }
 
-  // Only return published/sent broadcasts
-  return allBroadcasts.filter(
-    (b) => b.published_at || b.send_at
-  );
+  return allBroadcasts;
 }
 
 /**
@@ -102,7 +100,6 @@ function slugify(text: string): string {
 
 /**
  * Guess a tag from the subject/content
- * Can be refined later with Kit.com tags or manual mapping
  */
 function guessTag(subject: string, content: string): string {
   const text = `${subject} ${content}`.toLowerCase();
@@ -116,7 +113,7 @@ function guessTag(subject: string, content: string): string {
  * Extract a description/preview from HTML content
  */
 function extractDescription(content: string, maxLength = 160): string {
-  // Strip HTML tags
+  if (!content) return '';
   const text = content
     .replace(/<[^>]+>/g, '')
     .replace(/&nbsp;/g, ' ')
@@ -129,8 +126,6 @@ function extractDescription(content: string, maxLength = 160): string {
     .trim();
 
   if (text.length <= maxLength) return text;
-
-  // Cut at last space before maxLength
   const truncated = text.slice(0, maxLength);
   const lastSpace = truncated.lastIndexOf(' ');
   return truncated.slice(0, lastSpace > 0 ? lastSpace : maxLength) + '...';
@@ -149,19 +144,32 @@ function formatDate(dateStr: string): string {
 }
 
 /**
- * Transform raw broadcasts into Edition objects for the site
+ * Transform a raw broadcast (any shape) into an Edition
+ * Handles multiple possible field names from the API
  */
-function transformBroadcast(broadcast: Broadcast): Edition {
-  const dateStr = broadcast.published_at || broadcast.send_at || broadcast.created_at;
+function transformBroadcast(b: any): Edition | null {
+  // Try different field names for the subject/title
+  const title = b.subject || b.title || b.name || '';
+  if (!title) return null;
+
+  // Try different field names for content
+  const content = b.content || b.body || b.email_content || '';
+
+  // Try different field names for dates
+  const dateStr = b.published_at || b.sent_at || b.send_at || b.created_at || '';
+  if (!dateStr) return null;
+
+  // Try different field names for description/preview
+  const desc = b.preview_text || b.description || extractDescription(content);
 
   return {
-    id: broadcast.id,
-    slug: slugify(broadcast.subject),
+    id: b.id,
+    slug: slugify(title),
     date: formatDate(dateStr),
-    title: broadcast.subject,
-    desc: broadcast.preview_text || extractDescription(broadcast.content),
-    tag: guessTag(broadcast.subject, broadcast.content),
-    content: broadcast.content,
+    title,
+    desc,
+    tag: guessTag(title, content),
+    content,
     publishedAt: dateStr,
   };
 }
@@ -172,10 +180,15 @@ function transformBroadcast(broadcast: Broadcast): Edition {
  */
 export async function getEditions(): Promise<Edition[]> {
   const broadcasts = await fetchBroadcasts();
+  console.log(`[Kit] Total broadcasts fetched: ${broadcasts.length}`);
 
-  return broadcasts
+  const editions = broadcasts
     .map(transformBroadcast)
+    .filter((e): e is Edition => e !== null)
     .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+
+  console.log(`[Kit] Editions after transform: ${editions.length}`);
+  return editions;
 }
 
 /**
