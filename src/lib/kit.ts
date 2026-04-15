@@ -92,9 +92,10 @@ async function fetchFullBroadcasts(): Promise<any[]> {
     allBroadcasts.push(...results.filter(Boolean));
   }
 
-  // Filter for published broadcasts only
-  const published = allBroadcasts.filter((b) => b.published_at);
-  console.log(`[Kit] ${published.length} published out of ${allBroadcasts.length} total`);
+  // Filter for published AND public broadcasts only
+  // "public" flag = shown on Kit.com profile /posts page
+  const published = allBroadcasts.filter((b) => b.published_at && b.public === true);
+  console.log(`[Kit] ${published.length} public+published out of ${allBroadcasts.length} total`);
 
   return published;
 }
