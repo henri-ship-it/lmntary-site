@@ -25,6 +25,7 @@ export async function GET() {
       results.v3 = {
         status: res.status,
         broadcastCount: broadcasts.length,
+        firstId: broadcasts[0]?.id,
         error: body?.error || body?.message || null,
       };
     } catch (err: any) {
@@ -32,10 +33,10 @@ export async function GET() {
     }
   }
 
-  // Test fetching a single broadcast by ID to see all available fields
-  if (apiSecret && results.v3?.sampleBroadcasts?.[0]?.id) {
+  // Test fetching a single broadcast by ID to see content HTML structure
+  if (apiSecret && results.v3?.firstId) {
     try {
-      const testId = results.v3.sampleBroadcasts[0].id;
+      const testId = results.v3.firstId;
       const res = await fetch(
         `https://api.convertkit.com/v3/broadcasts/${testId}?api_secret=${apiSecret}`,
         { headers: { Accept: 'application/json' } }
