@@ -123,11 +123,39 @@ function guessTag(subject: string, content: string): string {
 }
 
 /**
+ * Strip email wrapper cruft from Kit.com HTML content:
+ * - Remove <style> blocks
+ * - Remove the branded header/banner image area
+ * - Remove email-specific wrapper tables
+ * - Remove tracking pixels and footer links
+ */
+function cleanEmailContent(html: string): string {
+  if (!html) return '';
+  return html
+    // Remove all <style> blocks
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+    // Remove HTML comments (including conditional Outlook comments)
+    .replace(/<!--[\s\S]*?-->/g, '')
+    // Remove the Kit.com branded header image (Mindset Matters banner etc.)
+    .replace(/<img[^>]*(?:kit-branded|header|banner|logo|mindset.?matters)[^>]*>/gi, '')
+    // Remove images that are just tracking pixels (1x1 or very small)
+    .replace(/<img[^>]*(?:width=["']?1["']?|height=["']?1["']?|tracking|beacon|open)[^>]*>/gi, '')
+    // Remove Kit.com footer/unsubscribe sections
+    .replace(/<[^>]*class=["'][^"']*(?:footer|unsubscribe|email-footer)[^"']*["'][^>]*>[\s\S]*?<\/[^>]+>/gi, '')
+    .trim();
+}
+
+/**
  * Extract a description/preview from HTML content
  */
 function extractDescription(content: string, maxLength = 160): string {
   if (!content) return '';
   const text = content
+    // Remove style blocks first (before stripping tags)
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+    // Remove HTML comments
+    .replace(/<!--[\s\S]*?-->/g, '')
+    // Remove all HTML tags
     .replace(/<[^>]+>/g, '')
     .replace(/&nbsp;/g, ' ')
     .replace(/&amp;/g, '&')
@@ -163,11 +191,12 @@ function transformBroadcast(b: any): Edition | null {
   const title = b.subject || b.title || b.name || '';
   if (!title) return null;
 
-  const content = b.content || b.body || '';
+  const rawContent = b.content || b.body || '';
+  const content = cleanEmailContent(rawContent);
   const dateStr = b.published_at || b.sent_at || b.send_at || '';
   if (!dateStr) return null;
 
-  const desc = b.description || extractDescription(content);
+  const desc = b.description || extractDescription(rawContent);
 
   return {
     id: b.id,
