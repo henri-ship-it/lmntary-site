@@ -123,25 +123,33 @@ function guessTag(subject: string, content: string): string {
 }
 
 /**
- * Strip email wrapper cruft from Kit.com HTML content:
- * - Remove <style> blocks
- * - Remove the branded header/banner image area
- * - Remove email-specific wrapper tables
- * - Remove tracking pixels and footer links
+ * Strip email wrapper cruft from Kit.com HTML content.
+ * Kit.com broadcasts are full email HTML with table layouts,
+ * style blocks, header images, and tracking pixels.
+ *
+ * Structure:
+ * - <style> blocks (email CSS)
+ * - First ck-section div = header/banner image (alt="Header Image")
+ * - Subsequent ck-section divs = actual newsletter content
+ * - Wrapped in black background table layout
  */
 function cleanEmailContent(html: string): string {
   if (!html) return '';
   return html
     // Remove all <style> blocks
     .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
-    // Remove HTML comments (including conditional Outlook comments)
+    // Remove HTML comments (including conditional Outlook comments like <!--[if mso]>)
     .replace(/<!--[\s\S]*?-->/g, '')
-    // Remove the Kit.com branded header image (Mindset Matters banner etc.)
-    .replace(/<img[^>]*(?:kit-branded|header|banner|logo|mindset.?matters)[^>]*>/gi, '')
-    // Remove images that are just tracking pixels (1x1 or very small)
-    .replace(/<img[^>]*(?:width=["']?1["']?|height=["']?1["']?|tracking|beacon|open)[^>]*>/gi, '')
-    // Remove Kit.com footer/unsubscribe sections
-    .replace(/<[^>]*class=["'][^"']*(?:footer|unsubscribe|email-footer)[^"']*["'][^>]*>[\s\S]*?<\/[^>]+>/gi, '')
+    // Remove the first ck-section (header/banner image section)
+    // It contains the branded logo/Mindset Matters image
+    .replace(/<div[^>]*class="ck-section"[^>]*>[\s\S]*?<\/div>\s*(?=<div[^>]*class="ck-section")/i, '')
+    // Remove any remaining images with alt="Header Image"
+    .replace(/<figure[^>]*>[\s\S]*?<img[^>]*alt=["']Header Image["'][^>]*>[\s\S]*?<\/figure>/gi, '')
+    .replace(/<img[^>]*alt=["']Header Image["'][^>]*>/gi, '')
+    // Remove images from embed.filekitcdn.com that are the header logo (small images ≤80px)
+    .replace(/<figure[^>]*>[\s\S]*?<img[^>]*width=["']?(?:[1-9]|[1-7]\d|80)["']?[^>]*embed\.filekitcdn\.com[^>]*>[\s\S]*?<\/figure>/gi, '')
+    // Remove tracking pixels
+    .replace(/<img[^>]*(?:width=["']?1["']?|height=["']?1["']?|tracking|beacon|open\.convertkit)[^>]*>/gi, '')
     .trim();
 }
 
