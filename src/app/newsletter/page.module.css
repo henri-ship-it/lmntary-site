@@ -1,269 +1,494 @@
 /* ===========================
-   HERO
+   HERO - Compact, punchy (Mark Manson style)
    =========================== */
 .hero {
-  padding: 160px 24px 100px;
+  padding: 100px 24px 72px;
   text-align: center;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.heroInner {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.heroEyebrow {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-text-secondary);
+  margin-bottom: 16px;
+  font-weight: 500;
 }
 
 .heroHeading {
-  font-family: var(--font-display);
-  font-size: clamp(36px, 6vw, 64px);
+  font-size: clamp(32px, 5vw, 48px);
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
-  line-height: 1.05;
-  margin-bottom: 28px;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 16px;
 }
 
 .heroSub {
-  font-size: clamp(17px, 2vw, 20px);
+  font-size: clamp(16px, 1.8vw, 18px);
   color: var(--color-text-secondary);
-  max-width: 520px;
-  margin: 0 auto 28px;
-  line-height: 1.55;
-  font-weight: 300;
-}
-
-.heroStats {
-  font-size: 14px;
-  color: var(--color-text-secondary);
-  margin-bottom: 44px;
-  letter-spacing: 0.01em;
-}
-
-.heroStats strong {
-  color: var(--color-text);
-  font-weight: 600;
-}
-
-/* ===========================
-   NEWSLETTER SIGNUP (Hero Form)
-   =========================== */
-.newsletterForm {
+  line-height: 1.6;
   margin-bottom: 24px;
+  font-weight: 400;
 }
 
-.newsletterFormWrapper {
+.heroProof {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  max-width: 440px;
-  margin: 0 auto;
-  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 32px;
 }
 
-.newsletterFormInput {
+.heroStat {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+  letter-spacing: 0.01em;
+}
+
+.heroDot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-border);
+}
+
+/* ===========================
+   SIGNUP FORM (shared by hero & bottom)
+   =========================== */
+.signupForm {
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.signupFormRow {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.signupInput {
   flex: 1;
-  min-width: 240px;
-  padding: 14px 20px;
+  min-width: 0;
+  padding: 14px 18px;
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-pill);
+  border-radius: 8px;
   font-family: var(--font-body);
-  font-size: 14px;
+  font-size: 15px;
+  color: var(--color-text);
+  background: var(--color-bg);
   outline: none;
   transition: border-color 0.2s;
 }
 
-.newsletterFormInput:focus {
+.signupInput:focus {
   border-color: var(--color-text);
 }
 
-.newsletterFormNote {
+.signupInput::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.signupInput:disabled {
+  opacity: 0.6;
+}
+
+.signupBtn {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.signupBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.signupNote {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.formSuccess {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 20px 24px;
+  background: rgba(4, 223, 191, 0.08);
+  border: 1px solid rgba(4, 223, 191, 0.25);
+  border-radius: 10px;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.formSuccessIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: var(--color-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.formSuccessText {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.formError {
+  font-size: 13px;
+  color: #e53e3e;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+/* ===========================
+   VALUE PROPS - Tight horizontal strip
+   =========================== */
+.value {
+  padding: 56px 24px;
+  background: var(--color-surface);
+}
+
+.valueGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+@media (max-width: 700px) {
+  .valueGrid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    max-width: 400px;
+  }
+}
+
+.valueItem {
+  text-align: center;
+}
+
+.valueLabel {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+  color: var(--color-text);
+}
+
+.valueDesc {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+}
+
+/* ===========================
+   LATEST ISSUE - Featured card
+   =========================== */
+.latest {
+  padding: 72px 24px 56px;
+}
+
+.latestInner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.latestLabel {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.latestCard {
+  display: block;
+  padding: 36px;
+  border: 1px solid var(--color-border-light);
+  border-radius: 12px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.latestCard:hover {
+  border-color: var(--color-text);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}
+
+.latestMeta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.latestTag {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.latestDate {
   font-size: 13px;
   color: var(--color-text-secondary);
 }
 
-/* ===========================
-   WHAT TO EXPECT
-   =========================== */
-.expectations {
-  padding: var(--section-padding);
-  background: var(--color-surface);
+.latestTitle {
+  font-size: clamp(22px, 3vw, 28px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  margin-bottom: 12px;
 }
 
-.expectationsGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-  max-width: var(--container-max);
+.latestDesc {
+  font-size: 16px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.latestRead {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  transition: color 0.2s;
+}
+
+.latestCard:hover .latestRead {
+  color: var(--color-accent);
+}
+
+/* ===========================
+   ARCHIVE - Clean list (Unreasonable Hospitality + Justin Welsh)
+   =========================== */
+.archive {
+  padding: 56px 24px 80px;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.archiveInner {
+  max-width: 720px;
   margin: 0 auto;
 }
 
-@media (max-width: 900px) {
-  .expectationsGrid {
-    grid-template-columns: 1fr;
-    gap: 48px;
-  }
-}
-
-.expectationCard {
-  text-align: center;
-}
-
-.expectationCardTitle {
-  font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 16px;
-}
-
-.expectationCardDesc {
-  font-size: 15px;
-  color: var(--color-text-secondary);
-  line-height: 1.6;
-}
-
-/* ===========================
-   ARCHIVE PREVIEW
-   =========================== */
-.archive {
-  padding: var(--section-padding);
-}
-
 .archiveHeader {
-  text-align: center;
-  margin-bottom: 56px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 32px;
 }
 
 .archiveHeading {
-  font-size: 30px;
+  font-size: 22px;
   font-weight: 700;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.02em;
 }
 
-.archiveGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+.archiveCount {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.archiveList {
+  display: flex;
+  flex-direction: column;
+}
+
+.archiveItem {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
   gap: 32px;
-  max-width: var(--container-max);
-  margin: 0 auto 48px;
+  padding: 24px 0;
+  border-top: 1px solid var(--color-border-light);
+  transition: opacity 0.15s;
+  cursor: pointer;
 }
 
-@media (max-width: 900px) {
-  .archiveGrid {
-    grid-template-columns: 1fr;
-  }
+.archiveItem:last-child {
+  border-bottom: 1px solid var(--color-border-light);
 }
 
-.archiveCard {
-  display: block;
-  padding: 32px;
-  border: 1px solid var(--color-border-light);
-  border-radius: var(--radius-card);
-  transition: border-color 0.2s, box-shadow 0.2s;
+.archiveItem:hover {
+  opacity: 0.65;
 }
 
-.archiveCard:hover {
-  border-color: var(--color-text);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
+.archiveItemLeft {
+  flex: 1;
+  min-width: 0;
 }
 
-.archiveCardDate {
-  font-size: 12px;
+.archiveItemTag {
+  display: inline-block;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--color-text-secondary);
-  margin-bottom: 12px;
-}
-
-.archiveCardTitle {
-  font-size: 18px;
+  color: var(--color-accent);
   font-weight: 600;
-  line-height: 1.35;
-  margin-bottom: 12px;
-  letter-spacing: -0.2px;
+  margin-bottom: 8px;
 }
 
-.archiveCardDesc {
+.archiveItemTitle {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+  margin-bottom: 6px;
+}
+
+.archiveItemDesc {
   font-size: 14px;
   color: var(--color-text-secondary);
   line-height: 1.5;
 }
 
-.archiveCta {
+.archiveItemRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.archiveItemDate {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.archiveItemArrow {
+  font-size: 18px;
+  color: var(--color-text-secondary);
+  transition: color 0.2s, transform 0.2s;
+}
+
+.archiveItem:hover .archiveItemArrow {
+  color: var(--color-text);
+  transform: translateX(3px);
+}
+
+@media (max-width: 600px) {
+  .archiveItem {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .archiveItemRight {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .archiveItemArrow {
+    display: none;
+  }
+}
+
+/* ===========================
+   BOTTOM CTA
+   =========================== */
+.bottomCta {
+  padding: 80px 24px;
+  background: var(--color-surface);
   text-align: center;
+}
+
+.bottomCtaInner {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.bottomCtaHeading {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
+}
+
+.bottomCtaDesc {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  margin-bottom: 32px;
+  line-height: 1.6;
 }
 
 /* ===========================
    MINDSET MATTERS LIVE
    =========================== */
-.liveCommunity {
-  padding: var(--section-padding);
+.live {
+  padding: 96px 24px;
   background: var(--color-dark);
   color: var(--color-white);
 }
 
-.liveCommunityInner {
-  max-width: 720px;
+.liveInner {
+  max-width: 640px;
   margin: 0 auto;
   text-align: center;
 }
 
-.liveCommunityHeading {
+.liveEyebrow {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-accent);
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.liveHeading {
   font-family: var(--font-display);
-  font-size: clamp(28px, 4vw, 40px);
+  font-size: clamp(24px, 4vw, 36px);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: -0.01em;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
-.liveCommunityDesc {
-  font-size: 17px;
+.liveDesc {
+  font-size: 16px;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.65);
-  margin-bottom: 32px;
-  font-weight: 300;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 36px;
 }
 
-.liveCommunityDetails {
-  background: rgba(4, 223, 191, 0.05);
-  border: 1px solid rgba(4, 223, 191, 0.2);
-  border-radius: var(--radius-card);
-  padding: 32px;
-  margin-bottom: 40px;
+.liveDetails {
   text-align: left;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin-bottom: 40px;
 }
 
-.liveCommunityDetailItem {
+.liveDetail {
   font-size: 15px;
   line-height: 1.7;
-  margin-bottom: 14px;
+  color: rgba(255, 255, 255, 0.75);
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.liveCommunityDetailItem:last-child {
-  margin-bottom: 0;
-}
-
-.liveCommunityDetailItem strong {
-  color: var(--color-accent);
-  font-weight: 600;
-}
-
-/* ===========================
-   BOTTOM CTA SECTION
-   =========================== */
-.bottomCta {
-  padding: var(--section-padding);
-  text-align: center;
-}
-
-.bottomCtaHeading {
-  font-size: 30px;
-  font-weight: 700;
-  margin-bottom: 12px;
-  letter-spacing: -0.5px;
-}
-
-.bottomCtaDesc {
-  font-size: 16px;
-  color: var(--color-text-secondary);
-  margin-bottom: 32px;
-  max-width: 560px;
-  margin-left: auto;
-  margin-right: auto;
+.liveDetail:last-child {
+  border-bottom: none;
 }

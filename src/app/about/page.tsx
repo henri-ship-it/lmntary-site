@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import NewsletterSignup from '@/components/NewsletterSignup';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
@@ -146,13 +147,13 @@ export default function AboutPage() {
             </div>
             <div>
               <p className={styles.newsletterIntro}>Join our newsletter for insights on performance psychology and high performance.</p>
-              <form className={styles.newsletterForm} action="#" method="POST">
-                <input type="email" className={styles.newsletterInput} placeholder="Enter your email" required />
-                <button type="submit" className="btn btn--primary">
-                  Subscribe
-                </button>
-              </form>
-              <p className={styles.newsletterNote}>We respect your privacy. Unsubscribe at any time.</p>
+              <NewsletterSignup
+                wrapperClass={styles.newsletterForm}
+                inputClass={styles.newsletterInput}
+                noteClass={styles.newsletterNote}
+                placeholder="Enter your email"
+                noteText="We respect your privacy. Unsubscribe at any time."
+              />
             </div>
           </div>
         </div>
