@@ -306,3 +306,14 @@
   color: var(--color-text);
   font-weight: 600;
 }
+
+.sidebarItemDone .sidebarItemIndex {
+  color: var(--color-accent);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.sidebarItemDone:not(.sidebarItemActive) .sidebarItemTitle {
+  color: var(--color-text);
+  opacity: 0.75;
+}

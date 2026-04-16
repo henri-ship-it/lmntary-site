@@ -157,6 +157,20 @@
   font-weight: 600;
   color: var(--color-text-secondary);
   letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.lessonIndexDone {
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
 }
 
 .lessonCopy {
@@ -259,6 +273,33 @@
   width: 100%;
   text-align: center;
   justify-content: center;
+}
+
+/* Progress block (free-course sidebar) */
+.progressBlock {
+  margin-bottom: 20px;
+}
+
+.progressBar {
+  height: 6px;
+  background: var(--color-surface);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--color-accent);
+  border-radius: 999px;
+  transition: width 240ms ease;
+}
+
+.progressMeta {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  letter-spacing: 0.02em;
 }
 
 .sidebarDivider {

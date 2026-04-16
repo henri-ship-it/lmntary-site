@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { getLessonBySlug, getCourseBySlug } from '@/lib/courses';
+import { getLessonBySlug } from '@/lib/courses';
+import LessonInteractive from './LessonInteractive';
+import LessonSidebarList from './LessonSidebarList';
 import styles from './page.module.css';
 
 export async function generateMetadata({
@@ -81,6 +83,13 @@ export default async function LessonPage({
             </div>
           )}
 
+          {/* Reading-progress bar + mark-complete control */}
+          <LessonInteractive
+            courseSlug={course.slug}
+            lessonSlug={lesson.slug}
+            locked={locked}
+          />
+
           {/* PREV / NEXT NAV */}
           {(prevLesson || nextLesson) && (
             <nav className={styles.nav}>
@@ -115,26 +124,14 @@ export default async function LessonPage({
           <div className={styles.sidebarSticky}>
             <div className={styles.sidebarCard}>
               <div className={styles.sidebarLabel}>{course.title}</div>
-              <ol className={styles.sidebarList}>
-                {course.lessons.map((l, i) => {
-                  const isCurrent = l.slug === lesson.slug;
-                  return (
-                    <li key={l.slug}>
-                      <Link
-                        href={`/learn/${course.slug}/${l.slug}`}
-                        className={`${styles.sidebarItem} ${
-                          isCurrent ? styles.sidebarItemActive : ''
-                        }`}
-                      >
-                        <span className={styles.sidebarItemIndex}>
-                          {String(i + 1).padStart(2, '0')}
-                        </span>
-                        <span className={styles.sidebarItemTitle}>{l.title}</span>
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ol>
+              <LessonSidebarList
+                courseSlug={course.slug}
+                currentLessonSlug={lesson.slug}
+                lessons={course.lessons.map((l) => ({
+                  slug: l.slug,
+                  title: l.title,
+                }))}
+              />
             </div>
           </div>
         </aside>

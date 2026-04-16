@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { getCourseBySlug } from '@/lib/courses';
+import CourseLessonList from './CourseLessonList';
+import CourseSidebar from './CourseSidebar';
 import styles from './page.module.css';
 
 export async function generateMetadata({
@@ -58,77 +60,31 @@ export default async function CoursePage({
 
           <div className={styles.lessonsBlock}>
             <h2 className={styles.lessonsHeading}>Lessons</h2>
-            <ol className={styles.lessonsList}>
-              {course.lessons.map((lesson, i) => {
-                const locked = lesson.access === 'paid';
-                const n = String(i + 1).padStart(2, '0');
-                return (
-                  <li key={lesson.slug} className={styles.lessonItem}>
-                    <Link
-                      href={`/learn/${course.slug}/${lesson.slug}`}
-                      className={styles.lessonLink}
-                    >
-                      <span className={styles.lessonIndex}>{n}</span>
-                      <div className={styles.lessonCopy}>
-                        <h3 className={styles.lessonTitle}>
-                          {lesson.title}
-                          {locked && (
-                            <span className={styles.lessonLock} aria-label="Members only">
-                              &#128274;
-                            </span>
-                          )}
-                        </h3>
-                        <p className={styles.lessonSummary}>{lesson.summary}</p>
-                      </div>
-                      <span className={styles.lessonDuration}>{lesson.duration}</span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ol>
+            <CourseLessonList
+              courseSlug={course.slug}
+              lessons={course.lessons.map((l) => ({
+                slug: l.slug,
+                title: l.title,
+                summary: l.summary,
+                duration: l.duration,
+                access: l.access,
+              }))}
+            />
           </div>
         </div>
 
         <aside className={styles.sidebar}>
           <div className={styles.sidebarSticky}>
-            <div className={styles.sidebarCard}>
-              {isFree ? (
-                <>
-                  <div className={styles.sidebarEyebrow}>Free course</div>
-                  <h3 className={styles.sidebarTitle}>Start for free</h3>
-                  <p className={styles.sidebarDesc}>
-                    All {course.lessons.length} lessons, fully unlocked. No account required. Read straight through or pick what you need.
-                  </p>
-                  <Link
-                    href={`/learn/${course.slug}/${course.lessons[0].slug}`}
-                    className="btn btn--primary"
-                  >
-                    Start lesson 1
-                  </Link>
-                </>
-              ) : (
-                <>
-                  <div className={styles.sidebarEyebrow}>{course.eyebrow}</div>
-                  <h3 className={styles.sidebarTitle}>Enrol in {course.title}</h3>
-                  <p className={styles.sidebarDesc}>
-                    One-time payment. Lifetime access to all lessons. Work through at your own pace.
-                  </p>
-                  <Link
-                    href="/programmes"
-                    className={`btn btn--primary ${styles.sidebarBtn}`}
-                  >
-                    Enrol now
-                  </Link>
-                  <div className={styles.sidebarDivider}></div>
-                  <p className={styles.sidebarMember}>
-                    Already enrolled?{' '}
-                    <Link href="/learn/sign-in" className={styles.sidebarMemberLink}>
-                      Sign in &rarr;
-                    </Link>
-                  </p>
-                </>
-              )}
-            </div>
+            <CourseSidebar
+              courseSlug={course.slug}
+              courseTitle={course.title}
+              eyebrow={course.eyebrow}
+              isFree={isFree}
+              lessons={course.lessons.map((l) => ({
+                slug: l.slug,
+                title: l.title,
+              }))}
+            />
           </div>
         </aside>
       </div>

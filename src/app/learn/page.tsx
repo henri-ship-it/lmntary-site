@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { getCourses } from '@/lib/courses';
+import CourseCards from './CourseCards';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
@@ -28,25 +29,15 @@ export default function LearnIndexPage() {
       {/* COURSES GRID */}
       <section className={styles.courses}>
         <div className={styles.coursesInner}>
-          <div className={styles.coursesGrid}>
-            {courses.map((course) => (
-              <Link
-                key={course.slug}
-                href={`/learn/${course.slug}`}
-                className={styles.courseCard}
-              >
-                <div className={styles.courseCardBadge}>{course.eyebrow}</div>
-                <h2 className={styles.courseCardTitle}>{course.title}</h2>
-                <p className={styles.courseCardTagline}>{course.tagline}</p>
-                <div className={styles.courseCardMeta}>
-                  <span>{course.lessons.length} lessons</span>
-                  <span className={styles.courseCardDot}></span>
-                  <span>Self-paced</span>
-                </div>
-                <span className={styles.courseCardLink}>View course &rarr;</span>
-              </Link>
-            ))}
-          </div>
+          <CourseCards
+            courses={courses.map((c) => ({
+              slug: c.slug,
+              title: c.title,
+              tagline: c.tagline,
+              eyebrow: c.eyebrow,
+              lessonCount: c.lessons.length,
+            }))}
+          />
         </div>
       </section>
 
