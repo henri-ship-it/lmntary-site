@@ -45,21 +45,24 @@ export default function NewsletterForm({ location }: NewsletterFormProps) {
     );
   }
 
+  const isSidebar = location === 'sidebar';
+  const rowClass = isSidebar ? styles.signupFormStack : styles.signupFormRow;
+
   return (
     <form className={styles.signupForm} onSubmit={handleSubmit}>
-      <div className={styles.signupFormRow}>
+      <div className={rowClass}>
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className={styles.signupInput}
+          className={isSidebar ? styles.signupInputSidebar : styles.signupInput}
           placeholder="you@example.com"
           required
           disabled={status === 'loading'}
         />
         <button
           type="submit"
-          className={`btn btn--primary ${styles.signupBtn}`}
+          className={`btn btn--primary ${isSidebar ? styles.signupBtnSidebar : styles.signupBtn}`}
           disabled={status === 'loading'}
         >
           {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
@@ -68,7 +71,9 @@ export default function NewsletterForm({ location }: NewsletterFormProps) {
       {status === 'error' && (
         <p className={styles.formError}>Something went wrong. Please try again.</p>
       )}
-      <p className={styles.signupNote}>Free. No spam. Unsubscribe anytime.</p>
+      {!isSidebar && (
+        <p className={styles.signupNote}>Free. No spam. Unsubscribe anytime.</p>
+      )}
     </form>
   );
 }

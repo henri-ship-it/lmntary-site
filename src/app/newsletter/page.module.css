@@ -28,6 +28,8 @@
 .stickySidebar {
   display: block;
   padding: 48px 0 48px 0;
+  align-self: stretch;
+  height: 100%;
 }
 
 @media (max-width: 960px) {
@@ -39,8 +41,6 @@
 .stickySidebarInner {
   position: sticky;
   top: 80px;
-  max-height: calc(100vh - 100px);
-  overflow-y: auto;
 }
 
 .stickySidebarCard {
@@ -146,6 +146,52 @@
   display: flex;
   gap: 10px;
   margin-bottom: 12px;
+}
+
+.signupFormStack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 0;
+}
+
+.signupInputSidebar {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--color-text);
+  background: var(--color-bg);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.signupInputSidebar:focus {
+  border-color: var(--color-text);
+}
+
+.signupInputSidebar::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.signupInputSidebar:disabled {
+  opacity: 0.6;
+}
+
+.signupBtnSidebar {
+  width: 100%;
+  padding: 11px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  justify-content: center;
+}
+
+.signupBtnSidebar:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 .signupInput {
@@ -441,63 +487,39 @@
 }
 
 /* ===========================
-   PAGINATION
+   LOAD MORE
    =========================== */
-.pagination {
+.loadMoreWrap {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
+  gap: 10px;
   margin-top: 40px;
 }
 
-.paginationPages {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.paginationPage {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
+.loadMoreBtn {
+  font-family: var(--font-body);
   font-size: 14px;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  transition: background 0.15s, color 0.15s;
-}
-
-.paginationPage:hover {
-  background: var(--color-surface);
-  color: var(--color-text);
-}
-
-.paginationPageActive {
-  background: var(--color-dark);
-  color: var(--color-white);
   font-weight: 600;
-}
-
-.paginationPageActive:hover {
-  background: var(--color-dark);
-  color: var(--color-white);
-}
-
-.paginationLink {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  padding: 8px 12px;
-  border-radius: 8px;
-  transition: background 0.15s, color 0.15s;
-}
-
-.paginationLink:hover {
-  background: var(--color-surface);
+  letter-spacing: 0.01em;
+  padding: 12px 28px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-bg);
   color: var(--color-text);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.loadMoreBtn:hover {
+  border-color: var(--color-text);
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+.loadMoreCount {
+  font-size: 12px;
+  color: var(--color-text-secondary);
 }
 
 /* ===========================

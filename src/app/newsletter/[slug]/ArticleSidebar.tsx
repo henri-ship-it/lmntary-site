@@ -60,7 +60,7 @@ function SubscribeForm({ compact = false }: { compact?: boolean }) {
         className={`btn btn--primary ${compact ? styles.inlineBtn : styles.sidebarBtn}`}
         disabled={status === 'loading'}
       >
-        {status === 'loading' ? '...' : 'Subscribe'}
+        {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
       </button>
     </form>
   );

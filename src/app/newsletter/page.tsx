@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 import { getEditions } from '@/lib/kit';
 import NewsletterForm from './NewsletterForm';
+import NewsletterArchive from './NewsletterArchive';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
@@ -15,25 +16,10 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic';
 export const revalidate = 3600;
 
-const ISSUES_PER_PAGE = 10;
-
-export default async function NewsletterPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ page?: string }>;
-}) {
-  const { page: pageParam } = await searchParams;
-  const currentPage = Math.max(1, parseInt(pageParam || '1', 10));
-
+export default async function NewsletterPage() {
   const editions = await getEditions();
   const latest = editions[0];
   const past = editions.slice(1);
-
-  // Pagination
-  const totalPages = Math.max(1, Math.ceil(past.length / ISSUES_PER_PAGE));
-  const safePage = Math.min(currentPage, totalPages);
-  const startIdx = (safePage - 1) * ISSUES_PER_PAGE;
-  const pageEditions = past.slice(startIdx, startIdx + ISSUES_PER_PAGE);
 
   return (
     <>
@@ -89,64 +75,16 @@ export default async function NewsletterPage({
             </section>
           )}
 
-          {/* ARCHIVE - Paginated list */}
-          {pageEditions.length > 0 && (
-            <section className={styles.archive}>
-              <div className={styles.archiveInner}>
-                <div className={styles.archiveHeader}>
-                  <h2 className={styles.archiveHeading}>Past Issues</h2>
-                  <p className={styles.archiveCount}>{editions.length} editions</p>
-                </div>
-                <div className={styles.archiveList}>
-                  {pageEditions.map((edition) => (
-                    <Link
-                      key={edition.id}
-                      href={`/newsletter/${edition.slug}`}
-                      className={styles.archiveItem}
-                    >
-                      <h3 className={styles.archiveItemTitle}>{edition.title}</h3>
-                      <div className={styles.archiveItemRight}>
-                        <span className={styles.archiveItemDate}>{edition.date}</span>
-                        <span className={styles.archiveItemArrow}>&rarr;</span>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-
-                {/* PAGINATION */}
-                {totalPages > 1 && (
-                  <nav className={styles.pagination}>
-                    {safePage > 1 && (
-                      <Link
-                        href={`/newsletter?page=${safePage - 1}`}
-                        className={styles.paginationLink}
-                      >
-                        &larr; Prev
-                      </Link>
-                    )}
-                    <div className={styles.paginationPages}>
-                      {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-                        <Link
-                          key={p}
-                          href={`/newsletter?page=${p}`}
-                          className={`${styles.paginationPage} ${p === safePage ? styles.paginationPageActive : ''}`}
-                        >
-                          {p}
-                        </Link>
-                      ))}
-                    </div>
-                    {safePage < totalPages && (
-                      <Link
-                        href={`/newsletter?page=${safePage + 1}`}
-                        className={styles.paginationLink}
-                      >
-                        Next &rarr;
-                      </Link>
-                    )}
-                  </nav>
-                )}
-              </div>
-            </section>
+          {/* ARCHIVE with Load More */}
+          {past.length > 0 && (
+            <NewsletterArchive
+              editions={past.map((e) => ({
+                id: e.id,
+                slug: e.slug,
+                title: e.title,
+                date: e.date,
+              }))}
+            />
           )}
 
           {/* EMPTY STATE - No newsletters yet */}

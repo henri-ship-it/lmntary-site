@@ -25,6 +25,11 @@ export default function Nav() {
             </a>
           </li>
           <li>
+            <a href="/learn" onClick={handleLinkClick}>
+              Learn
+            </a>
+          </li>
+          <li>
             <a href="/newsletter" onClick={handleLinkClick}>
               Newsletter
             </a>

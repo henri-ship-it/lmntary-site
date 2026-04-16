@@ -39,6 +39,9 @@ export default function Footer() {
               <li>
                 <a href="/newsletter">Newsletter</a>
               </li>
+              <li>
+                <a href="/learn">Learn</a>
+              </li>
             </ul>
           </div>
 

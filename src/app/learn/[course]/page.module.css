@@ -1,0 +1,285 @@
+/* ===========================
+   COURSE DETAIL — Header + lesson list + sticky sidebar
+   =========================== */
+
+/* HEADER */
+.header {
+  padding: 48px 24px 40px;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.headerInner {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin-bottom: 28px;
+  transition: color 0.15s;
+}
+
+.backLink:hover {
+  color: var(--color-text);
+}
+
+.headerMeta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.headerBadge {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.headerLessons {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+}
+
+.headerTitle {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 14px;
+  max-width: 720px;
+}
+
+.headerTagline {
+  font-size: clamp(16px, 1.8vw, 19px);
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+  max-width: 640px;
+}
+
+/* BODY GRID */
+.body {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 64px;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 48px 24px 96px;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .body {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+.main {
+  min-width: 0;
+}
+
+/* ABOUT */
+.aboutBlock {
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--color-border-light);
+  margin-bottom: 40px;
+}
+
+.aboutHeading {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-secondary);
+  margin-bottom: 16px;
+}
+
+.aboutText {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--color-text);
+  max-width: 640px;
+}
+
+/* LESSONS */
+.lessonsHeading {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-secondary);
+  margin-bottom: 20px;
+}
+
+.lessonsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.lessonItem {
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.lessonLink {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  gap: 20px;
+  align-items: center;
+  padding: 20px 0;
+  transition: opacity 0.15s;
+  cursor: pointer;
+}
+
+.lessonLink:hover {
+  opacity: 0.7;
+}
+
+.lessonIndex {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.05em;
+}
+
+.lessonCopy {
+  min-width: 0;
+}
+
+.lessonTitle {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+  margin-bottom: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lessonLock {
+  font-size: 13px;
+  filter: grayscale(1);
+  opacity: 0.55;
+}
+
+.lessonSummary {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.lessonDuration {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .lessonLink {
+    grid-template-columns: 32px 1fr;
+    gap: 14px;
+  }
+  .lessonDuration {
+    grid-column: 1 / -1;
+    padding-left: 46px;
+  }
+}
+
+/* SIDEBAR */
+.sidebar {
+  display: block;
+  align-self: stretch;
+  height: 100%;
+}
+
+@media (max-width: 960px) {
+  .sidebar {
+    display: block;
+    height: auto;
+  }
+}
+
+.sidebarSticky {
+  position: sticky;
+  top: 80px;
+}
+
+.sidebarCard {
+  padding: 28px;
+  border: 1px solid var(--color-border-light);
+  border-radius: 12px;
+  background: var(--color-bg);
+}
+
+.sidebarEyebrow {
+  font-family: var(--font-display);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: 12px;
+}
+
+.sidebarTitle {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin-bottom: 12px;
+}
+
+.sidebarDesc {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.sidebarBtn {
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+}
+
+.sidebarDivider {
+  height: 1px;
+  background: var(--color-border-light);
+  margin: 20px 0;
+}
+
+.sidebarMember {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  text-align: center;
+  margin: 0;
+}
+
+.sidebarMemberLink {
+  color: var(--color-text);
+  font-weight: 600;
+  transition: color 0.15s;
+}
+
+.sidebarMemberLink:hover {
+  color: var(--color-accent);
+}

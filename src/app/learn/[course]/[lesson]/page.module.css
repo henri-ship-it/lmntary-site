@@ -1,0 +1,308 @@
+/* ===========================
+   LESSON PAGE — Reading + sticky lesson list
+   =========================== */
+
+.page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* HEADER */
+.header {
+  padding: 48px 0 40px;
+  border-bottom: 1px solid var(--color-border-light);
+  margin-bottom: 48px;
+}
+
+.headerInner {
+  max-width: 720px;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin-bottom: 28px;
+  transition: color 0.15s;
+}
+
+.backLink:hover {
+  color: var(--color-text);
+}
+
+.headerMeta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.headerIndex {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-accent);
+}
+
+.headerDuration {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.headerTitle {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 14px;
+}
+
+.headerSummary {
+  font-size: clamp(16px, 1.6vw, 18px);
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+}
+
+/* BODY LAYOUT */
+.body {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 64px;
+  align-items: start;
+  padding-bottom: 96px;
+}
+
+@media (max-width: 960px) {
+  .body {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+.article {
+  min-width: 0;
+}
+
+/* CONTENT */
+.content {
+  max-width: 660px;
+}
+
+.content p {
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--color-text);
+  margin-bottom: 24px;
+  letter-spacing: 0.01em;
+}
+
+.content h2 {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-top: 40px;
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+
+.content h3 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-top: 32px;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+/* GATE */
+.gate {
+  max-width: 600px;
+  padding: 56px 40px;
+  text-align: center;
+  border: 1px solid var(--color-border-light);
+  border-radius: 16px;
+  background: var(--color-surface);
+}
+
+.gateLock {
+  font-size: 36px;
+  margin-bottom: 20px;
+  filter: grayscale(1);
+  opacity: 0.6;
+}
+
+.gateHeading {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin-bottom: 14px;
+}
+
+.gateDesc {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+  margin-bottom: 28px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.gateActions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* PREV / NEXT NAV */
+.nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding-top: 40px;
+  border-top: 1px solid var(--color-border-light);
+  margin-top: 56px;
+}
+
+@media (max-width: 600px) {
+  .nav {
+    grid-template-columns: 1fr;
+  }
+}
+
+.navPrev,
+.navNext {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 20px;
+  border: 1px solid var(--color-border-light);
+  border-radius: 12px;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.navNext {
+  text-align: right;
+}
+
+.navPrev:hover,
+.navNext:hover {
+  border-color: var(--color-text);
+  background: var(--color-surface);
+}
+
+.navLabel {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.navTitle {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+  color: var(--color-text);
+}
+
+/* SIDEBAR — sticky lesson list */
+.sidebar {
+  display: block;
+  align-self: stretch;
+  height: 100%;
+}
+
+@media (max-width: 960px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+.sidebarSticky {
+  position: sticky;
+  top: 80px;
+}
+
+.sidebarCard {
+  padding: 20px;
+  border: 1px solid var(--color-border-light);
+  border-radius: 12px;
+  background: var(--color-bg);
+}
+
+.sidebarLabel {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-secondary);
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.sidebarList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sidebarItem {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 10px;
+  align-items: start;
+  padding: 8px 6px;
+  border-radius: 6px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sidebarItem:hover {
+  background: var(--color-surface);
+}
+
+.sidebarItemActive {
+  background: var(--color-surface);
+}
+
+.sidebarItemIndex {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.05em;
+  padding-top: 2px;
+}
+
+.sidebarItemActive .sidebarItemIndex {
+  color: var(--color-accent);
+}
+
+.sidebarItemTitle {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--color-text-secondary);
+}
+
+.sidebarItemActive .sidebarItemTitle {
+  color: var(--color-text);
+  font-weight: 600;
+}
