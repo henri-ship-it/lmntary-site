@@ -24,12 +24,14 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-        <Nav />
-        <main className="grid-overlay" style={{ paddingTop: "52px", flex: 1, position: "relative" }}>
-          {children}
-        </main>
-        <Footer />
+      <body style={{ background: "#f0f0f0" }}>
+        <div className="site-frame">
+          <Nav />
+          <main className="grid-overlay" style={{ paddingTop: "52px", flex: 1, position: "relative" }}>
+            {children}
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

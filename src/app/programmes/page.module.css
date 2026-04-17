@@ -2,7 +2,7 @@
    PAGE HERO
    =========================== */
 .pageHero {
-  padding: 160px 24px 100px;
+  padding: 160px 40px 100px;
   text-align: center;
 }
 
@@ -29,7 +29,7 @@
    THE MODEL
    =========================== */
 .modelSection {
-  padding: 80px 24px;
+  padding: 80px 40px;
   background: var(--color-surface);
 }
 
@@ -91,7 +91,7 @@
    DIAGNOSTIC CARD
    =========================== */
 .diagnosticBlock {
-  padding: 100px 24px;
+  padding: 100px 40px;
   background: var(--color-surface);
 }
 
@@ -281,7 +281,7 @@
    CORPORATE SECTION
    =========================== */
 .corporateSection {
-  padding: 80px 24px;
+  padding: 80px 40px;
   border-top: 1px solid var(--color-border-light);
   border-bottom: 1px solid var(--color-border-light);
 }

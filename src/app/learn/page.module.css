@@ -4,7 +4,7 @@
 
 /* HERO */
 .hero {
-  padding: 96px 24px 48px;
+  padding: 100px 40px 56px;
   text-align: center;
   border-bottom: 1px solid var(--color-border-light);
 }
@@ -42,7 +42,7 @@
 
 /* COURSES GRID */
 .courses {
-  padding: 72px 24px;
+  padding: 80px 40px;
 }
 
 .coursesInner {
@@ -167,7 +167,7 @@
 
 /* MEMBER SIGN-IN NOTE */
 .memberNote {
-  padding: 64px 24px 80px;
+  padding: 72px 40px 96px;
   background: var(--color-surface);
   text-align: center;
   border-top: 1px solid var(--color-border-light);

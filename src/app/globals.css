@@ -14,14 +14,15 @@
   --color-accent-hover: #03c9ac;
   --color-dark: #1d1d1f;
   --color-white: #ffffff;
-  --color-grid: rgba(0, 0, 0, 0.06);
+  --color-grid: rgba(0, 0, 0, 0.035);
+  --site-inset: 16px;
 
   --font-display: 'Oxanium', sans-serif;
   --font-body: 'Inter', -apple-system, system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', 'Oxanium', monospace;
 
-  --section-padding: 120px 24px;
-  --section-padding-sm: 80px 24px;
+  --section-padding: 120px 40px;
+  --section-padding-sm: 80px 40px;
   --container-max: 1100px;
   --container-narrow: 720px;
 
@@ -88,6 +89,25 @@ img {
    lines with dot markers at intersections. The blueprint / architectural
    feel from the reference.
    =========================== */
+/* Site inset frame — the outer margin that makes the page feel
+   like it's sitting on a surface, as in the reference */
+.site-frame {
+  margin: var(--site-inset);
+  border: 1px solid var(--color-border-light);
+  min-height: calc(100vh - var(--site-inset) * 2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--color-bg);
+}
+
+@media (max-width: 768px) {
+  .site-frame {
+    margin: 0;
+    border: none;
+  }
+}
+
 .grid-overlay {
   position: relative;
 }
@@ -98,11 +118,32 @@ img {
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  background:
-    /* 3 vertical column lines */
-    linear-gradient(to right, var(--color-grid) 1px, transparent 1px) calc(50% - 360px) 0 / 1px 100% no-repeat,
-    linear-gradient(to right, var(--color-grid) 1px, transparent 1px) 50% 0 / 1px 100% no-repeat,
-    linear-gradient(to right, var(--color-grid) 1px, transparent 1px) calc(50% + 360px) 0 / 1px 100% no-repeat;
+  /* Dotted vertical lines using repeating-linear-gradient */
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      var(--color-grid) 0px, var(--color-grid) 4px,
+      transparent 4px, transparent 12px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      var(--color-grid) 0px, var(--color-grid) 4px,
+      transparent 4px, transparent 12px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      var(--color-grid) 0px, var(--color-grid) 4px,
+      transparent 4px, transparent 12px
+    );
+  background-size: 1px 12px, 1px 12px, 1px 12px;
+  background-position: calc(50% - 360px) 0, 50% 0, calc(50% + 360px) 0;
+  background-repeat: repeat-y;
+}
+
+/* Ensure all content sits above the grid lines */
+.grid-overlay > * {
+  position: relative;
+  z-index: 1;
 }
 
 /* Horizontal rule that participates in the grid */

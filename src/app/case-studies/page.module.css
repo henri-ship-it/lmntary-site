@@ -2,7 +2,7 @@
    PAGE HERO / HEADER
    =========================== */
 .pageHero {
-  padding: 160px 24px 100px;
+  padding: 160px 40px 100px;
   text-align: center;
 }
 
@@ -29,7 +29,7 @@
    FEATURED VIDEO SECTION
    =========================== */
 .featuredVideo {
-  padding: 80px 24px;
+  padding: 80px 40px;
   background: var(--color-surface);
 }
 
@@ -201,7 +201,7 @@
    BOTTOM CTA SECTION
    =========================== */
 .ctaSection {
-  padding: 100px 24px;
+  padding: 100px 40px;
   background: var(--color-dark);
   color: var(--color-white);
   text-align: center;

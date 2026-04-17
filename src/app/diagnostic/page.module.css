@@ -2,7 +2,7 @@
    HERO
    =========================== */
 .hero {
-  padding: 160px 24px 100px;
+  padding: 160px 40px 100px;
   text-align: center;
   background-color: var(--color-dark);
   color: var(--color-white);

@@ -2,7 +2,7 @@
    HERO
    =========================== */
 .hero {
-  padding: 160px 24px 100px;
+  padding: 160px 40px 100px;
   text-align: center;
   margin-top: 56px;
 }
@@ -44,7 +44,7 @@
   justify-content: center;
   gap: 12px;
   flex-wrap: wrap;
-  padding: 40px 24px;
+  padding: 40px 40px;
   max-width: var(--container-max);
   margin: 0 auto;
 }
