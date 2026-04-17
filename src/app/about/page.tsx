@@ -48,7 +48,9 @@ export default function AboutPage() {
         <div className="container">
           <div className={styles.teamMember}>
             <div className={styles.teamMemberContent}>
-              <div className={styles.teamMemberPhoto}>CB</div>
+              <div className={styles.teamMemberPhoto}>
+                <img src="/team/chris-bodman.jpg" alt="Chris Bodman" className={styles.teamMemberImg} />
+              </div>
               <div className={styles.teamMemberBio}>
                 <h2 className={styles.teamMemberName}>Chris Bodman</h2>
                 <div className={styles.teamMemberTitle}>Performance Psychologist</div>
@@ -68,25 +70,6 @@ export default function AboutPage() {
                   <strong>Partnerships and credentials:</strong> ECB. RFU. BOA. UKSI. Good Energy. Sport and Recreation Alliance. Supporting athletes and organisations
                   across cricket, rugby, winter sports, business, and nonprofits.
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* HENRI BALLS SECTION */}
-      <section className={`${styles.section} ${styles.sectionBordered}`}>
-        <div className="container">
-          <div className={`${styles.teamMember} ${styles.teamMemberSecondary}`}>
-            <div className={styles.teamMemberContent}>
-              <div className={styles.teamMemberPhoto}>HB</div>
-              <div className={styles.teamMemberBio}>
-                <h2 className={styles.teamMemberName}>Henri Balls</h2>
-                <div className={styles.teamMemberTitle}>Design and Marketing Lead</div>
-                <p className={styles.teamMemberDescription}>
-                  Henri brings creative direction and strategic marketing expertise to LMNTARY. With a background in digital design and brand communication, Henri
-                  ensures that our core message—that performance is learnable—is presented clearly and compellingly across every touchpoint.
-                </p>
               </div>
             </div>
           </div>

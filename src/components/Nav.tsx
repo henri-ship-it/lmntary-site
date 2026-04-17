@@ -15,7 +15,7 @@ export default function Nav() {
     <nav className={styles.nav}>
       <div className={styles.inner}>
         <Link href="/" className={styles.logo}>
-          LMNTARY Performance
+          <img src="/logos/logo-dark.svg" alt="LMNTARY Performance" className={styles.logoImg} />
         </Link>
 
         <ul className={`${styles.links} ${isOpen ? styles.linksActive : ''}`}>

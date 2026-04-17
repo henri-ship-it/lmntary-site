@@ -107,7 +107,7 @@
    LOGOS
    =========================== */
 .logos {
-  padding: 56px 40px;
+  padding: 48px 0;
   border-top: 1px solid var(--color-border-light);
   border-bottom: 1px solid var(--color-border-light);
 }
@@ -117,29 +117,9 @@
   font-family: var(--font-mono);
   font-size: 10px;
   color: var(--color-text-secondary);
-  margin-bottom: 28px;
+  margin-bottom: 24px;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-}
-
-.logosGrid {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 48px;
-  flex-wrap: wrap;
-  max-width: var(--container-max);
-  margin: 0 auto;
-}
-
-.logosItem {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-text-secondary);
-  opacity: 0.45;
 }
 
 /* ===========================

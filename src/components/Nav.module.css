@@ -32,17 +32,19 @@
 }
 
 .logo {
-  font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  display: flex;
+  align-items: center;
   cursor: pointer;
-  transition: color 0.15s;
+  transition: opacity 0.15s;
 }
 
 .logo:hover {
-  color: var(--color-accent);
+  opacity: 0.7;
+}
+
+.logoImg {
+  height: 32px;
+  width: auto;
 }
 
 .links {

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import NewsletterSignup from "@/components/NewsletterSignup";
+import LogoTicker from "@/components/LogoTicker";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -38,16 +39,7 @@ export default function Home() {
       {/* LOGO STRIP */}
       <section className={styles.logos}>
         <p className={styles.logosLabel}>Trusted by athletes and organisations at</p>
-        <div className={styles.logosGrid}>
-          <span className={styles.logosItem}>ECB</span>
-          <span className={styles.logosItem}>RFU</span>
-          <span className={styles.logosItem}>BOA</span>
-          <span className={styles.logosItem}>UKSI</span>
-          <span className={styles.logosItem}>PRG</span>
-          <span className={styles.logosItem}>Good Energy</span>
-          <span className={styles.logosItem}>SCC</span>
-          <span className={styles.logosItem}>GR</span>
-        </div>
+        <LogoTicker />
       </section>
 
       {/* MANIFESTO */}
