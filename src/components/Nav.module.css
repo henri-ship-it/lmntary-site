@@ -3,15 +3,22 @@
    =========================== */
 .nav {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: var(--site-inset);
+  left: var(--site-inset);
+  right: var(--site-inset);
   z-index: 100;
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: saturate(180%) blur(30px);
-  -webkit-backdrop-filter: saturate(180%) blur(30px);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: saturate(180%) blur(50px);
+  -webkit-backdrop-filter: saturate(180%) blur(50px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    top: 0;
+    left: 0;
+    right: 0;
+  }
 }
 
 .inner {
