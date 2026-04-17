@@ -14,19 +14,20 @@
   --color-accent-hover: #03c9ac;
   --color-dark: #1d1d1f;
   --color-white: #ffffff;
+  --color-grid: rgba(0, 0, 0, 0.06);
 
   --font-display: 'Oxanium', sans-serif;
   --font-body: 'Inter', -apple-system, system-ui, sans-serif;
-  --font-serif: 'Oxanium', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Oxanium', monospace;
 
   --section-padding: 120px 24px;
   --section-padding-sm: 80px 24px;
-  --container-max: 1200px;
+  --container-max: 1100px;
   --container-narrow: 720px;
 
   --radius-pill: 980px;
-  --radius-card: 16px;
-  --radius-sm: 8px;
+  --radius-card: 2px;
+  --radius-sm: 2px;
 }
 
 /* ===========================
@@ -82,6 +83,63 @@ img {
 }
 
 /* ===========================
+   GRID LINE OVERLAY
+   Creates the visible structural grid — vertical columns and horizontal
+   lines with dot markers at intersections. The blueprint / architectural
+   feel from the reference.
+   =========================== */
+.grid-overlay {
+  position: relative;
+}
+
+.grid-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    /* 3 vertical column lines */
+    linear-gradient(to right, var(--color-grid) 1px, transparent 1px) calc(50% - 360px) 0 / 1px 100% no-repeat,
+    linear-gradient(to right, var(--color-grid) 1px, transparent 1px) 50% 0 / 1px 100% no-repeat,
+    linear-gradient(to right, var(--color-grid) 1px, transparent 1px) calc(50% + 360px) 0 / 1px 100% no-repeat;
+}
+
+/* Horizontal rule that participates in the grid */
+.grid-rule {
+  border: none;
+  height: 1px;
+  background: var(--color-grid);
+  position: relative;
+}
+
+/* Dot at a grid intersection */
+.grid-dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-grid);
+}
+
+/* Monospace label — used for metadata, timestamps, badge text */
+.mono {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* Section divider — thin horizontal line spanning the container */
+.section-divider {
+  border: none;
+  height: 1px;
+  background: var(--color-border-light);
+  margin: 0;
+}
+
+/* ===========================
    BUTTONS
    =========================== */
 .btn {
@@ -89,15 +147,16 @@ img {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 14px 28px;
-  border-radius: var(--radius-pill);
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
+  padding: 13px 26px;
+  border-radius: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.2s ease;
-  border: none;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
 }
 
 .btn--primary {

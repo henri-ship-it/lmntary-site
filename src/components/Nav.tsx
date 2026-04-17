@@ -48,7 +48,7 @@ export default function Nav() {
             <a
               href="/diagnostic"
               className="btn btn--primary"
-              style={{ padding: '10px 20px', fontSize: '13px' }}
+              style={{ padding: '8px 18px', fontSize: '10px' }}
               onClick={handleLinkClick}
             >
               Take the Diagnostic

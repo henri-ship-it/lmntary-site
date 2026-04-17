@@ -1,5 +1,5 @@
 /* ===========================
-   COURSE DETAIL — Header + lesson list + sticky sidebar
+   COURSE DETAIL — Geometric / Structural
    =========================== */
 
 /* HEADER */
@@ -9,7 +9,7 @@
 }
 
 .headerInner {
-  max-width: 1120px;
+  max-width: var(--container-max);
   margin: 0 auto;
 }
 
@@ -17,8 +17,11 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
   color: var(--color-text-secondary);
   margin-bottom: 28px;
   transition: color 0.15s;
@@ -36,39 +39,38 @@
 }
 
 .headerBadge {
-  font-family: var(--font-display);
-  font-size: 11px;
-  font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: var(--color-surface);
-  color: var(--color-text);
+  letter-spacing: 0.14em;
+  padding: 5px 12px;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
 }
 
 .headerLessons {
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   color: var(--color-text-secondary);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 500;
+  letter-spacing: 0.1em;
 }
 
 .headerTitle {
   font-size: clamp(32px, 5vw, 48px);
   font-weight: 700;
   letter-spacing: -0.03em;
-  line-height: 1.1;
+  line-height: 1.08;
   margin-bottom: 14px;
   max-width: 720px;
 }
 
 .headerTagline {
-  font-size: clamp(16px, 1.8vw, 19px);
+  font-size: clamp(15px, 1.6vw, 17px);
   color: var(--color-text-secondary);
-  line-height: 1.55;
-  max-width: 640px;
+  line-height: 1.6;
+  max-width: 600px;
 }
 
 /* BODY GRID */
@@ -76,7 +78,7 @@
   display: grid;
   grid-template-columns: 1fr 320px;
   gap: 64px;
-  max-width: 1120px;
+  max-width: var(--container-max);
   margin: 0 auto;
   padding: 48px 24px 96px;
   align-items: start;
@@ -101,27 +103,31 @@
 }
 
 .aboutHeading {
-  font-size: 14px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
   color: var(--color-text-secondary);
   margin-bottom: 16px;
 }
 
 .aboutText {
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.7;
   color: var(--color-text);
   max-width: 640px;
 }
 
 /* LESSONS */
+.lessonsBlock {}
+
 .lessonsHeading {
-  font-size: 14px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
   color: var(--color-text-secondary);
   margin-bottom: 20px;
 }
@@ -142,7 +148,7 @@
   grid-template-columns: 48px 1fr auto;
   gap: 20px;
   align-items: center;
-  padding: 20px 0;
+  padding: 18px 0;
   transition: opacity 0.15s;
   cursor: pointer;
 }
@@ -152,8 +158,8 @@
 }
 
 .lessonIndex {
-  font-family: var(--font-display);
-  font-size: 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
   font-weight: 600;
   color: var(--color-text-secondary);
   letter-spacing: 0.05em;
@@ -162,14 +168,13 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  border-radius: 999px;
   transition: background 0.15s, color 0.15s;
 }
 
 .lessonIndexDone {
   background: var(--color-accent);
   color: #fff;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -178,7 +183,7 @@
 }
 
 .lessonTitle {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.35;
@@ -189,22 +194,24 @@
 }
 
 .lessonLock {
-  font-size: 13px;
+  font-size: 12px;
   filter: grayscale(1);
-  opacity: 0.55;
+  opacity: 0.5;
 }
 
 .lessonSummary {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--color-text-secondary);
   line-height: 1.5;
 }
 
 .lessonDuration {
-  font-size: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   color: var(--color-text-secondary);
   white-space: nowrap;
-  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 @media (max-width: 600px) {
@@ -234,28 +241,27 @@
 
 .sidebarSticky {
   position: sticky;
-  top: 80px;
+  top: 72px;
 }
 
 .sidebarCard {
   padding: 28px;
   border: 1px solid var(--color-border-light);
-  border-radius: 12px;
   background: var(--color-bg);
 }
 
 .sidebarEyebrow {
-  font-family: var(--font-display);
-  font-size: 11px;
+  font-family: var(--font-mono);
+  font-size: 9px;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-weight: 700;
+  letter-spacing: 0.14em;
+  font-weight: 600;
   color: var(--color-accent);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .sidebarTitle {
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.25;
@@ -263,7 +269,7 @@
 }
 
 .sidebarDesc {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--color-text-secondary);
   line-height: 1.6;
   margin-bottom: 20px;
@@ -275,15 +281,14 @@
   justify-content: center;
 }
 
-/* Progress block (free-course sidebar) */
+/* Progress block */
 .progressBlock {
   margin-bottom: 20px;
 }
 
 .progressBar {
-  height: 6px;
+  height: 4px;
   background: var(--color-surface);
-  border-radius: 999px;
   overflow: hidden;
   margin-bottom: 10px;
 }
@@ -291,15 +296,15 @@
 .progressFill {
   height: 100%;
   background: var(--color-accent);
-  border-radius: 999px;
   transition: width 240ms ease;
 }
 
 .progressMeta {
-  font-size: 12px;
+  font-family: var(--font-mono);
+  font-size: 9px;
   color: var(--color-text-secondary);
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .sidebarDivider {
@@ -309,7 +314,7 @@
 }
 
 .sidebarMember {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--color-text-secondary);
   text-align: center;
   margin: 0;

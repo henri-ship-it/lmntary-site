@@ -1,9 +1,10 @@
 /* ===========================
-   FOOTER
+   FOOTER — Geometric / structural grid
    =========================== */
 .footer {
-  padding: 80px 24px 40px;
+  padding: 64px 24px 32px;
   border-top: 1px solid var(--color-border-light);
+  position: relative;
 }
 
 .inner {
@@ -14,8 +15,10 @@
 .grid {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-  gap: 48px;
-  margin-bottom: 64px;
+  gap: 40px;
+  margin-bottom: 56px;
+  padding-bottom: 56px;
+  border-bottom: 1px solid var(--color-border-light);
 }
 
 .brand {
@@ -24,27 +27,29 @@
 
 .logo {
   font-family: var(--font-display);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   margin-bottom: 16px;
 }
 
 .tagline {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--color-text-secondary);
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .colTitle {
-  font-family: var(--font-display);
-  font-size: 11px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   color: var(--color-text-secondary);
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-border-light);
 }
 
 .colLinks {
@@ -56,9 +61,9 @@
 }
 
 .colLinks a {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--color-text-secondary);
-  transition: color 0.2s;
+  transition: color 0.15s;
 }
 
 .colLinks a:hover {
@@ -69,15 +74,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 24px;
-  border-top: 1px solid var(--color-border-light);
   flex-wrap: wrap;
   gap: 16px;
 }
 
 .copy {
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
   color: var(--color-text-secondary);
+  text-transform: uppercase;
 }
 
 .social {
@@ -86,9 +92,12 @@
 }
 
 .social a {
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--color-text-secondary);
-  transition: color 0.2s;
+  transition: color 0.15s;
 }
 
 .social a:hover {
@@ -98,6 +107,6 @@
 @media (max-width: 768px) {
   .grid {
     grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    gap: 32px;
   }
 }

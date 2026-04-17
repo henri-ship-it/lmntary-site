@@ -1,18 +1,23 @@
 /* ===========================
+   HOME PAGE — Geometric / Structural Redesign
+   =========================== */
+
+/* ===========================
    HERO
    =========================== */
 .hero {
-  padding: 160px 24px 100px;
+  padding: 140px 24px 80px;
   text-align: center;
+  position: relative;
 }
 
 .heroEyebrow {
-  font-family: var(--font-display);
-  font-size: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.18em;
   color: var(--color-text-secondary);
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .heroHeading {
@@ -21,7 +26,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: -0.01em;
-  line-height: 1.1;
+  line-height: 1.08;
   margin-bottom: 28px;
   max-width: 700px;
   margin-left: auto;
@@ -33,42 +38,42 @@
 }
 
 .heroSub {
-  font-size: clamp(17px, 2vw, 20px);
+  font-size: clamp(16px, 1.8vw, 18px);
   color: var(--color-text-secondary);
-  max-width: 520px;
+  max-width: 500px;
   margin: 0 auto 44px;
-  line-height: 1.55;
-  font-weight: 300;
+  line-height: 1.6;
+  font-weight: 400;
 }
 
 .heroActions {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 14px;
   flex-wrap: wrap;
   margin-bottom: 56px;
 }
 
 /* Hero Newsletter CTA */
 .heroNewsletter {
-  max-width: 480px;
+  max-width: 460px;
   margin: 0 auto;
   padding-top: 40px;
   border-top: 1px solid var(--color-border-light);
 }
 
 .heroNewsletterLabel {
-  font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 4px;
+  letter-spacing: 0.14em;
+  margin-bottom: 6px;
 }
 
 .heroNewsletterDesc {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--color-text-secondary);
   margin-bottom: 16px;
 }
@@ -77,20 +82,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 0;
   flex-wrap: wrap;
 }
 
 .heroNewsletterInput {
   flex: 1;
   min-width: 200px;
-  padding: 12px 16px;
+  padding: 11px 14px;
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-right: none;
+  border-radius: 0;
   font-family: var(--font-body);
-  font-size: 14px;
+  font-size: 13px;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.15s;
 }
 
 .heroNewsletterInput:focus {
@@ -101,18 +107,19 @@
    LOGOS
    =========================== */
 .logos {
-  padding: 56px 24px;
+  padding: 48px 24px;
   border-top: 1px solid var(--color-border-light);
   border-bottom: 1px solid var(--color-border-light);
 }
 
 .logosLabel {
   text-align: center;
-  font-size: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   color: var(--color-text-secondary);
   margin-bottom: 28px;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
 }
 
 .logosGrid {
@@ -126,42 +133,41 @@
 }
 
 .logosItem {
-  font-family: var(--font-display);
-  font-size: 12px;
-  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   color: var(--color-text-secondary);
-  opacity: 0.5;
+  opacity: 0.45;
 }
 
 /* ===========================
-   MANIFESTO (The Problem)
+   MANIFESTO
    =========================== */
 .manifesto {
-  padding: 140px 24px;
+  padding: 120px 24px;
   text-align: center;
 }
 
 .manifestoInner {
-  max-width: 640px;
+  max-width: 620px;
   margin: 0 auto;
 }
 
 .manifestoLead {
   font-family: var(--font-body);
   font-weight: 500;
-  font-style: normal;
-  font-size: clamp(22px, 3vw, 30px);
+  font-size: clamp(22px, 3vw, 28px);
   line-height: 1.45;
   color: var(--color-text-secondary);
   margin-bottom: 48px;
-  letter-spacing: -0.2px;
+  letter-spacing: -0.3px;
 }
 
 .manifestoBody p {
-  font-size: 16px;
-  line-height: 1.7;
+  font-size: 15px;
+  line-height: 1.75;
   color: var(--color-text-secondary);
   margin-bottom: 24px;
 }
@@ -177,20 +183,20 @@
 
 .manifestoAccent {
   display: inline;
-  background: linear-gradient(transparent 60%, rgba(4, 223, 191, 0.2) 60%);
+  background: linear-gradient(transparent 60%, rgba(4, 223, 191, 0.15) 60%);
 }
 
 .manifestoDivider {
-  width: 40px;
+  width: 48px;
   height: 1px;
   background: var(--color-border);
   margin: 48px auto;
 }
 
 .manifestoClosing {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 500;
-  line-height: 1.5;
+  line-height: 1.55;
   color: var(--color-text);
 }
 
@@ -198,22 +204,24 @@
    DIAGNOSTIC (Central CTA)
    =========================== */
 .diagnostic {
-  padding: 100px 24px;
+  padding: 96px 24px;
   background: var(--color-dark);
   color: var(--color-white);
   text-align: center;
+  border-top: 1px solid var(--color-border-light);
+  border-bottom: 1px solid var(--color-border-light);
 }
 
 .diagnosticInner {
-  max-width: 640px;
+  max-width: 600px;
   margin: 0 auto;
 }
 
 .diagnosticEyebrow {
-  font-family: var(--font-display);
-  font-size: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.16em;
   color: var(--color-accent);
   margin-bottom: 20px;
 }
@@ -221,33 +229,34 @@
 .diagnosticHeading {
   font-size: clamp(28px, 4vw, 40px);
   font-weight: 700;
-  margin-bottom: 20px;
-  letter-spacing: -0.5px;
-  line-height: 1.15;
+  margin-bottom: 18px;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
 }
 
 .diagnosticDesc {
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.55);
   margin-bottom: 16px;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .diagnosticDetails {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 32px;
+  gap: 28px;
   margin-bottom: 40px;
   flex-wrap: wrap;
 }
 
 .diagnosticDetail {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.45);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
 }
 
 .diagnosticDetail span {
@@ -275,20 +284,17 @@
 }
 
 .programmesModelLabel {
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-style: normal;
-  font-size: 18px;
+  font-size: 16px;
   color: var(--color-text-secondary);
   margin-bottom: 4px;
 }
 
 .programmesModelName {
-  font-family: var(--font-display);
-  font-size: 14px;
-  font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
 }
 
 .programmesModelDivider {
@@ -300,9 +306,11 @@
 .programmesGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 1px;
+  background: var(--color-border-light);
   max-width: var(--container-max);
   margin: 0 auto;
+  border: 1px solid var(--color-border-light);
 }
 
 @media (max-width: 900px) {
@@ -312,35 +320,35 @@
 }
 
 .programmeCard {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-card);
+  background: var(--color-bg);
   padding: 40px 32px;
   display: flex;
   flex-direction: column;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: background 0.15s;
+  border: none;
+  border-radius: 0;
 }
 
 .programmeCard:hover {
-  border-color: var(--color-text);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
+  background: var(--color-surface);
 }
 
 .programmeCardFeatured {
-  border-color: var(--color-text);
+  background: var(--color-surface);
 }
 
 .programmeCardBadge {
   display: inline-block;
-  font-family: var(--font-display);
-  font-size: 11px;
+  font-family: var(--font-mono);
+  font-size: 9px;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border-light);
-  padding: 4px 12px;
-  border-radius: var(--radius-pill);
-  margin-bottom: 20px;
+  letter-spacing: 0.12em;
+  border: 1px solid var(--color-border);
+  padding: 5px 12px;
+  border-radius: 0;
+  margin-bottom: 24px;
   width: fit-content;
+  color: var(--color-text-secondary);
 }
 
 .programmeCardTitle {
@@ -356,23 +364,23 @@
   font-size: 32px;
   font-weight: 700;
   margin-bottom: 4px;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.03em;
 }
 
 .programmeCardPayment {
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   color: var(--color-text-secondary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   margin-bottom: 24px;
 }
 
 .programmeCardDesc {
-  font-size: 15px;
+  font-size: 14px;
   color: var(--color-text-secondary);
-  line-height: 1.5;
+  line-height: 1.6;
   margin-bottom: 24px;
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-style: normal;
 }
 
 .programmeCardFeatures {
@@ -382,8 +390,8 @@
 }
 
 .programmeCardFeatures li {
-  font-size: 14px;
-  padding: 8px 0;
+  font-size: 13px;
+  padding: 10px 0;
   border-bottom: 1px solid var(--color-border-light);
   color: var(--color-text);
 }
@@ -398,9 +406,6 @@
 }
 
 .programmeCardFeatures li.limited {
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-style: normal;
   color: var(--color-text-secondary);
 }
 
@@ -413,20 +418,20 @@
 }
 
 /* ===========================
-   LIMITLESS HERO (above cards)
+   LIMITLESS INTRO
    =========================== */
 .limitlessIntro {
   text-align: center;
-  max-width: 780px;
+  max-width: 700px;
   margin: 0 auto 56px;
   padding: 0 24px;
 }
 
 .limitlessIntroEyebrow {
-  font-family: var(--font-display);
-  font-size: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.16em;
   color: var(--color-accent);
   margin-bottom: 16px;
 }
@@ -434,24 +439,26 @@
 .limitlessIntroHeading {
   font-size: clamp(28px, 4vw, 40px);
   font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.5px;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
   margin-bottom: 20px;
 }
 
 .limitlessIntroDesc {
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.6;
   color: var(--color-text-secondary);
-  font-weight: 300;
+  font-weight: 400;
 }
 
 /* ===========================
-   TESTIMONIALS (Case Studies)
+   TESTIMONIALS
    =========================== */
 .testimonials {
   padding: var(--section-padding);
   background: var(--color-surface);
+  border-top: 1px solid var(--color-border-light);
+  border-bottom: 1px solid var(--color-border-light);
 }
 
 .testimonialsHeader {
@@ -460,15 +467,15 @@
 }
 
 .testimonialsHeading {
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 700;
-  margin-bottom: 16px;
-  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+  letter-spacing: -0.03em;
 }
 
 .testimonialsSub {
   color: var(--color-text-secondary);
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .testimonialsFeatured {
@@ -481,9 +488,9 @@
   width: 100%;
   padding-bottom: 56.25%;
   background: var(--color-dark);
-  border-radius: var(--radius-card);
   overflow: hidden;
   margin-bottom: 24px;
+  border: 1px solid var(--color-border-light);
 }
 
 .testimonialsVideoPlaceholder {
@@ -498,16 +505,15 @@
 }
 
 .testimonialsVideoPlay {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  width: 56px;
+  height: 56px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 16px;
-  font-size: 24px;
-  transition: border-color 0.2s;
+  font-size: 20px;
+  transition: border-color 0.15s;
 }
 
 .testimonialsVideoPlaceholder:hover .testimonialsVideoPlay {
@@ -515,25 +521,26 @@
 }
 
 .testimonialsVideoName {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
 }
 
 .testimonialsVideoProgramme {
-  font-size: 14px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   opacity: 0.5;
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-style: normal;
-  color: var(--color-text-secondary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .testimonialsGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 1px;
+  background: var(--color-border-light);
   max-width: var(--container-max);
   margin: 0 auto;
+  border: 1px solid var(--color-border-light);
 }
 
 @media (max-width: 900px) {
@@ -544,9 +551,8 @@
 
 .testimonialCard {
   background: var(--color-bg);
-  border-radius: var(--radius-card);
   padding: 36px 32px;
-  border: 1px solid var(--color-border-light);
+  border: none;
 }
 
 .testimonialCardQuote {
@@ -559,8 +565,6 @@
 .testimonialCardQuote::before {
   content: '"';
   font-family: var(--font-display);
-  font-weight: 500;
-  font-style: normal;
   font-size: 28px;
   line-height: 0;
   vertical-align: -6px;
@@ -569,13 +573,16 @@
 }
 
 .testimonialCardAuthor {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
 }
 
 .testimonialCardProgramme {
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   color: var(--color-text-secondary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .testimonialsCta {
@@ -584,10 +591,11 @@
 }
 
 /* ===========================
-   NEWSLETTER SECTION (replaces Insights)
+   NEWSLETTER SECTION
    =========================== */
 .newsletterSection {
   padding: var(--section-padding);
+  border-top: 1px solid var(--color-border-light);
 }
 
 .newsletterSectionInner {
@@ -610,12 +618,12 @@
 .newsletterSectionContent {}
 
 .newsletterSectionEyebrow {
-  font-family: var(--font-display);
-  font-size: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.16em;
   color: var(--color-text-secondary);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .newsletterSectionHeading {
@@ -627,29 +635,30 @@
 }
 
 .newsletterSectionDesc {
-  font-size: 17px;
+  font-size: 16px;
   color: var(--color-text-secondary);
   line-height: 1.6;
   margin-bottom: 28px;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .newsletterSectionForm {
   display: flex;
-  gap: 10px;
+  gap: 0;
   flex-wrap: wrap;
 }
 
 .newsletterSectionInput {
   flex: 1;
   min-width: 200px;
-  padding: 14px 18px;
+  padding: 12px 14px;
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-right: none;
+  border-radius: 0;
   font-family: var(--font-body);
-  font-size: 15px;
+  font-size: 14px;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.15s;
 }
 
 .newsletterSectionInput:focus {
@@ -659,39 +668,43 @@
 .newsletterSectionPreview {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 24px;
-  padding: 40px;
-  background: var(--color-surface);
-  border-radius: 16px;
+  gap: 1px;
+  background: var(--color-border-light);
   border: 1px solid var(--color-border-light);
 }
 
 .newsletterSectionStat {
   text-align: center;
+  background: var(--color-surface);
+  padding: 32px 16px;
 }
 
 .newsletterSectionStatNumber {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
   letter-spacing: -0.02em;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .newsletterSectionStatLabel {
-  font-size: 12px;
+  font-family: var(--font-mono);
+  font-size: 9px;
   color: var(--color-text-secondary);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
 }
 
 .newsletterSectionLink {
   grid-column: 1 / -1;
   text-align: center;
-  font-size: 14px;
-  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--color-text);
-  padding-top: 16px;
-  border-top: 1px solid var(--color-border-light);
+  background: var(--color-bg);
+  padding: 16px;
   transition: color 0.15s;
 }
 
@@ -705,6 +718,7 @@
 .shop {
   padding: var(--section-padding);
   background: var(--color-surface);
+  border-top: 1px solid var(--color-border-light);
 }
 
 .shopHeader {
@@ -719,15 +733,18 @@
 }
 
 .shopHeading {
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 700;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.03em;
 }
 
 .shopLink {
-  font-size: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
   color: var(--color-text-secondary);
-  transition: color 0.2s;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.15s;
 }
 
 .shopLink:hover {
@@ -737,10 +754,11 @@
 .shopGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  gap: 1px;
+  background: var(--color-border-light);
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 24px;
+  border: 1px solid var(--color-border-light);
 }
 
 @media (max-width: 900px) {
@@ -760,36 +778,37 @@
 
 .shopCard {
   display: block;
-  transition: opacity 0.2s;
+  background: var(--color-bg);
+  transition: background 0.15s;
 }
 
 .shopCard:hover {
-  opacity: 0.8;
+  background: var(--color-surface);
 }
 
 .shopCardImage {
   width: 100%;
   aspect-ratio: 1;
   background: var(--color-bg);
-  border: 1px solid var(--color-border-light);
-  border-radius: var(--radius-card);
-  margin-bottom: 16px;
+  border-bottom: 1px solid var(--color-border-light);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 40px;
+  font-size: 36px;
   color: var(--color-text-secondary);
 }
 
 .shopCardTitle {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   margin-bottom: 4px;
+  padding: 16px 16px 0;
 }
 
 .shopCardPrice {
-  font-size: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
   color: var(--color-text-secondary);
+  letter-spacing: 0.04em;
+  padding: 0 16px 16px;
 }
-
-/* (Elevate and old newsletter sections removed) */

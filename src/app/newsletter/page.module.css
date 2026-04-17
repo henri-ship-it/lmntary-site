@@ -1,11 +1,13 @@
 /* ===========================
-   PAGE LAYOUT - Main + Sticky Sidebar
+   NEWSLETTER — Geometric / Structural
    =========================== */
+
+/* PAGE LAYOUT */
 .pageLayout {
   display: grid;
   grid-template-columns: 1fr 300px;
   gap: 0 40px;
-  max-width: 1120px;
+  max-width: var(--container-max);
   margin: 0 auto;
   padding: 0 24px;
   align-items: start;
@@ -22,12 +24,10 @@
   min-width: 0;
 }
 
-/* ===========================
-   STICKY SIDEBAR - Subscribe (right side)
-   =========================== */
+/* STICKY SIDEBAR */
 .stickySidebar {
   display: block;
-  padding: 48px 0 48px 0;
+  padding: 48px 0;
   align-self: stretch;
   height: 100%;
 }
@@ -40,74 +40,71 @@
 
 .stickySidebarInner {
   position: sticky;
-  top: 80px;
+  top: 72px;
 }
 
 .stickySidebarCard {
   padding: 24px;
   border: 1px solid var(--color-border-light);
-  border-radius: 12px;
   background: var(--color-bg);
 }
 
 .stickySidebarLabel {
-  font-family: var(--font-display);
-  font-size: 11px;
+  font-family: var(--font-mono);
+  font-size: 9px;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-weight: 700;
+  letter-spacing: 0.14em;
+  font-weight: 600;
   margin-bottom: 10px;
   color: var(--color-text);
 }
 
 .stickySidebarDesc {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--color-text-secondary);
-  line-height: 1.55;
+  line-height: 1.6;
   margin-bottom: 16px;
 }
 
 .stickySidebarNote {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--color-text-secondary);
   margin-top: 10px;
 }
 
-/* ===========================
-   HERO - Compact, punchy (Mark Manson style)
-   =========================== */
+/* HERO */
 .hero {
-  padding: 100px 24px 72px;
+  padding: 96px 24px 64px;
   text-align: center;
   border-bottom: 1px solid var(--color-border-light);
 }
 
 .heroInner {
-  max-width: 560px;
+  max-width: 540px;
   margin: 0 auto;
 }
 
 .heroEyebrow {
-  font-size: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.16em;
   color: var(--color-text-secondary);
   margin-bottom: 16px;
-  font-weight: 500;
 }
 
 .heroHeading {
   font-size: clamp(32px, 5vw, 48px);
   font-weight: 700;
   letter-spacing: -0.03em;
-  line-height: 1.1;
+  line-height: 1.08;
   margin-bottom: 16px;
 }
 
 .heroSub {
-  font-size: clamp(16px, 1.8vw, 18px);
+  font-size: clamp(15px, 1.6vw, 17px);
   color: var(--color-text-secondary);
-  line-height: 1.6;
+  line-height: 1.65;
   margin-bottom: 24px;
   font-weight: 400;
 }
@@ -121,22 +118,22 @@
 }
 
 .heroStat {
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   font-weight: 600;
   color: var(--color-text);
-  letter-spacing: 0.01em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .heroDot {
-  width: 4px;
-  height: 4px;
+  width: 3px;
+  height: 3px;
   border-radius: 50%;
   background: var(--color-border);
 }
 
-/* ===========================
-   SIGNUP FORM (shared by hero & bottom)
-   =========================== */
+/* SIGNUP FORMS */
 .signupForm {
   max-width: 440px;
   margin: 0 auto;
@@ -144,7 +141,7 @@
 
 .signupFormRow {
   display: flex;
-  gap: 10px;
+  gap: 0;
   margin-bottom: 12px;
 }
 
@@ -157,15 +154,15 @@
 
 .signupInputSidebar {
   width: 100%;
-  padding: 11px 14px;
+  padding: 10px 14px;
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: 0;
   font-family: var(--font-body);
-  font-size: 14px;
+  font-size: 13px;
   color: var(--color-text);
   background: var(--color-bg);
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.15s;
 }
 
 .signupInputSidebar:focus {
@@ -182,8 +179,8 @@
 
 .signupBtnSidebar {
   width: 100%;
-  padding: 11px 14px;
-  font-size: 13px;
+  padding: 10px 14px;
+  font-size: 11px;
   font-weight: 600;
   text-align: center;
   justify-content: center;
@@ -197,15 +194,16 @@
 .signupInput {
   flex: 1;
   min-width: 0;
-  padding: 14px 18px;
+  padding: 12px 14px;
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-right: none;
+  border-radius: 0;
   font-family: var(--font-body);
-  font-size: 15px;
+  font-size: 14px;
   color: var(--color-text);
   background: var(--color-bg);
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.15s;
 }
 
 .signupInput:focus {
@@ -231,9 +229,11 @@
 }
 
 .signupNote {
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   color: var(--color-text-secondary);
   text-align: center;
+  letter-spacing: 0.04em;
 }
 
 .formSuccess {
@@ -242,87 +242,84 @@
   justify-content: center;
   gap: 12px;
   padding: 20px 24px;
-  background: rgba(4, 223, 191, 0.08);
-  border: 1px solid rgba(4, 223, 191, 0.25);
-  border-radius: 10px;
+  background: rgba(4, 223, 191, 0.06);
+  border: 1px solid rgba(4, 223, 191, 0.2);
   max-width: 440px;
   margin: 0 auto;
 }
 
 .formSuccessIcon {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
+  width: 24px;
+  height: 24px;
   background: var(--color-accent);
   color: var(--color-dark);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   flex-shrink: 0;
 }
 
 .formSuccessText {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--color-text);
 }
 
 .formError {
-  font-size: 13px;
+  font-size: 12px;
   color: #e53e3e;
   text-align: center;
   margin-bottom: 8px;
 }
 
-/* ===========================
-   VALUE PROPS - Tight horizontal strip
-   =========================== */
+/* VALUE PROPS */
 .value {
-  padding: 56px 24px;
+  padding: 48px 24px;
   background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border-light);
 }
 
 .valueGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
+  gap: 1px;
+  background: var(--color-border-light);
   max-width: 800px;
   margin: 0 auto;
+  border: 1px solid var(--color-border-light);
 }
 
 @media (max-width: 700px) {
   .valueGrid {
     grid-template-columns: 1fr;
-    gap: 32px;
-    max-width: 400px;
   }
 }
 
 .valueItem {
   text-align: center;
+  background: var(--color-surface);
+  padding: 28px 20px;
 }
 
 .valueLabel {
   font-size: 14px;
   font-weight: 600;
   letter-spacing: -0.01em;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   color: var(--color-text);
 }
 
 .valueDesc {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--color-text-secondary);
   line-height: 1.55;
 }
 
-/* ===========================
-   LATEST ISSUE - Featured card
-   =========================== */
+/* LATEST ISSUE */
 .latest {
-  padding: 72px 24px 56px;
+  padding: 64px 24px 48px;
 }
 
 .latestInner {
@@ -331,9 +328,10 @@
 }
 
 .latestLabel {
-  font-size: 11px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.14em;
   color: var(--color-text-secondary);
   font-weight: 600;
   margin-bottom: 20px;
@@ -341,21 +339,23 @@
 
 .latestCard {
   display: block;
-  padding: 36px;
+  padding: 32px;
   border: 1px solid var(--color-border-light);
-  border-radius: 12px;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.15s, background 0.15s;
   cursor: pointer;
 }
 
 .latestCard:hover {
   border-color: var(--color-text);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  background: var(--color-surface);
 }
 
 .latestDate {
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   margin-bottom: 16px;
   display: block;
 }
@@ -364,26 +364,27 @@
   font-size: clamp(22px, 3vw, 28px);
   font-weight: 700;
   letter-spacing: -0.03em;
-  line-height: 1.25;
+  line-height: 1.2;
   margin-bottom: 20px;
 }
 
 .latestRead {
-  font-size: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   color: var(--color-text);
-  transition: color 0.2s;
+  transition: color 0.15s;
 }
 
 .latestCard:hover .latestRead {
   color: var(--color-accent);
 }
 
-/* ===========================
-   ARCHIVE - Clean list with pagination
-   =========================== */
+/* ARCHIVE */
 .archive {
-  padding: 56px 24px 80px;
+  padding: 48px 24px 72px;
   border-top: 1px solid var(--color-border-light);
 }
 
@@ -396,18 +397,21 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  margin-bottom: 32px;
+  margin-bottom: 28px;
 }
 
 .archiveHeading {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.02em;
 }
 
 .archiveCount {
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   color: var(--color-text-secondary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .archiveList {
@@ -420,7 +424,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 32px;
-  padding: 20px 0;
+  padding: 18px 0;
   border-top: 1px solid var(--color-border-light);
   transition: opacity 0.15s;
   cursor: pointer;
@@ -431,11 +435,11 @@
 }
 
 .archiveItem:hover {
-  opacity: 0.65;
+  opacity: 0.6;
 }
 
 .archiveItemTitle {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.35;
@@ -445,7 +449,7 @@
 
 .emptyState {
   text-align: center;
-  font-size: 16px;
+  font-size: 15px;
   color: var(--color-text-secondary);
   padding: 48px 0;
 }
@@ -458,15 +462,18 @@
 }
 
 .archiveItemDate {
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   color: var(--color-text-secondary);
   white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .archiveItemArrow {
-  font-size: 18px;
+  font-size: 16px;
   color: var(--color-text-secondary);
-  transition: color 0.2s, transform 0.2s;
+  transition: color 0.15s, transform 0.15s;
 }
 
 .archiveItem:hover .archiveItemArrow {
@@ -480,31 +487,28 @@
     align-items: flex-start;
     gap: 8px;
   }
-
   .archiveItemArrow {
     display: none;
   }
 }
 
-/* ===========================
-   LOAD MORE
-   =========================== */
+/* LOAD MORE */
 .loadMoreWrap {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  margin-top: 40px;
+  margin-top: 36px;
 }
 
 .loadMoreBtn {
-  font-family: var(--font-body);
-  font-size: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   padding: 12px 28px;
   border: 1px solid var(--color-border);
-  border-radius: 999px;
   background: var(--color-bg);
   color: var(--color-text);
   cursor: pointer;
@@ -518,29 +522,30 @@
 }
 
 .loadMoreCount {
-  font-size: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   color: var(--color-text-secondary);
+  letter-spacing: 0.04em;
 }
 
-/* ===========================
-   BOTTOM CTA - Full width subscribe section
-   =========================== */
+/* BOTTOM CTA */
 .bottomCta {
-  padding: 96px 24px;
+  padding: 80px 24px;
   background: var(--color-surface);
   text-align: center;
   border-top: 1px solid var(--color-border-light);
 }
 
 .bottomCtaInner {
-  max-width: 640px;
+  max-width: 600px;
   margin: 0 auto;
 }
 
 .bottomCtaEyebrow {
-  font-size: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.16em;
   color: var(--color-text-secondary);
   font-weight: 600;
   margin-bottom: 20px;
@@ -550,36 +555,36 @@
   font-size: clamp(24px, 3.5vw, 32px);
   font-weight: 700;
   letter-spacing: -0.03em;
-  line-height: 1.2;
-  margin-bottom: 16px;
+  line-height: 1.15;
+  margin-bottom: 14px;
 }
 
 .bottomCtaDesc {
-  font-size: 16px;
+  font-size: 15px;
   color: var(--color-text-secondary);
-  margin-bottom: 36px;
+  margin-bottom: 32px;
   line-height: 1.65;
 }
 
-/* ===========================
-   MINDSET MATTERS LIVE
-   =========================== */
+/* MINDSET MATTERS LIVE */
 .live {
-  padding: 96px 24px;
+  padding: 80px 24px;
   background: var(--color-dark);
   color: var(--color-white);
+  border-top: 1px solid var(--color-border-light);
 }
 
 .liveInner {
-  max-width: 640px;
+  max-width: 600px;
   margin: 0 auto;
   text-align: center;
 }
 
 .liveEyebrow {
-  font-size: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.16em;
   color: var(--color-accent);
   font-weight: 600;
   margin-bottom: 16px;
@@ -595,25 +600,24 @@
 }
 
 .liveDesc {
-  font-size: 16px;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 36px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 32px;
 }
 
 .liveDetails {
   text-align: left;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
   padding: 28px 32px;
-  margin-bottom: 40px;
+  margin-bottom: 36px;
 }
 
 .liveDetail {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.7;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.7);
   padding: 8px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
