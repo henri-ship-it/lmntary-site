@@ -5,13 +5,13 @@
    =========================== */
 .nav {
   position: fixed;
-  top: var(--site-inset);
-  left: var(--site-inset);
-  right: var(--site-inset);
-  z-index: 100;
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: saturate(200%) blur(60px);
-  -webkit-backdrop-filter: saturate(200%) blur(60px);
+  top: calc(var(--site-inset) + 1px);
+  left: calc(var(--site-inset) + 1px);
+  right: calc(var(--site-inset) + 1px);
+  z-index: 200;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: saturate(200%) blur(80px);
+  -webkit-backdrop-filter: saturate(200%) blur(80px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
