@@ -1,5 +1,7 @@
 /* ===========================
-   NAVIGATION — Geometric / structural
+   NAVIGATION — Centered logo + links bar
+   Inspired by reference mockup: logo centered above,
+   links row below, heavy glass blur background.
    =========================== */
 .nav {
   position: fixed;
@@ -7,9 +9,9 @@
   left: var(--site-inset);
   right: var(--site-inset);
   z-index: 100;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: saturate(180%) blur(50px);
-  -webkit-backdrop-filter: saturate(180%) blur(50px);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: saturate(200%) blur(60px);
+  -webkit-backdrop-filter: saturate(200%) blur(60px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
@@ -26,9 +28,16 @@
   margin: 0 auto;
   padding: 0 24px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  height: 52px;
+}
+
+/* Logo row */
+.logoRow {
+  padding: 16px 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .logo {
@@ -43,20 +52,29 @@
 }
 
 .logoImg {
-  height: 32px;
+  height: 48px;
   width: auto;
+}
+
+/* Links row */
+.linksRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-bottom: 12px;
 }
 
 .links {
   display: flex;
   align-items: center;
-  gap: 36px;
+  gap: 32px;
   list-style: none;
 }
 
 .links a {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -64,13 +82,32 @@
   transition: color 0.15s;
   display: flex;
   align-items: center;
-  padding: 0;
+  padding: 6px 0;
 }
 
 .links a:hover {
   color: var(--color-text);
 }
 
+/* CTA button in nav */
+.cta {
+  font-family: var(--font-mono) !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  background: var(--color-accent) !important;
+  color: var(--color-dark) !important;
+  padding: 8px 20px !important;
+  border-radius: 0 !important;
+  transition: background 0.15s !important;
+}
+
+.cta:hover {
+  background: var(--color-accent-hover) !important;
+}
+
+/* Mobile toggle */
 .toggle {
   display: none;
   background: none;
@@ -93,10 +130,12 @@
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 52px;
+  top: 100%;
   left: 0;
   right: 0;
-  background: var(--color-bg);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
   padding: 24px;
   gap: 20px;
   border-bottom: 1px solid var(--color-border-light);
@@ -114,5 +153,17 @@
 
   .linksActive {
     display: flex !important;
+  }
+
+  .logoRow {
+    padding: 12px 0 8px;
+  }
+
+  .logoImg {
+    height: 36px;
+  }
+
+  .linksRow {
+    padding-bottom: 8px;
   }
 }

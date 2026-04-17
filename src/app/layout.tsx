@@ -27,7 +27,7 @@ export default function RootLayout({
       <body style={{ background: "#f0f0f0" }}>
         <div className="site-frame">
           <Nav />
-          <main className="grid-overlay" style={{ paddingTop: "52px", flex: 1, position: "relative" }}>
+          <main className="grid-overlay" style={{ paddingTop: "96px", flex: 1, position: "relative" }}>
             {children}
           </main>
           <Footer />

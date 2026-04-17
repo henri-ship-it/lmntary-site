@@ -1,20 +1,23 @@
 /* ===========================
    LOGO TICKER — infinite horizontal scroll
+   Narrower container, ~6 logos visible, wide edge fade
    =========================== */
 .ticker {
   overflow: hidden;
   position: relative;
   width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
-/* Fade edges */
+/* Wide fade edges */
 .ticker::before,
 .ticker::after {
   content: '';
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 80px;
+  width: 120px;
   z-index: 2;
   pointer-events: none;
 }
@@ -32,9 +35,9 @@
 .track {
   display: flex;
   align-items: center;
-  gap: 64px;
+  gap: 80px;
   width: max-content;
-  animation: scroll 40s linear infinite;
+  animation: scroll 45s linear infinite;
 }
 
 .item {
@@ -42,21 +45,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 36px;
-  opacity: 0.35;
+  width: 80px;
+  height: 28px;
+  opacity: 0.3;
   filter: grayscale(1);
   transition: opacity 0.3s, filter 0.3s;
 }
 
 .item:hover {
-  opacity: 0.7;
+  opacity: 0.6;
   filter: grayscale(0);
 }
 
 .img {
-  height: 100%;
+  max-height: 100%;
+  max-width: 100%;
   width: auto;
-  max-width: 120px;
+  height: auto;
   object-fit: contain;
 }
 
