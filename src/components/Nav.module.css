@@ -1,18 +1,16 @@
 /* ===========================
-   NAVIGATION — Centered logo + links bar
-   Inspired by reference mockup: logo centered above,
-   links row below, heavy glass blur background.
+   NAVIGATION — Visualize Value style
+   Single row. Logo left. Links right. Minimal.
    =========================== */
 .nav {
   position: fixed;
-  top: calc(var(--site-inset) + 1px);
-  left: calc(var(--site-inset) + 1px);
-  right: calc(var(--site-inset) + 1px);
+  top: var(--site-inset);
+  left: var(--site-inset);
+  right: var(--site-inset);
   z-index: 200;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: saturate(200%) blur(80px);
-  -webkit-backdrop-filter: saturate(200%) blur(80px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  background: hsla(0, 0%, 100%, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 @media (max-width: 768px) {
@@ -23,122 +21,116 @@
   }
 }
 
+/* Single-row container — logo left, links right */
 .inner {
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Logo row */
-.logoRow {
-  padding: 16px 0 8px;
+  padding: 0 32px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  height: 64px;
 }
 
+/* Logo — clean and sized correctly */
 .logo {
   display: flex;
   align-items: center;
-  cursor: pointer;
-  transition: opacity 0.15s;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
 }
 
 .logo:hover {
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 .logoImg {
-  height: 48px;
+  height: 40px;
   width: auto;
+  display: block;
 }
 
-/* Links row */
-.linksRow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding-bottom: 12px;
-}
-
+/* Links — horizontal row, right-aligned */
 .links {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 28px;
   list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.links li {
+  display: flex;
+  align-items: center;
 }
 
 .links a {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
   color: var(--color-text-secondary);
-  transition: color 0.15s;
-  display: flex;
-  align-items: center;
-  padding: 6px 0;
+  transition: color 0.2s;
+  letter-spacing: 0;
+  text-transform: none;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
 .links a:hover {
   color: var(--color-text);
 }
 
-/* CTA button in nav */
+/* CTA — subtle, not shouty */
 .cta {
-  font-family: var(--font-mono) !important;
-  font-size: 10px !important;
-  font-weight: 600 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.08em !important;
-  background: var(--color-accent) !important;
+  font-family: var(--font-body) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
   color: var(--color-dark) !important;
+  background: var(--color-accent) !important;
   padding: 8px 20px !important;
-  border-radius: 0 !important;
-  transition: background 0.15s !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  transition: opacity 0.2s !important;
 }
 
 .cta:hover {
-  background: var(--color-accent-hover) !important;
+  opacity: 0.8 !important;
 }
 
-/* Mobile toggle */
+/* Mobile hamburger — two lines, minimal */
 .toggle {
   display: none;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px;
+  padding: 8px 0;
   flex-direction: column;
+  gap: 6px;
 }
 
 .toggleSpan {
   display: block;
-  width: 18px;
-  height: 1px;
+  width: 20px;
+  height: 1.5px;
   background: var(--color-text);
-  margin: 4px 0;
   transition: all 0.2s;
 }
 
+/* Mobile expanded menu */
 .linksActive {
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 100%;
+  top: 64px;
   left: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  padding: 24px;
-  gap: 20px;
-  border-bottom: 1px solid var(--color-border-light);
+  background: hsla(0, 0%, 100%, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 20px 32px;
+  gap: 16px;
+  border-top: 1px solid var(--color-border-light);
   list-style: none;
 }
 
@@ -153,17 +145,5 @@
 
   .linksActive {
     display: flex !important;
-  }
-
-  .logoRow {
-    padding: 12px 0 8px;
-  }
-
-  .logoImg {
-    height: 36px;
-  }
-
-  .linksRow {
-    padding-bottom: 8px;
   }
 }
