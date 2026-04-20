@@ -18,7 +18,7 @@ export default function Home() {
           </p>
           <div className={styles.heroActions}>
             <Link href="/diagnostic" className="btn btn--primary">
-              Get Your Profile
+              Performance Diagnostic
             </Link>
             <Link href="/programmes" className="btn btn--secondary">
               Explore Programme
