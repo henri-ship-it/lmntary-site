@@ -93,7 +93,7 @@ export default async function NewsletterArticlePage({ params }: { params: Promis
               <p className={styles.bottomSubscribeEyebrow}>Never miss an issue</p>
               <h2 className={styles.bottomSubscribeHeading}>Get Mindset Matters delivered every Sunday.</h2>
               <p className={styles.bottomSubscribeDesc}>
-                One insight, one framework, one action step. Performance psychology you can actually use, straight to your inbox. Join 1,000+ subscribers.
+                The newsletter subscribers actually look forward to. Performance psychology that lands, straight to your inbox. Join 1,000+ subscribers.
               </p>
               <ArticleSidebar
                 related={related.map(r => ({ slug: r.slug, tag: r.tag, title: r.title }))}

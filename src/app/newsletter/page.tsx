@@ -29,7 +29,7 @@ export default async function NewsletterPage() {
           <p className={styles.heroEyebrow}>Weekly Newsletter</p>
           <h1 className={styles.heroHeading}>Mindset Matters</h1>
           <p className={styles.heroSub}>
-            Performance psychology in practice. One insight, one framework, one action step. Every week.
+            Performance psychology you actually read. The one newsletter people say they look forward to opening.
           </p>
           <div className={styles.heroProof}>
             <span className={styles.heroStat}>1,000+ subscribers</span>
@@ -120,7 +120,7 @@ export default async function NewsletterPage() {
           <p className={styles.bottomCtaEyebrow}>Never miss an issue</p>
           <h2 className={styles.bottomCtaHeading}>Join 1,000+ subscribers who read Mindset Matters every week.</h2>
           <p className={styles.bottomCtaDesc}>
-            One insight, one framework, one action step. Every Sunday. Performance psychology you can actually use, delivered straight to your inbox. No spam. Unsubscribe in one click.
+            The newsletter subscribers actually look forward to. Performance psychology that lands, every Sunday. No fluff. Unsubscribe in one click.
           </p>
           <NewsletterForm location="bottom" />
         </div>

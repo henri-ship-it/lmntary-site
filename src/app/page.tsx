@@ -234,7 +234,7 @@ export default function Home() {
             <p className={styles.newsletterSectionEyebrow}>Weekly Newsletter</p>
             <h2 className={styles.newsletterSectionHeading}>Mindset Matters</h2>
             <p className={styles.newsletterSectionDesc}>
-              Performance psychology in practice. One insight, one framework, one action step. Every week. Join 1,000+ subscribers.
+              Performance psychology you actually read. The one newsletter people say they look forward to opening. Join 1,000+ subscribers.
             </p>
             <NewsletterSignup
               wrapperClass={styles.newsletterSectionForm}
