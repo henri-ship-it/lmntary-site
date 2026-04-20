@@ -35,7 +35,7 @@ export default function DiagnosticPage() {
             </div>
             <div className={styles.step}>
               <div className={styles.number}>2</div>
-              <h3 className={styles.stepTitle}>Get Your Profile</h3>
+              <h3 className={styles.stepTitle}>Performance Diagnostic</h3>
               <p className={styles.stepDesc}>See your dominant behavioural style and what it means for your performance.</p>
             </div>
             <div className={styles.step}>
