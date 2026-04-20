@@ -1,30 +1,51 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
+import { createClient } from '@/lib/supabase-browser';
 import styles from './page.module.css';
 
 /**
- * Placeholder magic-link form.
+ * Magic-link sign-in form.
  *
- * Final behaviour (see AUTH_ARCHITECTURE.md):
- *   POST /api/auth/magic-link { email }
- *     → server checks Stripe / Kit for paid-customer tag
- *     → if yes: signs a short-lived JWT, emails link that sets a cookie
- *     → if no: still returns success (don't leak customer status)
- *
- * For now we just show the "check your inbox" state.
+ * Sends a Supabase OTP (magic link) to the user's email.
+ * On click, Supabase redirects to /auth/callback which exchanges
+ * the code for a session and sends them to /learn.
  */
 export default function SignInForm() {
   const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'loading' | 'sent'>('idle');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'sent' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (!email || status === 'loading') return;
+
     setStatus('loading');
-    // TODO: wire to /api/auth/magic-link once built
-    await new Promise((r) => setTimeout(r, 600));
-    setStatus('sent');
+    setErrorMsg('');
+
+    try {
+      const supabase = createClient();
+
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback?redirect=/learn`,
+        },
+      });
+
+      if (error) {
+        console.error('Magic link error:', error);
+        setErrorMsg(error.message);
+        setStatus('error');
+        return;
+      }
+
+      setStatus('sent');
+    } catch (err) {
+      console.error('Sign-in failed:', err);
+      setErrorMsg('Something went wrong. Please try again.');
+      setStatus('error');
+    }
   }
 
   if (status === 'sent') {
@@ -32,7 +53,7 @@ export default function SignInForm() {
       <div className={styles.sent}>
         <div className={styles.sentIcon}>&#10003;</div>
         <p className={styles.sentText}>
-          Check your inbox. If we have a record of your account, you&apos;ll get a sign-in link in the next minute or two.
+          Check your inbox. We&apos;ve sent a sign-in link to <strong>{email}</strong>. It expires in 24 hours.
         </p>
       </div>
     );
@@ -56,6 +77,9 @@ export default function SignInForm() {
       >
         {status === 'loading' ? 'Sending link...' : 'Send me a sign-in link'}
       </button>
+      {status === 'error' && (
+        <p className={styles.error}>{errorMsg}</p>
+      )}
     </form>
   );
 }

@@ -2,8 +2,10 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { getLessonBySlug } from '@/lib/courses';
+import { createServerComponentClient } from '@/lib/supabase';
 import LessonInteractive from './LessonInteractive';
 import LessonSidebarList from './LessonSidebarList';
+import ReflectionInput from '@/components/ReflectionInput';
 import styles from './page.module.css';
 
 export async function generateMetadata({
@@ -34,9 +36,22 @@ export default async function LessonPage({
   const nextLesson =
     index < course.lessons.length - 1 ? course.lessons[index + 1] : null;
 
-  // Access check — for now, paid lessons show a soft gate.
-  // Real auth will swap this for a JWT-cookie check.
-  const locked = lesson.access === 'paid';
+  // Access check — paid lessons require Supabase auth.
+  // Free lessons are always accessible.
+  const supabase = await createServerComponentClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  const locked = lesson.access === 'paid' && !user;
+
+  // Fetch user profile for personalised reflection prompts
+  let dominantStyle: string | null = null;
+  if (user) {
+    const { data: profile } = await supabase
+      .from('user_profiles')
+      .select('dominant_style')
+      .eq('id', user.id)
+      .single();
+    dominantStyle = profile?.dominant_style || null;
+  }
 
   return (
     <div className={styles.page}>
@@ -81,6 +96,15 @@ export default async function LessonPage({
             <div className={styles.content}>
               <p>{lesson.body}</p>
             </div>
+          )}
+
+          {/* Reflection input (authenticated users only, unlocked lessons) */}
+          {user && !locked && (
+            <ReflectionInput
+              courseSlug={course.slug}
+              lessonSlug={lesson.slug}
+              dominantStyle={dominantStyle}
+            />
           )}
 
           {/* Reading-progress bar + mark-complete control */}

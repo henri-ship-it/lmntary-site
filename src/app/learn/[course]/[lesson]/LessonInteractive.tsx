@@ -8,6 +8,7 @@ import {
   markLessonIncomplete,
   markLessonViewed,
 } from '@/lib/lesson-progress';
+import { syncLessonProgress, syncLessonViewed } from '@/lib/actions/progress-actions';
 import styles from './LessonInteractive.module.css';
 
 interface Props {
@@ -23,8 +24,7 @@ interface Props {
  *   - auto-marks "complete" once the user has scrolled past 90% of the page
  *   - renders a manual Mark Complete / Mark Incomplete button
  *
- * Does nothing for locked (paid, not-yet-auth'd) lessons — we don't want to
- * count a gate screen as progress.
+ * Progress is dual-written: localStorage for instant UI, Supabase for persistence.
  */
 export default function LessonInteractive({
   courseSlug,
@@ -39,6 +39,8 @@ export default function LessonInteractive({
   useEffect(() => {
     if (locked) return;
     markLessonViewed(courseSlug, lessonSlug);
+    // Fire-and-forget server sync
+    syncLessonViewed(courseSlug, lessonSlug).catch(() => {});
   }, [courseSlug, lessonSlug, locked]);
 
   // Auto-complete on deep scroll.
@@ -58,6 +60,7 @@ export default function LessonInteractive({
       if (pct >= 0.9) {
         done = true;
         markLessonComplete(courseSlug, lessonSlug);
+        syncLessonProgress(courseSlug, lessonSlug, true).catch(() => {});
         setJustCompleted(true);
       }
     }
@@ -78,9 +81,11 @@ export default function LessonInteractive({
   function handleToggle() {
     if (isComplete) {
       markLessonIncomplete(courseSlug, lessonSlug);
+      syncLessonProgress(courseSlug, lessonSlug, false).catch(() => {});
       setJustCompleted(false);
     } else {
       markLessonComplete(courseSlug, lessonSlug);
+      syncLessonProgress(courseSlug, lessonSlug, true).catch(() => {});
       setJustCompleted(true);
     }
   }
