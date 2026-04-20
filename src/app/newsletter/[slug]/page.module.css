@@ -165,9 +165,25 @@
   margin: 40px 0;
 }
 
+/* Strip all Kit.com email wrapper padding/margins so body aligns with title */
+.articleContent div,
+.articleContent section,
+.articleContent table,
+.articleContent td,
+.articleContent th,
+.articleContent tbody,
+.articleContent tr {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
 .articleContent table {
   width: 100% !important;
   border: none !important;
+  border-spacing: 0 !important;
+  border-collapse: collapse !important;
 }
 
 .articleContent td {
