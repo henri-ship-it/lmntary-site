@@ -14,7 +14,7 @@ export default function Home() {
             TRAIN YOUR MIND LIKE YOU TRAIN YOUR BODY.
           </h1>
           <p className={styles.heroSub}>
-            Understand how you operate. See what's holding you back. Build from there. 20+ years of applied performance psychology, distilled into a system that works.
+            Understand how you operate. See what&apos;s holding you back. Applied performance psychology, distilled into a system that works.
           </p>
           <div className={styles.heroActions}>
             <Link href="/diagnostic" className="btn btn--primary">
