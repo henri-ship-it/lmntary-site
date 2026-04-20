@@ -4,7 +4,7 @@
    =========================== */
 .nav {
   position: fixed;
-  top: var(--site-inset);
+  top: 0;
   left: var(--site-inset);
   right: var(--site-inset);
   z-index: 200;
