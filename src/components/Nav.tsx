@@ -12,7 +12,7 @@ export default function Nav() {
   };
 
   return (
-    <nav className={styles.nav}>
+    <nav className={`${styles.nav} backdrop-blur-xl`}>
       <div className={styles.inner}>
         <Link href="/" className={styles.logo}>
           <img src="/logos/logo-dark.svg" alt="LMNTARY Performance" className={styles.logoImg} />
