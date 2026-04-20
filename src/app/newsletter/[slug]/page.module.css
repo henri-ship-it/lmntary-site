@@ -165,18 +165,14 @@
   margin: 40px 0;
 }
 
-/* Strip all Kit.com email wrapper padding/margins so body aligns with title */
-.articleContent div,
-.articleContent section,
-.articleContent table,
-.articleContent td,
-.articleContent th,
-.articleContent tbody,
-.articleContent tr {
+/* Strip ALL Kit.com email wrapper padding/margins so body aligns with title */
+.articleContent * {
   padding-left: 0 !important;
   padding-right: 0 !important;
   margin-left: 0 !important;
   margin-right: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 .articleContent table {
