@@ -9,8 +9,8 @@
   right: var(--site-inset);
   z-index: 200;
   background: hsla(0, 0%, 100%, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
 }
 
 @media (max-width: 768px) {
@@ -126,8 +126,8 @@
   left: 0;
   right: 0;
   background: hsla(0, 0%, 100%, 0.95);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   padding: 20px 32px;
   gap: 16px;
   border-top: 1px solid var(--color-border-light);
