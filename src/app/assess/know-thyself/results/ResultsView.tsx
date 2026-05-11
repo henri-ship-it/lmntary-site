@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   STYLES,
   TRAIT_QUESTIONS,
@@ -11,7 +12,7 @@ import {
 import styles from './page.module.css';
 
 interface Props {
-  scores: StyleScores;
+  scores: StyleScores | null;
   traitScores: Record<string, number> | null;
   completedAt: string | null;
   firstName: string;
@@ -42,7 +43,6 @@ function generateHighlights(scores: StyleScores): { text: string; style: StyleKe
     style: dominant,
   });
 
-  // Find secondary (second highest)
   const sorted = STYLE_ORDER
     .map((k) => ({ key: k, pct: getScorePct(scores, k) }))
     .sort((a, b) => b.pct - a.pct);
@@ -55,14 +55,12 @@ function generateHighlights(scores: StyleScores): { text: string; style: StyleKe
     });
   }
 
-  // Find lowest
   const lowest = sorted[sorted.length - 1];
   highlights.push({
     text: `${STYLES[lowest.key].label} is your least expressed style at ${lowest.pct}% — a growth opportunity`,
     style: lowest.key,
   });
 
-  // Balance check
   const range = sorted[0].pct - sorted[sorted.length - 1].pct;
   if (range < 15) {
     highlights.push({
@@ -71,7 +69,7 @@ function generateHighlights(scores: StyleScores): { text: string; style: StyleKe
     });
   } else if (range > 35) {
     highlights.push({
-      text: `Strong style polarity — ${sorted[0].pct - sorted[sorted.length - 1].pct} point range between your highest and lowest`,
+      text: `Strong style polarity — ${range} point range between your highest and lowest`,
       style: dominant,
     });
   }
@@ -86,11 +84,10 @@ function generateInsight(scores: StyleScores): string {
     .sort((a, b) => b.pct - a.pct);
 
   const d = STYLES[dominant];
-  const second = sorted.length > 1 ? STYLES[sorted[1].key] : null;
 
   let insight = d.description;
 
-  if (second) {
+  if (sorted.length > 1) {
     const combos: Record<string, string> = {
       'dynamo-analyst': 'Combined with your Analyst secondary, you bring both decisiveness and rigour — a potent combination for strategic leadership.',
       'dynamo-caretaker': 'Your Caretaker secondary balances your drive with genuine care for people — you push hard but keep the team with you.',
@@ -115,18 +112,55 @@ function generateInsight(scores: StyleScores): string {
   return insight;
 }
 
-export default function ResultsView({ scores, traitScores, completedAt, firstName }: Props) {
-  const [activeTab, setActiveTab] = useState<StyleKey>(
-    scores.dominant_style.toLowerCase() as StyleKey
-  );
+export default function ResultsView({
+  scores: serverScores,
+  traitScores: serverTraitScores,
+  completedAt: serverCompletedAt,
+  firstName,
+}: Props) {
+  const router = useRouter();
+  const [activeTab, setActiveTab] = useState<StyleKey>('dynamo');
+  const [resolvedScores, setResolvedScores] = useState<StyleScores | null>(serverScores);
+  const [resolvedTraitScores, setResolvedTraitScores] = useState<Record<string, number> | null>(serverTraitScores);
+  const [resolvedCompletedAt, setResolvedCompletedAt] = useState<string | null>(serverCompletedAt);
+  const [ready, setReady] = useState(!!serverScores);
 
+  // Fall back to sessionStorage if no server data
+  useEffect(() => {
+    if (resolvedScores) {
+      setActiveTab(resolvedScores.dominant_style.toLowerCase() as StyleKey);
+      setReady(true);
+      return;
+    }
+    try {
+      const stored = sessionStorage.getItem('knowThyselfResults');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        setResolvedScores(parsed.scores);
+        setResolvedTraitScores(parsed.traitScores);
+        setResolvedCompletedAt(parsed.completedAt);
+        setActiveTab(parsed.scores.dominant_style.toLowerCase() as StyleKey);
+        setReady(true);
+      } else {
+        router.push('/assess/know-thyself');
+      }
+    } catch {
+      router.push('/assess/know-thyself');
+    }
+  }, [resolvedScores, router]);
+
+  if (!ready || !resolvedScores) {
+    return <div className={styles.page} style={{ minHeight: '100vh' }} />;
+  }
+
+  const scores = resolvedScores;
+  const traitScores = resolvedTraitScores;
+  const completedAt = resolvedCompletedAt;
   const dominant = scores.dominant_style.toLowerCase() as StyleKey;
   const dominantMeta = STYLES[dominant];
   const dominantPct = getScorePct(scores, dominant);
   const highlights = generateHighlights(scores);
   const insight = generateInsight(scores);
-
-  // Trait breakdown for current tab
   const tabQuestions = TRAIT_QUESTIONS.filter((q) => q.style === activeTab);
 
   return (
@@ -145,7 +179,11 @@ export default function ResultsView({ scores, traitScores, completedAt, firstNam
           </div>
         )}
         <div className={styles.headerActions}>
-          <Link href="/assess/know-thyself" className="btn btn--secondary" style={{ borderColor: 'rgba(255,255,255,0.2)', color: '#fff' }}>
+          <Link
+            href="/assess/know-thyself"
+            className="btn btn--secondary"
+            style={{ borderColor: 'rgba(255,255,255,0.2)', color: '#fff' }}
+          >
             Retake Assessment
           </Link>
           <Link href="/learn" className="btn btn--primary">

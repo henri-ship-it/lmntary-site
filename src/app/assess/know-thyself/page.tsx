@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { redirect } from 'next/navigation';
 import { createServerComponentClient } from '@/lib/supabase-server';
 import QuestionnaireForm from './QuestionnaireForm';
 
@@ -10,22 +9,26 @@ export const metadata: Metadata = {
 };
 
 export default async function KnowThyselfPage() {
-  const supabase = await createServerComponentClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  let hasExisting = false;
 
-  if (!user) {
-    redirect('/learn/sign-in?redirect=/assess/know-thyself');
+  try {
+    const supabase = await createServerComponentClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+      const { data: existing } = await supabase
+        .from('know_thyself_assessments')
+        .select('id')
+        .eq('user_id', user.id)
+        .limit(1)
+        .single();
+      hasExisting = !!existing;
+    }
+  } catch {
+    // Supabase not configured yet — continue without auth
   }
 
-  // Check if they already have results
-  const { data: existing } = await supabase
-    .from('know_thyself_assessments')
-    .select('id')
-    .eq('user_id', user.id)
-    .limit(1)
-    .single();
-
-  return <QuestionnaireForm hasExistingResults={!!existing} />;
+  return <QuestionnaireForm hasExistingResults={hasExisting} />;
 }

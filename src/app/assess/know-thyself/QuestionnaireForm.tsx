@@ -7,6 +7,7 @@ import {
   TRAIT_QUESTIONS,
   QUESTION_ORDER,
   RATING_LABELS,
+  calculateScores,
 } from '@/lib/know-thyself-data';
 import { submitKnowThyself } from '@/lib/actions/assessment-actions';
 import styles from './page.module.css';
@@ -49,18 +50,41 @@ export default function QuestionnaireForm({ hasExistingResults }: Props) {
       setTimeout(() => setLoadingStep(3), 3200),
     ];
 
-    const result = await submitKnowThyself(answers);
+    // Try to save to Supabase (will fail gracefully if not signed in)
+    let savedToDb = false;
+    try {
+      const result = await submitKnowThyself(answers);
+      savedToDb = result.success;
+    } catch {
+      // Not signed in or Supabase not configured — that's fine
+    }
+
+    // Always calculate client-side and store for the results page
+    const scores = calculateScores(answers);
+    const traitScores: Record<string, number> = {};
+    for (const q of TRAIT_QUESTIONS) {
+      traitScores[`q${q.id}`] = answers[q.id] || 3;
+    }
+
+    // Store in sessionStorage so results page can read it
+    try {
+      sessionStorage.setItem(
+        'knowThyselfResults',
+        JSON.stringify({
+          scores,
+          traitScores,
+          completedAt: new Date().toISOString(),
+          savedToDb,
+        })
+      );
+    } catch {
+      // sessionStorage not available
+    }
 
     stepTimers.forEach(clearTimeout);
-
-    if (result.success) {
-      setLoadingStep(4);
-      await new Promise((r) => setTimeout(r, 600));
-      router.push('/assess/know-thyself/results');
-    } else {
-      setSubmitting(false);
-      alert(result.error || 'Something went wrong. Please try again.');
-    }
+    setLoadingStep(4);
+    await new Promise((r) => setTimeout(r, 600));
+    router.push('/assess/know-thyself/results');
   };
 
   // Auto-scroll to next unanswered question after selecting
