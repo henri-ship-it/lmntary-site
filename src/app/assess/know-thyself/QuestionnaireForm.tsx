@@ -9,7 +9,6 @@ import {
   RATING_LABELS,
   calculateScores,
 } from '@/lib/know-thyself-data';
-import { submitKnowThyself } from '@/lib/actions/assessment-actions';
 import styles from './page.module.css';
 
 interface Props {
@@ -50,16 +49,7 @@ export default function QuestionnaireForm({ hasExistingResults }: Props) {
       setTimeout(() => setLoadingStep(3), 3200),
     ];
 
-    // Try to save to Supabase (will fail gracefully if not signed in)
-    let savedToDb = false;
-    try {
-      const result = await submitKnowThyself(answers);
-      savedToDb = result.success;
-    } catch {
-      // Not signed in or Supabase not configured — that's fine
-    }
-
-    // Always calculate client-side and store for the results page
+    // Calculate client-side scores
     const scores = calculateScores(answers);
     const traitScores: Record<string, number> = {};
     for (const q of TRAIT_QUESTIONS) {
@@ -74,7 +64,6 @@ export default function QuestionnaireForm({ hasExistingResults }: Props) {
           scores,
           traitScores,
           completedAt: new Date().toISOString(),
-          savedToDb,
         })
       );
     } catch {
