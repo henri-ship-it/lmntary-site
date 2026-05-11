@@ -53,10 +53,10 @@ export default function ResultsView({ scores: serverScores }: Props) {
   }
 
   const dimensions: { key: DimensionKey; score: number }[] = [
-    { key: 'SR', score: scores.SR },
-    { key: 'FE', score: scores.FE },
-    { key: 'LI', score: scores.LI },
-    { key: 'SA', score: scores.SA },
+    { key: 'CL', score: scores.CL },
+    { key: 'MI', score: scores.MI },
+    { key: 'EN', score: scores.EN },
+    { key: 'MO', score: scores.MO },
   ];
 
   const getScoreLabel = (pct: number) => {

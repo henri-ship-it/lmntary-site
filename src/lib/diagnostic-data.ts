@@ -4,18 +4,18 @@
  * 20 statements, 5 per dimension. Users rate each 1–5.
  * Dimension score = sum of 5 items / (5 × 5) × 100 → percentage.
  *
- * Dimensions:
- *   SR — Stress & Recovery
- *   FE — Focus & Execution
- *   LI — Leadership & Influence
- *   SA — Self-Awareness & Regulation
+ * Dimensions (mapped to Limitless modules):
+ *   CL — Clarity   → Learn   (patterns, self-knowledge, understanding what matters)
+ *   MI — Mindset    → Manage  (motivation, psych flexibility, the lens you operate through)
+ *   EN — Energy     → Nurture (environment, flow, support systems, recovery)
+ *   MO — Momentum   → Thrive  (sustaining performance, goals, reflection, boundaries)
  *
  * NOTE: Questions are negatively framed (pain indicators).
  * Higher agreement = higher pain = LOWER performance in that area.
  * Final "performance score" per dimension = 100 - rawPainPct.
  */
 
-export type DimensionKey = 'SR' | 'FE' | 'LI' | 'SA';
+export type DimensionKey = 'CL' | 'MI' | 'EN' | 'MO';
 
 export interface DiagnosticItem {
   id: number;
@@ -36,181 +36,181 @@ export interface DimensionMeta {
 // ─── Dimension metadata ───────────────────────────────────────
 
 export const DIMENSIONS: Record<DimensionKey, DimensionMeta> = {
-  SR: {
-    key: 'SR',
-    label: 'Stress & Recovery',
-    shortLabel: 'Stress',
+  CL: {
+    key: 'CL',
+    label: 'Clarity',
+    shortLabel: 'Clarity',
     description:
-      'Your capacity to manage pressure, switch off, and sustain energy across the demands you face.',
+      'How well you understand your own patterns — what drives you, where you get stuck, and what actually matters.',
     lowScoreInsight:
-      'You are running on depleted reserves. The data suggests you have normalised chronic stress — rating it as low-priority even as your energy collapses by mid-afternoon. You push through rather than recover. Without intervention, this trajectory ends in burnout, not performance.',
+      'You\'re busy, but you\'re not sure it\'s the right busy. You have goals, but they don\'t feel connected to anything deeper. You keep ending up in the same loops — same frustrations, same results — and you can\'t quite see why. That\'s not a motivation problem. It\'s a clarity problem. Until you can see your own patterns clearly, you\'ll keep repeating them.',
     highScoreInsight:
-      'Your stress management and recovery rhythms are effective. You maintain energy reserves and absorb pressure without significant performance degradation.',
+      'You know what matters to you and you can see your own patterns clearly. That self-knowledge gives you an edge — you make better decisions because you understand what\'s driving them.',
   },
-  FE: {
-    key: 'FE',
-    label: 'Focus & Execution',
-    shortLabel: 'Focus',
+  MI: {
+    key: 'MI',
+    label: 'Mindset',
+    shortLabel: 'Mindset',
     description:
-      'Your ability to maintain mental clarity, protect your attention, and deliver consistent output on what matters most.',
+      'The lens you see everything through — how you talk to yourself, how you handle setbacks, and whether your thinking helps or holds you back.',
     lowScoreInsight:
-      'You have systems, but they are not consistent. Your mental clarity is significantly lower than where you need it to be, and the gap between your ambition and your daily output is widening. You are losing productive capacity to context-switching, unclear priorities, and reactive work.',
+      'You look confident from the outside. But inside, there\'s a running commentary that second-guesses everything. You overthink decisions. You replay conversations. You know you\'re capable, but something keeps pulling you back to doubt. That voice got you here — it pushed you to prove yourself. But it\'s now the thing standing between you and the next level.',
     highScoreInsight:
-      'Your focus and execution systems are strong. You maintain clarity on priorities and deliver with consistency, even when demands increase.',
+      'Your internal dialogue works for you, not against you. You bounce back from setbacks without spiralling, and you can catch yourself before overthinking takes over.',
   },
-  LI: {
-    key: 'LI',
-    label: 'Leadership & Influence',
-    shortLabel: 'Leadership',
+  EN: {
+    key: 'EN',
+    label: 'Energy',
+    shortLabel: 'Energy',
     description:
-      'Your effectiveness in holding others accountable, navigating difficult conversations, and influencing outcomes without friction.',
+      'Whether you\'ve built the environment, rhythms, and support around you that actually fuel performance — or drain it.',
     lowScoreInsight:
-      'You are absorbing other people\'s problems. Difficult conversations are either escalating or being avoided, and you are taking on too much rather than delegating effectively. The energy you spend managing interpersonal dynamics is energy not directed at your own performance.',
+      'You\'re running on fumes and you\'ve normalised it. Your energy crashes by mid-afternoon, your sleep is disrupted, and you push through instead of recovering. You haven\'t built the environment around you that makes good performance sustainable. You\'re relying on willpower when you should be relying on design.',
     highScoreInsight:
-      'Your communication and influence patterns are effective. You delegate with confidence and navigate interpersonal dynamics without significant energy loss.',
+      'You\'ve built rhythms and an environment that sustain you. Your energy holds up through the day and you recover well — that\'s a serious advantage most people don\'t have.',
   },
-  SA: {
-    key: 'SA',
-    label: 'Self-Awareness & Regulation',
-    shortLabel: 'Awareness',
+  MO: {
+    key: 'MO',
+    label: 'Momentum',
+    shortLabel: 'Momentum',
     description:
-      'Your capacity to recognise your own patterns, regulate your internal dialogue, and respond deliberately rather than reactively.',
+      'Your ability to sustain performance over time — setting real goals, protecting your priorities, and not burning out in the process.',
     lowScoreInsight:
-      'You appear confident on the outside, but internally you are battling self-doubt, overthinking, and reactive patterns that override your best intentions. The voice that drove you to achieve is now the same voice holding you back. Until you can see these patterns clearly, they will continue to run the show.',
+      'You\'re absorbing everyone else\'s problems and calling it "being helpful." You can\'t say no. You avoid the hard conversations. You sprint, crash, and sprint again instead of building something sustainable. The pattern is clear: you give everything to everyone else and leave nothing for what actually matters to you.',
     highScoreInsight:
-      'Your self-awareness is well-developed. You recognise your patterns under pressure and regulate your responses deliberately rather than reactively.',
+      'You protect your priorities and sustain your performance over time. You set boundaries, reflect regularly, and know when to push and when to pull back.',
   },
 };
 
 // ─── The 20 diagnostic items ──────────────────────────────────
 
 export const DIAGNOSTIC_ITEMS: DiagnosticItem[] = [
-  // ── Stress & Recovery ──
+  // ── Clarity (Learn) ──
   {
     id: 1,
     code: 'DIAG-001',
-    statement: 'I find it difficult to fully switch off from work, even when I want to.',
-    dimension: 'SR',
+    statement: 'I\'m not clear on what my core strengths actually are or how to use them consistently.',
+    dimension: 'CL',
   },
   {
     id: 2,
     code: 'DIAG-002',
-    statement: 'By mid-afternoon, my energy and mental sharpness have noticeably declined.',
-    dimension: 'SR',
+    statement: 'I keep ending up in the same frustrating patterns but can\'t see why.',
+    dimension: 'CL',
   },
   {
     id: 3,
     code: 'DIAG-003',
-    statement: 'I push through fatigue rather than adjusting my pace or taking recovery time.',
-    dimension: 'SR',
+    statement: 'My daily work doesn\'t feel connected to anything I genuinely value.',
+    dimension: 'CL',
   },
   {
     id: 4,
     code: 'DIAG-004',
-    statement: 'My sleep quality is frequently disrupted by work-related thoughts or anxiety.',
-    dimension: 'SR',
+    statement: 'I struggle to explain what I actually want from the next phase of my life or career.',
+    dimension: 'CL',
   },
   {
     id: 5,
     code: 'DIAG-005',
-    statement: 'I sacrifice my own wellbeing to meet the demands of work or other commitments.',
-    dimension: 'SR',
+    statement: 'I make decisions based on what\'s expected of me rather than what matters to me.',
+    dimension: 'CL',
   },
 
-  // ── Focus & Execution ──
+  // ── Mindset (Manage) ──
   {
     id: 6,
     code: 'DIAG-006',
-    statement: 'I have systems for organising my work, but I cannot sustain them consistently.',
-    dimension: 'FE',
+    statement: 'I battle self-doubt even when I know, objectively, that I am capable.',
+    dimension: 'MI',
   },
   {
     id: 7,
     code: 'DIAG-007',
-    statement: 'I frequently get pulled into reactive work instead of planned, high-value tasks.',
-    dimension: 'FE',
+    statement: 'I overthink situations to the point where it delays my decisions or actions.',
+    dimension: 'MI',
   },
   {
     id: 8,
     code: 'DIAG-008',
-    statement: 'I struggle to maintain deep focus for extended periods without distraction.',
-    dimension: 'FE',
+    statement: 'When things go wrong, my first instinct is to push harder rather than think differently.',
+    dimension: 'MI',
   },
   {
     id: 9,
     code: 'DIAG-009',
-    statement: 'My mental clarity is significantly lower than I need it to be.',
-    dimension: 'FE',
+    statement: 'I find it hard to stay motivated once the initial excitement of something wears off.',
+    dimension: 'MI',
   },
   {
     id: 10,
     code: 'DIAG-010',
-    statement: 'I try to do too many things at once instead of completing one thing well.',
-    dimension: 'FE',
+    statement: 'I repeat the same unproductive patterns despite knowing they don\'t serve me.',
+    dimension: 'MI',
   },
 
-  // ── Leadership & Influence ──
+  // ── Energy (Nurture) ──
   {
     id: 11,
     code: 'DIAG-011',
-    statement: 'I end up absorbing other people\'s problems rather than empowering them to solve their own.',
-    dimension: 'LI',
+    statement: 'I find it difficult to fully switch off from work, even when I want to.',
+    dimension: 'EN',
   },
   {
     id: 12,
     code: 'DIAG-012',
-    statement: 'I avoid or delay difficult conversations that I know need to happen.',
-    dimension: 'LI',
+    statement: 'By mid-afternoon, my energy and mental sharpness have noticeably declined.',
+    dimension: 'EN',
   },
   {
     id: 13,
     code: 'DIAG-013',
-    statement: 'I find it hard to hold others accountable without feeling uncomfortable.',
-    dimension: 'LI',
+    statement: 'I push through fatigue rather than adjusting my pace or taking recovery time.',
+    dimension: 'EN',
   },
   {
     id: 14,
     code: 'DIAG-014',
-    statement: 'I struggle to say no to requests, even when they compromise my own priorities.',
-    dimension: 'LI',
+    statement: 'My sleep quality is frequently disrupted by work-related thoughts or anxiety.',
+    dimension: 'EN',
   },
   {
     id: 15,
     code: 'DIAG-015',
-    statement: 'I take on too much myself rather than delegating effectively to others.',
-    dimension: 'LI',
+    statement: 'I sacrifice my own wellbeing to meet the demands of work or other commitments.',
+    dimension: 'EN',
   },
 
-  // ── Self-Awareness & Regulation ──
+  // ── Momentum (Thrive) ──
   {
     id: 16,
     code: 'DIAG-016',
-    statement: 'I battle self-doubt even when I know, objectively, that I am capable.',
-    dimension: 'SA',
+    statement: 'I end up absorbing other people\'s problems rather than empowering them to solve their own.',
+    dimension: 'MO',
   },
   {
     id: 17,
     code: 'DIAG-017',
-    statement: 'I repeat the same unproductive patterns despite knowing they do not serve me.',
-    dimension: 'SA',
+    statement: 'I avoid or delay difficult conversations that I know need to happen.',
+    dimension: 'MO',
   },
   {
     id: 18,
     code: 'DIAG-018',
-    statement: 'I overthink situations to the point where it delays my decisions or actions.',
-    dimension: 'SA',
+    statement: 'I struggle to say no to requests, even when they compromise my own priorities.',
+    dimension: 'MO',
   },
   {
     id: 19,
     code: 'DIAG-019',
-    statement: 'When things go wrong, I default to pushing harder rather than stepping back to reflect.',
-    dimension: 'SA',
+    statement: 'I don\'t have a regular practice for reviewing my goals and adjusting my approach.',
+    dimension: 'MO',
   },
   {
     id: 20,
     code: 'DIAG-020',
-    statement: 'I lack a regular practice for understanding my own behaviour and its impact.',
-    dimension: 'SA',
+    statement: 'I sprint hard then crash, rather than pacing myself for sustained performance.',
+    dimension: 'MO',
   },
 ];
 
@@ -218,7 +218,7 @@ export const DIAGNOSTIC_ITEMS: DiagnosticItem[] = [
 // Interleave dimensions so same-dimension items aren't clustered.
 
 export const ITEM_ORDER: number[] = [
-  1, 6, 11, 16,   // SR FE LI SA
+  1, 6, 11, 16,   // CL MI EN MO
   2, 7, 12, 17,
   3, 8, 13, 18,
   4, 9, 14, 19,
@@ -238,10 +238,10 @@ export const SCALE_LABELS: Record<number, string> = {
 // ─── Scoring ──────────────────────────────────────────────────
 
 export interface DiagnosticScores {
-  SR: number; // performance % (100 = no pain)
-  FE: number;
-  LI: number;
-  SA: number;
+  CL: number; // performance % (100 = no pain)
+  MI: number;
+  EN: number;
+  MO: number;
   overall: number;
   weakest: DimensionKey;
   strongest: DimensionKey;
@@ -250,7 +250,7 @@ export interface DiagnosticScores {
 export function calculateDiagnosticScores(
   answers: Record<number, number>
 ): DiagnosticScores {
-  const sums: Record<DimensionKey, number> = { SR: 0, FE: 0, LI: 0, SA: 0 };
+  const sums: Record<DimensionKey, number> = { CL: 0, MI: 0, EN: 0, MO: 0 };
 
   for (const item of DIAGNOSTIC_ITEMS) {
     const val = answers[item.id] || 3; // default neutral
@@ -260,24 +260,23 @@ export function calculateDiagnosticScores(
   const maxPerDimension = 5 * 5; // 5 questions × max 5
 
   // Invert: high agreement with pain statements = low performance
-  const SR = Math.round(100 - (sums.SR / maxPerDimension) * 100);
-  const FE = Math.round(100 - (sums.FE / maxPerDimension) * 100);
-  const LI = Math.round(100 - (sums.LI / maxPerDimension) * 100);
-  const SA = Math.round(100 - (sums.SA / maxPerDimension) * 100);
+  const CL = Math.round(100 - (sums.CL / maxPerDimension) * 100);
+  const MI = Math.round(100 - (sums.MI / maxPerDimension) * 100);
+  const EN = Math.round(100 - (sums.EN / maxPerDimension) * 100);
+  const MO = Math.round(100 - (sums.MO / maxPerDimension) * 100);
 
-  const overall = Math.round((SR + FE + LI + SA) / 4);
+  const overall = Math.round((CL + MI + EN + MO) / 4);
 
-  const scores = { SR, FE, LI, SA };
+  const scores = { CL, MI, EN, MO };
   const entries = Object.entries(scores) as [DimensionKey, number][];
   const weakest = entries.reduce((a, b) => (b[1] < a[1] ? b : a))[0];
   const strongest = entries.reduce((a, b) => (b[1] > a[1] ? b : a))[0];
 
-  return { SR, FE, LI, SA, overall, weakest, strongest };
+  return { CL, MI, EN, MO, overall, weakest, strongest };
 }
 
 // ─── Section breaks ───────────────────────────────────────────
-// Insert after every 5 questions (4 items per interleaved group × ~1.25)
-// Actually: after items 4, 8, 12, 16 in the presentation order.
+// Insert after every 4 items in the presentation order.
 
 export interface SectionBreak {
   sectionNumber: number;
@@ -288,18 +287,18 @@ export interface SectionBreak {
 export const SECTION_BREAKS: Record<number, SectionBreak> = {
   4: {
     sectionNumber: 2,
-    dimensionFocus: 'FE',
-    label: 'SECTION 02 — FOCUS & EXECUTION',
+    dimensionFocus: 'MI',
+    label: 'SECTION 02 — MINDSET',
   },
   8: {
     sectionNumber: 3,
-    dimensionFocus: 'LI',
-    label: 'SECTION 03 — LEADERSHIP & INFLUENCE',
+    dimensionFocus: 'EN',
+    label: 'SECTION 03 — ENERGY',
   },
   12: {
     sectionNumber: 4,
-    dimensionFocus: 'SA',
-    label: 'SECTION 04 — SELF-AWARENESS & REGULATION',
+    dimensionFocus: 'MO',
+    label: 'SECTION 04 — MOMENTUM',
   },
   16: {
     sectionNumber: 5,
