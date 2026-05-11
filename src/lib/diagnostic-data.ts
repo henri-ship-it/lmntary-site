@@ -41,44 +41,44 @@ export const DIMENSIONS: Record<DimensionKey, DimensionMeta> = {
     label: 'Stress & Recovery',
     shortLabel: 'Stress',
     description:
-      'Your capacity to manage pressure, switch off, and maintain sustainable energy levels.',
+      'Your capacity to manage pressure, switch off, and sustain energy across the demands you face.',
     lowScoreInsight:
-      'You are showing signs of chronic stress accumulation. Your recovery patterns are insufficient for the demands you face. Without intervention, this trajectory leads to diminished output and burnout.',
+      'You are running on depleted reserves. The data suggests you have normalised chronic stress — rating it as low-priority even as your energy collapses by mid-afternoon. You push through rather than recover. Without intervention, this trajectory ends in burnout, not performance.',
     highScoreInsight:
-      'Your stress management and recovery protocols are effective. You maintain energy reserves and can absorb pressure without significant performance degradation.',
+      'Your stress management and recovery rhythms are effective. You maintain energy reserves and absorb pressure without significant performance degradation.',
   },
   FE: {
     key: 'FE',
     label: 'Focus & Execution',
     shortLabel: 'Focus',
     description:
-      'Your ability to sustain attention, prioritise effectively, and deliver consistent output.',
+      'Your ability to maintain mental clarity, protect your attention, and deliver consistent output on what matters most.',
     lowScoreInsight:
-      'Your attention architecture is fragmented. You are losing significant productive capacity to context-switching, unclear priorities, and inconsistent execution rhythms.',
+      'You have systems, but they are not consistent. Your mental clarity is significantly lower than where you need it to be, and the gap between your ambition and your daily output is widening. You are losing productive capacity to context-switching, unclear priorities, and reactive work.',
     highScoreInsight:
-      'Your focus and execution systems are strong. You maintain clarity on priorities and deliver with consistency.',
+      'Your focus and execution systems are strong. You maintain clarity on priorities and deliver with consistency, even when demands increase.',
   },
   LI: {
     key: 'LI',
     label: 'Leadership & Influence',
     shortLabel: 'Leadership',
     description:
-      'Your effectiveness in communicating, influencing outcomes, and navigating interpersonal dynamics.',
+      'Your effectiveness in holding others accountable, navigating difficult conversations, and influencing outcomes without friction.',
     lowScoreInsight:
-      'You are experiencing friction in how you communicate and lead. Unresolved interpersonal dynamics are draining cognitive resources that should be directed toward performance.',
+      'You are absorbing other people\'s problems. Difficult conversations are either escalating or being avoided, and you are taking on too much rather than delegating effectively. The energy you spend managing interpersonal dynamics is energy not directed at your own performance.',
     highScoreInsight:
-      'Your communication and influence patterns are effective. You navigate interpersonal dynamics with minimal friction and energy loss.',
+      'Your communication and influence patterns are effective. You delegate with confidence and navigate interpersonal dynamics without significant energy loss.',
   },
   SA: {
     key: 'SA',
     label: 'Self-Awareness & Regulation',
     shortLabel: 'Awareness',
     description:
-      'Your capacity to recognise your own patterns, manage emotional responses, and adapt behaviour deliberately.',
+      'Your capacity to recognise your own patterns, regulate your internal dialogue, and respond deliberately rather than reactively.',
     lowScoreInsight:
-      'You are operating with significant blind spots. Reactive patterns are overriding deliberate behaviour, limiting your ability to adapt and grow under pressure.',
+      'You appear confident on the outside, but internally you are battling self-doubt, overthinking, and reactive patterns that override your best intentions. The voice that drove you to achieve is now the same voice holding you back. Until you can see these patterns clearly, they will continue to run the show.',
     highScoreInsight:
-      'Your self-awareness is well-developed. You recognise your patterns and regulate your responses effectively, even under pressure.',
+      'Your self-awareness is well-developed. You recognise your patterns under pressure and regulate your responses deliberately rather than reactively.',
   },
 };
 
@@ -95,7 +95,7 @@ export const DIAGNOSTIC_ITEMS: DiagnosticItem[] = [
   {
     id: 2,
     code: 'DIAG-002',
-    statement: 'I regularly feel physically or mentally drained by the end of the working day.',
+    statement: 'By mid-afternoon, my energy and mental sharpness have noticeably declined.',
     dimension: 'SR',
   },
   {
@@ -113,7 +113,7 @@ export const DIAGNOSTIC_ITEMS: DiagnosticItem[] = [
   {
     id: 5,
     code: 'DIAG-005',
-    statement: 'I have no structured strategy for managing my energy or recovery.',
+    statement: 'I sacrifice my own wellbeing to meet the demands of work or other commitments.',
     dimension: 'SR',
   },
 
@@ -121,7 +121,7 @@ export const DIAGNOSTIC_ITEMS: DiagnosticItem[] = [
   {
     id: 6,
     code: 'DIAG-006',
-    statement: 'I often start the day without a clear sense of my top priorities.',
+    statement: 'I have systems for organising my work, but I cannot sustain them consistently.',
     dimension: 'FE',
   },
   {
@@ -133,19 +133,19 @@ export const DIAGNOSTIC_ITEMS: DiagnosticItem[] = [
   {
     id: 8,
     code: 'DIAG-008',
-    statement: 'I struggle to sustain deep focus for more than 30 minutes at a time.',
+    statement: 'I struggle to maintain deep focus for extended periods without distraction.',
     dimension: 'FE',
   },
   {
     id: 9,
     code: 'DIAG-009',
-    statement: 'My output quality varies significantly depending on my mood or environment.',
+    statement: 'My mental clarity is significantly lower than I need it to be.',
     dimension: 'FE',
   },
   {
     id: 10,
     code: 'DIAG-010',
-    statement: 'I regularly overcommit and then underdeliver on what matters most.',
+    statement: 'I try to do too many things at once instead of completing one thing well.',
     dimension: 'FE',
   },
 
@@ -153,31 +153,31 @@ export const DIAGNOSTIC_ITEMS: DiagnosticItem[] = [
   {
     id: 11,
     code: 'DIAG-011',
-    statement: 'I find it hard to get buy-in from others for my ideas or decisions.',
+    statement: 'I end up absorbing other people\'s problems rather than empowering them to solve their own.',
     dimension: 'LI',
   },
   {
     id: 12,
     code: 'DIAG-012',
-    statement: 'Difficult conversations tend to escalate or get avoided entirely.',
+    statement: 'I avoid or delay difficult conversations that I know need to happen.',
     dimension: 'LI',
   },
   {
     id: 13,
     code: 'DIAG-013',
-    statement: 'I spend significant mental energy navigating workplace politics or conflict.',
+    statement: 'I find it hard to hold others accountable without feeling uncomfortable.',
     dimension: 'LI',
   },
   {
     id: 14,
     code: 'DIAG-014',
-    statement: 'I feel uncertain about how I am perceived by colleagues or my team.',
+    statement: 'I struggle to say no to requests, even when they compromise my own priorities.',
     dimension: 'LI',
   },
   {
     id: 15,
     code: 'DIAG-015',
-    statement: 'I struggle to delegate effectively and end up taking on too much myself.',
+    statement: 'I take on too much myself rather than delegating effectively to others.',
     dimension: 'LI',
   },
 
@@ -185,7 +185,7 @@ export const DIAGNOSTIC_ITEMS: DiagnosticItem[] = [
   {
     id: 16,
     code: 'DIAG-016',
-    statement: 'I often react emotionally in high-pressure situations before thinking clearly.',
+    statement: 'I battle self-doubt even when I know, objectively, that I am capable.',
     dimension: 'SA',
   },
   {
@@ -197,19 +197,19 @@ export const DIAGNOSTIC_ITEMS: DiagnosticItem[] = [
   {
     id: 18,
     code: 'DIAG-018',
-    statement: 'I find it difficult to accurately assess my own strengths and limitations.',
+    statement: 'I overthink situations to the point where it delays my decisions or actions.',
     dimension: 'SA',
   },
   {
     id: 19,
     code: 'DIAG-019',
-    statement: 'I tend to avoid feedback or become defensive when receiving it.',
+    statement: 'When things go wrong, I default to pushing harder rather than stepping back to reflect.',
     dimension: 'SA',
   },
   {
     id: 20,
     code: 'DIAG-020',
-    statement: 'I lack a regular practice for reflecting on my behaviour and its impact.',
+    statement: 'I lack a regular practice for understanding my own behaviour and its impact.',
     dimension: 'SA',
   },
 ];
