@@ -1,0 +1,547 @@
+/* ===========================
+   KNOW THYSELF — RESULTS PAGE
+   Deep Personality–inspired card-based layout
+   =========================== */
+
+.page {
+  min-height: 100vh;
+  background: var(--color-surface);
+  padding-bottom: 120px;
+}
+
+/* ─── Header ─────────────────────────── */
+.header {
+  padding: 140px 40px 60px;
+  background: var(--color-dark);
+  color: var(--color-white);
+  text-align: center;
+}
+
+.headerEyebrow {
+  font-family: var(--font-display);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-accent);
+  margin-bottom: 16px;
+}
+
+.headerTitle {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.headerSub {
+  font-size: 17px;
+  color: rgba(255, 255, 255, 0.55);
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.55;
+  font-weight: 300;
+}
+
+.headerDate {
+  margin-top: 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.headerActions {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* ─── Highlights Strip ────────────────── */
+.highlights {
+  max-width: 800px;
+  margin: -32px auto 0;
+  padding: 0 24px;
+  position: relative;
+  z-index: 2;
+}
+
+.highlightsCard {
+  background: var(--color-white);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-card);
+  padding: 28px 32px;
+}
+
+.highlightsTitle {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  margin-bottom: 16px;
+}
+
+.highlightsList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.highlightItem {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--color-text);
+  padding-left: 20px;
+  position: relative;
+}
+
+.highlightItem::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.highlightItem[data-style='dynamo']::before {
+  background: #E74C3C;
+}
+.highlightItem[data-style='analyst']::before {
+  background: #3498DB;
+}
+.highlightItem[data-style='caretaker']::before {
+  background: #2ECC71;
+}
+.highlightItem[data-style='energiser']::before {
+  background: #F39C12;
+}
+
+/* ─── Content Container ───────────────── */
+.content {
+  max-width: 800px;
+  margin: 40px auto 0;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ─── Card (generic) ──────────────────── */
+.card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-card);
+  padding: 36px 32px;
+}
+
+.cardLabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  margin-bottom: 4px;
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  margin-bottom: 8px;
+}
+
+.cardDesc {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+/* ─── Style Bars (Big Four chart) ─────── */
+.styleBars {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.styleBarRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.styleBarIcon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border-radius: var(--radius-card);
+  flex-shrink: 0;
+}
+
+.styleBarInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.styleBarHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.styleBarName {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--color-text);
+}
+
+.styleBarTagline {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.styleBarTrack {
+  height: 12px;
+  background: var(--color-surface);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.styleBarFill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.styleBarPct {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-text);
+  width: 48px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ─── Dominant Style Card ─────────────── */
+.dominantCard {
+  background: var(--color-dark);
+  color: var(--color-white);
+  border-color: var(--color-dark);
+}
+
+.dominantCard .cardLabel {
+  color: var(--color-accent);
+}
+
+.dominantCard .cardTitle {
+  color: var(--color-white);
+  font-size: 28px;
+}
+
+.dominantIcon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.dominantPct {
+  font-family: var(--font-display);
+  font-size: 64px;
+  font-weight: 700;
+  color: var(--color-accent);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.dominantDesc {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.65;
+  margin-bottom: 28px;
+  max-width: 560px;
+}
+
+.dominantTraits {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.traitSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.traitSectionLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.traitItem {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  padding-left: 18px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.traitItem::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.traitItemWarn {
+  composes: traitItem;
+}
+
+.traitItemWarn::before {
+  content: '!';
+  color: #F39C12;
+}
+
+/* ─── Radar / Quadrant Visual ─────────── */
+.quadrant {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.quadrantGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 1;
+}
+
+.quadrantCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px 16px;
+  border-radius: var(--radius-card);
+  transition: transform 0.2s ease;
+}
+
+.quadrantCell[data-dominant='true'] {
+  transform: scale(1.02);
+  box-shadow: 0 0 0 2px var(--color-dark);
+}
+
+.quadrantCellIcon {
+  font-size: 28px;
+}
+
+.quadrantCellLabel {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text);
+}
+
+.quadrantCellPct {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.quadrantNote {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  text-align: center;
+  line-height: 1.5;
+  max-width: 400px;
+}
+
+/* ─── Trait Breakdown ─────────────────── */
+.traitBreakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.traitRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.traitStatement {
+  flex: 1;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--color-text);
+  min-width: 0;
+}
+
+.traitScore {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  width: 28px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.traitMiniBar {
+  width: 80px;
+  height: 6px;
+  background: var(--color-surface);
+  border-radius: 3px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.traitMiniBarFill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.8s ease;
+}
+
+/* ─── Style Breakdown Tabs ────────────── */
+.tabRow {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.tab {
+  padding: 10px 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  margin-bottom: -1px;
+}
+
+.tab:hover {
+  color: var(--color-text);
+}
+
+.tab[data-active='true'] {
+  color: var(--color-text);
+  border-bottom-color: var(--color-accent);
+}
+
+/* ─── Insights / What This Means ──────── */
+.insightBox {
+  padding: 20px 24px;
+  background: var(--color-surface);
+  border-left: 3px solid var(--color-accent);
+  border-radius: 0 var(--radius-card) var(--radius-card) 0;
+  margin-top: 24px;
+}
+
+.insightTitle {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  margin-bottom: 8px;
+}
+
+.insightText {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--color-text);
+}
+
+/* ─── Bottom CTA ──────────────────────── */
+.bottomCta {
+  text-align: center;
+  padding-top: 24px;
+}
+
+.retakeLink {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 2px;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.retakeLink:hover {
+  color: var(--color-text);
+  border-color: var(--color-text);
+}
+
+/* ─── Responsive ──────────────────────── */
+@media (max-width: 640px) {
+  .card {
+    padding: 28px 20px;
+  }
+
+  .highlightsCard {
+    padding: 20px;
+  }
+
+  .styleBarRow {
+    gap: 10px;
+  }
+
+  .quadrantGrid {
+    max-width: 320px;
+  }
+
+  .traitMiniBar {
+    width: 50px;
+  }
+
+  .tabRow {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
