@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -104,6 +105,11 @@ export default function QuestionnaireForm({ hasExistingResults }: Props) {
   const [submitting, setSubmitting] = useState(false);
   const [loadingStep, setLoadingStep] = useState(0);
   const [animKey, setAnimKey] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const questionsById = Object.fromEntries(
     TRAIT_QUESTIONS.map((q) => [q.id, q])
@@ -234,10 +240,17 @@ export default function QuestionnaireForm({ hasExistingResults }: Props) {
     return () => window.removeEventListener('keydown', handleKey);
   }, [started, submitting, currentStep, handleSelect, goBack]);
 
+  /* ─── Portal wrapper — renders above Nav stacking context ── */
+
+  const portal = (content: React.ReactNode) => {
+    if (!mounted) return null;
+    return createPortal(content, document.body);
+  };
+
   /* ─── Render: Loading overlay ─────────────────────────── */
 
   if (submitting) {
-    return (
+    return portal(
       <div className={styles.page}>
         <div className={styles.loadingOverlay}>
           <div className={styles.loadingEmoji}>🧬</div>
@@ -276,7 +289,7 @@ export default function QuestionnaireForm({ hasExistingResults }: Props) {
   /* ─── Render: Intro screen ────────────────────────────── */
 
   if (!started) {
-    return (
+    return portal(
       <div className={styles.page}>
         <div className={styles.introScreen}>
           <div className={styles.introBadge}>
@@ -314,7 +327,7 @@ export default function QuestionnaireForm({ hasExistingResults }: Props) {
   /* ─── Render: Interstitial screen ─────────────────────── */
 
   if (currentStep?.type === 'interstitial') {
-    return (
+    return portal(
       <div className={styles.page}>
         {/* Top bar */}
         <div className={styles.topBar}>
@@ -357,7 +370,7 @@ export default function QuestionnaireForm({ hasExistingResults }: Props) {
       answeredCount === TOTAL_QUESTIONS - 1 &&
       selectedValue === undefined;
 
-    return (
+    return portal(
       <div className={styles.page}>
         {/* Top bar */}
         <div className={styles.topBar}>
