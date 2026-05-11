@@ -1,547 +1,356 @@
 /* ===========================
-   KNOW THYSELF — RESULTS PAGE
-   Deep Personality–inspired card-based layout
+   PERFORMANCE DIAGNOSTIC — RESULTS
+   Clinical lab aesthetic, monospace, stark
    =========================== */
 
 .page {
   min-height: 100vh;
-  background: var(--color-surface);
-  padding-bottom: 120px;
+  background: #fafafa;
+  padding: 40px 24px 120px;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+}
+
+.resultsContainer {
+  max-width: 640px;
+  margin: 0 auto;
 }
 
 /* ─── Header ─────────────────────────── */
 .header {
-  padding: 140px 40px 60px;
-  background: var(--color-dark);
-  color: var(--color-white);
   text-align: center;
+  padding: 40px 0 48px;
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 40px;
 }
 
-.headerEyebrow {
-  font-family: var(--font-display);
-  font-size: 12px;
+.headerBadge {
+  font-size: 10px;
+  font-weight: 600;
+  color: #999;
+  letter-spacing: 3px;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--color-accent);
   margin-bottom: 16px;
 }
 
 .headerTitle {
-  font-family: var(--font-display);
-  font-size: clamp(28px, 5vw, 48px);
+  font-family: var(--font-display, 'Oxanium', sans-serif);
+  font-size: clamp(24px, 4vw, 36px);
   font-weight: 700;
+  color: #1d1d1f;
   text-transform: uppercase;
-  letter-spacing: -0.01em;
-  line-height: 1.1;
-  margin-bottom: 12px;
-}
-
-.headerSub {
-  font-size: 17px;
-  color: rgba(255, 255, 255, 0.55);
-  max-width: 480px;
-  margin: 0 auto;
-  line-height: 1.55;
-  font-weight: 300;
-}
-
-.headerDate {
-  margin-top: 16px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.3);
-}
-
-.headerActions {
-  margin-top: 28px;
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-}
-
-/* ─── Highlights Strip ────────────────── */
-.highlights {
-  max-width: 800px;
-  margin: -32px auto 0;
-  padding: 0 24px;
-  position: relative;
-  z-index: 2;
-}
-
-.highlightsCard {
-  background: var(--color-white);
-  border: 1px solid var(--color-border-light);
-  border-radius: var(--radius-card);
-  padding: 28px 32px;
-}
-
-.highlightsTitle {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-text-secondary);
-  margin-bottom: 16px;
-}
-
-.highlightsList {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.highlightItem {
-  font-size: 15px;
-  line-height: 1.5;
-  color: var(--color-text);
-  padding-left: 20px;
-  position: relative;
-}
-
-.highlightItem::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 8px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
-
-.highlightItem[data-style='dynamo']::before {
-  background: #E74C3C;
-}
-.highlightItem[data-style='analyst']::before {
-  background: #3498DB;
-}
-.highlightItem[data-style='caretaker']::before {
-  background: #2ECC71;
-}
-.highlightItem[data-style='energiser']::before {
-  background: #F39C12;
-}
-
-/* ─── Content Container ───────────────── */
-.content {
-  max-width: 800px;
-  margin: 40px auto 0;
-  padding: 0 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-/* ─── Card (generic) ──────────────────── */
-.card {
-  background: var(--color-white);
-  border: 1px solid var(--color-border-light);
-  border-radius: var(--radius-card);
-  padding: 36px 32px;
-}
-
-.cardLabel {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-text-secondary);
-  margin-bottom: 4px;
-}
-
-.cardTitle {
-  font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
-  color: var(--color-text);
-  margin-bottom: 8px;
-}
-
-.cardDesc {
-  font-size: 15px;
-  color: var(--color-text-secondary);
-  line-height: 1.6;
+  letter-spacing: 2px;
   margin-bottom: 32px;
 }
 
-/* ─── Style Bars (Big Four chart) ─────── */
-.styleBars {
+.overallScore {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-}
-
-.styleBarRow {
-  display: flex;
   align-items: center;
-  gap: 16px;
-}
-
-.styleBarIcon {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  border-radius: var(--radius-card);
-  flex-shrink: 0;
-}
-
-.styleBarInfo {
-  flex: 1;
-  min-width: 0;
-}
-
-.styleBarHeader {
-  display: flex;
-  align-items: baseline;
   gap: 8px;
-  margin-bottom: 6px;
 }
 
-.styleBarName {
-  font-family: var(--font-display);
-  font-size: 14px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  color: var(--color-text);
-}
-
-.styleBarTagline {
-  font-size: 12px;
-  color: var(--color-text-secondary);
-}
-
-.styleBarTrack {
-  height: 12px;
-  background: var(--color-surface);
-  border-radius: 6px;
-  overflow: hidden;
-  position: relative;
-}
-
-.styleBarFill {
-  height: 100%;
-  border-radius: 6px;
-  transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.styleBarPct {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: var(--color-text);
-  width: 48px;
-  text-align: right;
-  flex-shrink: 0;
-}
-
-/* ─── Dominant Style Card ─────────────── */
-.dominantCard {
-  background: var(--color-dark);
-  color: var(--color-white);
-  border-color: var(--color-dark);
-}
-
-.dominantCard .cardLabel {
-  color: var(--color-accent);
-}
-
-.dominantCard .cardTitle {
-  color: var(--color-white);
-  font-size: 28px;
-}
-
-.dominantIcon {
-  font-size: 48px;
-  margin-bottom: 16px;
-}
-
-.dominantPct {
-  font-family: var(--font-display);
+.overallNumber {
+  font-family: var(--font-display, 'Oxanium', sans-serif);
   font-size: 64px;
   font-weight: 700;
-  color: var(--color-accent);
+  color: #1d1d1f;
   line-height: 1;
-  margin-bottom: 8px;
 }
 
-.dominantDesc {
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.7);
-  line-height: 1.65;
-  margin-bottom: 28px;
-  max-width: 560px;
+.overallLabel {
+  font-size: 10px;
+  color: #999;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
-.dominantTraits {
+/* ─── Dimension Cards ────────────────── */
+.dimensionGrid {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
+  margin-bottom: 40px;
 }
 
-.traitSection {
+.dimensionCard {
+  padding: 20px 24px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+}
+
+.dimensionCard[data-weakest='true'] {
+  border-color: #e74c3c;
+  border-width: 2px;
+}
+
+.dimHeader {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
-.traitSectionLabel {
-  font-family: var(--font-mono);
+.dimCode {
   font-size: 10px;
   font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.4);
+  color: #bbb;
+  letter-spacing: 1px;
 }
 
-.traitItem {
+.dimName {
+  font-family: var(--font-body, 'Inter', sans-serif);
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.85);
-  padding-left: 18px;
-  position: relative;
-  line-height: 1.5;
-}
-
-.traitItem::before {
-  content: '✓';
-  position: absolute;
-  left: 0;
-  color: var(--color-accent);
-  font-weight: 700;
-}
-
-.traitItemWarn {
-  composes: traitItem;
-}
-
-.traitItemWarn::before {
-  content: '!';
-  color: #F39C12;
-}
-
-/* ─── Radar / Quadrant Visual ─────────── */
-.quadrant {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-}
-
-.quadrantGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2px;
-  width: 100%;
-  max-width: 420px;
-  aspect-ratio: 1;
-}
-
-.quadrantCell {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 24px 16px;
-  border-radius: var(--radius-card);
-  transition: transform 0.2s ease;
-}
-
-.quadrantCell[data-dominant='true'] {
-  transform: scale(1.02);
-  box-shadow: 0 0 0 2px var(--color-dark);
-}
-
-.quadrantCellIcon {
-  font-size: 28px;
-}
-
-.quadrantCellLabel {
-  font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--color-text);
-}
-
-.quadrantCellPct {
-  font-family: var(--font-mono);
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--color-text);
-}
-
-.quadrantNote {
-  font-size: 13px;
-  color: var(--color-text-secondary);
-  text-align: center;
-  line-height: 1.5;
-  max-width: 400px;
-}
-
-/* ─── Trait Breakdown ─────────────────── */
-.traitBreakdown {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.traitRow {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.traitStatement {
+  font-weight: 600;
+  color: #1d1d1f;
   flex: 1;
-  font-size: 13px;
-  line-height: 1.4;
-  color: var(--color-text);
-  min-width: 0;
 }
 
-.traitScore {
-  font-family: var(--font-mono);
+.dimStatus {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.dimBarTrack {
+  width: 100%;
+  height: 4px;
+  background: #f0f0f0;
+  margin-bottom: 8px;
+}
+
+.dimBarFill {
+  height: 100%;
+  transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dimScore {
   font-size: 12px;
   font-weight: 600;
-  color: var(--color-text-secondary);
-  width: 28px;
-  text-align: right;
-  flex-shrink: 0;
+  color: #1d1d1f;
 }
 
-.traitMiniBar {
-  width: 80px;
-  height: 6px;
-  background: var(--color-surface);
-  border-radius: 3px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.traitMiniBarFill {
-  height: 100%;
-  border-radius: 3px;
-  transition: width 0.8s ease;
-}
-
-/* ─── Style Breakdown Tabs ────────────── */
-.tabRow {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 24px;
-  border-bottom: 1px solid var(--color-border-light);
-}
-
-.tab {
-  padding: 10px 16px;
-  font-family: var(--font-mono);
+.dimFlag {
+  margin-top: 8px;
   font-size: 11px;
+  color: #e74c3c;
+  font-weight: 500;
+}
+
+/* ─── Insight Teaser ─────────────────── */
+.insightTeaser {
+  padding: 24px;
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  margin-bottom: 40px;
+}
+
+.insightLabel {
+  font-size: 10px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  color: #999;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--color-text-secondary);
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  margin-bottom: -1px;
-}
-
-.tab:hover {
-  color: var(--color-text);
-}
-
-.tab[data-active='true'] {
-  color: var(--color-text);
-  border-bottom-color: var(--color-accent);
-}
-
-/* ─── Insights / What This Means ──────── */
-.insightBox {
-  padding: 20px 24px;
-  background: var(--color-surface);
-  border-left: 3px solid var(--color-accent);
-  border-radius: 0 var(--radius-card) var(--radius-card) 0;
-  margin-top: 24px;
-}
-
-.insightTitle {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-text-secondary);
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .insightText {
-  font-size: 15px;
-  line-height: 1.65;
-  color: var(--color-text);
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 14px;
+  color: #333;
+  line-height: 1.7;
 }
 
-/* ─── Bottom CTA ──────────────────────── */
-.bottomCta {
+/* ─── Email Gate ─────────────────────── */
+.emailGate {
+  padding: 32px 24px;
+  background: #1d1d1f;
+  color: #fff;
   text-align: center;
-  padding-top: 24px;
+  margin-bottom: 40px;
 }
 
-.retakeLink {
-  font-family: var(--font-mono);
+.gateLabel {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.gateTitle {
+  font-family: var(--font-display, 'Oxanium', sans-serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.gateDesc {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+  max-width: 400px;
+  margin: 0 auto 24px;
+}
+
+.gateForm {
+  display: flex;
+  gap: 8px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.gateInput {
+  flex: 1;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 13px;
+}
+
+.gateInput::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.gateButton {
+  padding: 14px 24px;
+  background: #fff;
+  color: #1d1d1f;
+  border: none;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
   font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  cursor: pointer;
+  letter-spacing: 1px;
   text-transform: uppercase;
-  color: var(--color-text-secondary);
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+
+.gateButton:hover {
+  opacity: 0.9;
+}
+
+.gateButton:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.gateSuccess {
+  padding: 16px 0;
+}
+
+.gateSuccessIcon {
+  font-size: 24px;
+  margin-bottom: 12px;
+  color: var(--color-accent, #04DFBF);
+}
+
+.gateSuccessTitle {
+  font-family: var(--font-display, 'Oxanium', sans-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.gateSuccessDesc {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ─── Footer CTA ─────────────────────── */
+.footerCta {
+  text-align: center;
+  padding: 32px 0;
+  border-top: 1px solid #e5e5e5;
+}
+
+.footerLabel {
+  font-size: 10px;
+  font-weight: 600;
+  color: #999;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.footerDesc {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+  max-width: 440px;
+  margin: 0 auto 24px;
+}
+
+.footerButton {
+  display: inline-block;
+  padding: 14px 40px;
+  background: #1d1d1f;
+  color: #fff;
   text-decoration: none;
-  border-bottom: 1px solid var(--color-border);
-  padding-bottom: 2px;
-  transition: color 0.15s, border-color 0.15s;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: background 0.15s;
 }
 
-.retakeLink:hover {
-  color: var(--color-text);
-  border-color: var(--color-text);
+.footerButton:hover {
+  background: #333;
 }
 
-/* ─── Responsive ──────────────────────── */
-@media (max-width: 640px) {
-  .card {
-    padding: 28px 20px;
-  }
+/* ─── No Results ─────────────────────── */
+.noResults {
+  text-align: center;
+  padding: 120px 24px;
+}
 
-  .highlightsCard {
-    padding: 20px;
-  }
+.noResultsTitle {
+  font-family: var(--font-display, 'Oxanium', sans-serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: #1d1d1f;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
 
-  .styleBarRow {
-    gap: 10px;
-  }
+.noResultsDesc {
+  font-size: 13px;
+  color: #999;
+  margin-bottom: 32px;
+}
 
-  .quadrantGrid {
-    max-width: 320px;
-  }
+.noResultsCta {
+  display: inline-block;
+  padding: 14px 40px;
+  background: #1d1d1f;
+  color: #fff;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
 
-  .traitMiniBar {
-    width: 50px;
+/* ─── Responsive ─────────────────────── */
+@media (max-width: 480px) {
+  .gateForm {
+    flex-direction: column;
   }
-
-  .tabRow {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+  .overallNumber {
+    font-size: 48px;
   }
 }

@@ -3,85 +3,50 @@
 import { useState, useCallback, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import {
-  TRAIT_QUESTIONS,
-  QUESTION_ORDER,
-  calculateScores,
-  STYLES,
-  type StyleKey,
-} from '@/lib/know-thyself-data';
+  DIAGNOSTIC_ITEMS,
+  ITEM_ORDER,
+  SCALE_LABELS,
+  DIMENSIONS,
+  SECTION_BREAKS,
+  calculateDiagnosticScores,
+  type DimensionKey,
+} from '@/lib/diagnostic-data';
 import styles from './page.module.css';
 
 /* ─── Wizard step types ─────────────────────────────────── */
 
 interface QuestionStep {
   type: 'question';
-  questionId: number;
+  itemId: number;
 }
 
-interface InterstitialStep {
-  type: 'interstitial';
-  emoji: string;
-  title: string;
-  description: string;
-  ctaLabel: string;
+interface SectionStep {
+  type: 'section';
+  sectionNumber: number;
+  label: string;
+  dimensionKey: DimensionKey | 'ALL';
 }
 
-type WizardStep = QuestionStep | InterstitialStep;
+type WizardStep = QuestionStep | SectionStep;
 
 /* ─── Build the step sequence ───────────────────────────── */
 
-const LIKERT_OPTIONS = [
-  { value: 1, emoji: '👎', label: 'Strongly Disagree' },
-  { value: 2, emoji: '😕', label: 'Disagree' },
-  { value: 3, emoji: '😐', label: 'Neutral' },
-  { value: 4, emoji: '😊', label: 'Agree' },
-  { value: 5, emoji: '👍', label: 'Strongly Agree' },
-];
-
 function buildSteps(): WizardStep[] {
   const steps: WizardStep[] = [];
-  const questionsPerSection = 9;
 
-  for (let i = 0; i < QUESTION_ORDER.length; i++) {
-    steps.push({ type: 'question', questionId: QUESTION_ORDER[i] });
+  for (let i = 0; i < ITEM_ORDER.length; i++) {
+    steps.push({ type: 'question', itemId: ITEM_ORDER[i] });
 
-    // Insert interstitial after every 9 questions (except at the very end)
-    if (
-      (i + 1) % questionsPerSection === 0 &&
-      i + 1 < QUESTION_ORDER.length
-    ) {
-      const sectionIndex = Math.floor(i / questionsPerSection);
-      const interstitials: InterstitialStep[] = [
-        {
-          type: 'interstitial',
-          emoji: '🔥',
-          title: 'Great momentum!',
-          description:
-            "You're a quarter of the way through. Your answers are already painting a picture of your natural style.",
-          ctaLabel: 'Keep Going',
-        },
-        {
-          type: 'interstitial',
-          emoji: '🧩',
-          title: 'Halfway there!',
-          description:
-            "Your behavioural patterns are taking shape. The next set of questions will sharpen the picture even further.",
-          ctaLabel: "Let's Continue",
-        },
-        {
-          type: 'interstitial',
-          emoji: '🚀',
-          title: 'Almost done!',
-          description:
-            "Just one more section to go. Your unique profile is nearly complete — finish strong!",
-          ctaLabel: 'Final Stretch',
-        },
-      ];
-      if (sectionIndex < interstitials.length) {
-        steps.push(interstitials[sectionIndex]);
-      }
+    // Insert section break after certain positions
+    const breakDef = SECTION_BREAKS[i + 1]; // 1-indexed position
+    if (breakDef && i + 1 < ITEM_ORDER.length) {
+      steps.push({
+        type: 'section',
+        sectionNumber: breakDef.sectionNumber,
+        label: breakDef.label,
+        dimensionKey: breakDef.dimensionFocus as DimensionKey | 'ALL',
+      });
     }
   }
 
@@ -89,7 +54,17 @@ function buildSteps(): WizardStep[] {
 }
 
 const WIZARD_STEPS = buildSteps();
-const TOTAL_QUESTIONS = TRAIT_QUESTIONS.length;
+const TOTAL_ITEMS = DIAGNOSTIC_ITEMS.length;
+
+/* ─── Scale options (no emoji — just numbers) ───────────── */
+
+const SCALE_OPTIONS = [
+  { value: 1, label: 'Strongly Disagree' },
+  { value: 2, label: 'Disagree' },
+  { value: 3, label: 'Neutral' },
+  { value: 4, label: 'Agree' },
+  { value: 5, label: 'Strongly Agree' },
+];
 
 /* ─── Component ─────────────────────────────────────────── */
 
@@ -107,18 +82,16 @@ export default function QuestionnaireForm({ hasExistingResults }: Props) {
   const [animKey, setAnimKey] = useState(0);
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  useEffect(() => { setMounted(true); }, []);
 
-  const questionsById = Object.fromEntries(
-    TRAIT_QUESTIONS.map((q) => [q.id, q])
+  const itemsById = Object.fromEntries(
+    DIAGNOSTIC_ITEMS.map((q) => [q.id, q])
   );
 
   const answeredCount = Object.keys(answers).length;
   const currentStep = WIZARD_STEPS[currentStepIdx];
 
-  // Count only question steps for the progress display
+  // Count only question steps for progress
   const questionStepIndices = WIZARD_STEPS.map((s, i) =>
     s.type === 'question' ? i : -1
   ).filter((i) => i >= 0);
@@ -126,15 +99,19 @@ export default function QuestionnaireForm({ hasExistingResults }: Props) {
     currentStep?.type === 'question'
       ? questionStepIndices.indexOf(currentStepIdx) + 1
       : null;
-  const progressPct = (answeredCount / TOTAL_QUESTIONS) * 100;
+  const progressPct = (answeredCount / TOTAL_ITEMS) * 100;
+
+  /* ─── Portal wrapper ──────────────────────────────────── */
+
+  const portal = (content: React.ReactNode) => {
+    if (!mounted) return null;
+    return createPortal(content, document.body);
+  };
 
   /* ─── Navigation ──────────────────────────────────────── */
 
   const goForward = useCallback(() => {
-    setCurrentStepIdx((prev) => {
-      const next = Math.min(prev + 1, WIZARD_STEPS.length - 1);
-      return next;
-    });
+    setCurrentStepIdx((prev) => Math.min(prev + 1, WIZARD_STEPS.length - 1));
     setAnimKey((k) => k + 1);
   }, []);
 
@@ -146,16 +123,13 @@ export default function QuestionnaireForm({ hasExistingResults }: Props) {
   /* ─── Answer selection (auto-advance) ─────────────────── */
 
   const handleSelect = useCallback(
-    (questionId: number, value: number) => {
-      setAnswers((prev) => ({ ...prev, [questionId]: value }));
-
-      // Auto-advance after a short delay for visual feedback
+    (itemId: number, value: number) => {
+      setAnswers((prev) => ({ ...prev, [itemId]: value }));
       setTimeout(() => {
-        // If this was the last question, don't auto-advance past the end
         if (currentStepIdx < WIZARD_STEPS.length - 1) {
           goForward();
         }
-      }, 350);
+      }, 300);
     },
     [currentStepIdx, goForward]
   );
@@ -167,27 +141,20 @@ export default function QuestionnaireForm({ hasExistingResults }: Props) {
     setSubmitting(true);
     setLoadingStep(0);
 
-    // Animated loading steps
     const timers = [
-      setTimeout(() => setLoadingStep(1), 800),
-      setTimeout(() => setLoadingStep(2), 2000),
-      setTimeout(() => setLoadingStep(3), 3200),
+      setTimeout(() => setLoadingStep(1), 600),
+      setTimeout(() => setLoadingStep(2), 1400),
+      setTimeout(() => setLoadingStep(3), 2200),
     ];
 
-    // Calculate scores
-    const scores = calculateScores(answers);
-    const traitScores: Record<string, number> = {};
-    for (const q of TRAIT_QUESTIONS) {
-      traitScores[`q${q.id}`] = answers[q.id] || 3;
-    }
+    const scores = calculateDiagnosticScores(answers);
 
-    // Store in sessionStorage
     try {
       sessionStorage.setItem(
-        'knowThyselfResults',
+        'diagnosticResults',
         JSON.stringify({
           scores,
-          traitScores,
+          answers,
           completedAt: new Date().toISOString(),
         })
       );
@@ -197,21 +164,20 @@ export default function QuestionnaireForm({ hasExistingResults }: Props) {
 
     timers.forEach(clearTimeout);
     setLoadingStep(4);
-    await new Promise((r) => setTimeout(r, 600));
+    await new Promise((r) => setTimeout(r, 500));
     router.push('/assess/know-thyself/results');
   }, [answers, router, submitting]);
 
-  // Auto-submit when all questions answered on the last step
+  // Auto-submit when all answered on last step
   useEffect(() => {
     if (
-      answeredCount === TOTAL_QUESTIONS &&
+      answeredCount === TOTAL_ITEMS &&
       currentStepIdx === WIZARD_STEPS.length - 1 &&
       currentStep?.type === 'question' &&
-      answers[currentStep.questionId] !== undefined &&
+      answers[(currentStep as QuestionStep).itemId] !== undefined &&
       !submitting
     ) {
-      // Small delay so user sees their last selection
-      const t = setTimeout(() => handleSubmit(), 500);
+      const t = setTimeout(() => handleSubmit(), 400);
       return () => clearTimeout(t);
     }
   }, [answeredCount, currentStepIdx, currentStep, answers, submitting, handleSubmit]);
@@ -225,7 +191,7 @@ export default function QuestionnaireForm({ hasExistingResults }: Props) {
       if (currentStep?.type === 'question') {
         const num = parseInt(e.key);
         if (num >= 1 && num <= 5) {
-          handleSelect(currentStep.questionId, num);
+          handleSelect((currentStep as QuestionStep).itemId, num);
           return;
         }
       }
@@ -234,18 +200,14 @@ export default function QuestionnaireForm({ hasExistingResults }: Props) {
         e.preventDefault();
         goBack();
       }
+      if (e.key === 'Enter' && currentStep?.type === 'section') {
+        goForward();
+      }
     };
 
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [started, submitting, currentStep, handleSelect, goBack]);
-
-  /* ─── Portal wrapper — renders above Nav stacking context ── */
-
-  const portal = (content: React.ReactNode) => {
-    if (!mounted) return null;
-    return createPortal(content, document.body);
-  };
+  }, [started, submitting, currentStep, handleSelect, goBack, goForward]);
 
   /* ─── Render: Loading overlay ─────────────────────────── */
 
@@ -253,20 +215,17 @@ export default function QuestionnaireForm({ hasExistingResults }: Props) {
     return portal(
       <div className={styles.page}>
         <div className={styles.loadingOverlay}>
-          <div className={styles.loadingEmoji}>🧬</div>
-          <div className={styles.loadingTitle}>Analysing Your Profile</div>
-          <div className={styles.loadingSub}>
-            Building your personalised behavioural report
-          </div>
+          <div className={styles.loadingTitle}>Processing</div>
+          <div className={styles.loadingSub}>Compiling diagnostic report</div>
           <div className={styles.loadingBar}>
             <div className={styles.loadingBarFill} />
           </div>
           <ul className={styles.loadingSteps}>
             {[
-              'Scoring 36 behavioural traits',
-              'Mapping your style profile',
-              'Identifying your dominant pattern',
-              'Generating insights',
+              'Scoring 20 performance indicators',
+              'Mapping dimension profiles',
+              'Identifying critical areas',
+              'Generating report',
             ].map((step, i) => (
               <li
                 key={i}
@@ -275,7 +234,7 @@ export default function QuestionnaireForm({ hasExistingResults }: Props) {
                 data-done={loadingStep > i ? 'true' : undefined}
               >
                 <span className={styles.loadingCheck}>
-                  {loadingStep > i ? '✓' : loadingStep === i ? '○' : '·'}
+                  {loadingStep > i ? '✓' : loadingStep === i ? '›' : '·'}
                 </span>
                 {step}
               </li>
@@ -292,49 +251,42 @@ export default function QuestionnaireForm({ hasExistingResults }: Props) {
     return portal(
       <div className={styles.page}>
         <div className={styles.introScreen}>
-          <div className={styles.introBadge}>
-            <span>⏱</span> 5-minute assessment
-          </div>
-          <h1 className={styles.introTitle}>Know Thyself</h1>
+          <div className={styles.introBadge}>LMNTARY Performance Lab</div>
+          <h1 className={styles.introTitle}>Performance Diagnostic</h1>
           <p className={styles.introSub}>
-            Discover your behavioural style profile. 36 quick questions — answer
-            instinctively, there are no wrong answers.
+            Identify where you're leaking performance. 20 clinical statements
+            across four dimensions — answer honestly for an accurate reading.
           </p>
           <button
             className={styles.introStart}
             onClick={() => setStarted(true)}
           >
-            Start Assessment
+            Begin Diagnostic
           </button>
-          <p className={styles.introNote}>
-            Your answers help us personalise your coaching experience. Results
-            are private to you.
-          </p>
-          {hasExistingResults && (
-            <div className={styles.existingBanner}>
-              You&apos;ve already taken this assessment.{' '}
-              <Link href="/assess/know-thyself/results">
-                View your results
-              </Link>{' '}
-              or retake it below.
-            </div>
-          )}
+          <div className={styles.introMeta}>
+            <span className={styles.introMetaItem}>20 items</span>
+            <span className={styles.introMetaDot} />
+            <span className={styles.introMetaItem}>~3 min</span>
+            <span className={styles.introMetaDot} />
+            <span className={styles.introMetaItem}>4 dimensions</span>
+          </div>
         </div>
       </div>
     );
   }
 
-  /* ─── Render: Interstitial screen ─────────────────────── */
+  /* ─── Render: Section break screen ────────────────────── */
 
-  if (currentStep?.type === 'interstitial') {
+  if (currentStep?.type === 'section') {
+    const sectionStep = currentStep as SectionStep;
+    const dim = sectionStep.dimensionKey !== 'ALL'
+      ? DIMENSIONS[sectionStep.dimensionKey]
+      : null;
+
     return portal(
       <div className={styles.page}>
-        {/* Top bar */}
         <div className={styles.topBar}>
-          <button
-            className={styles.backButton}
-            onClick={goBack}
-          >
+          <button className={styles.backButton} onClick={goBack}>
             ←
           </button>
           <div className={styles.progressBarOuter}>
@@ -344,16 +296,29 @@ export default function QuestionnaireForm({ hasExistingResults }: Props) {
             />
           </div>
           <span className={styles.stepCounter}>
-            {answeredCount} / {TOTAL_QUESTIONS}
+            {answeredCount} / {TOTAL_ITEMS}
           </span>
         </div>
 
-        <div className={styles.interstitialScreen} key={animKey}>
-          <div className={styles.interstitialEmoji}>{currentStep.emoji}</div>
-          <h2 className={styles.interstitialTitle}>{currentStep.title}</h2>
-          <p className={styles.interstitialDesc}>{currentStep.description}</p>
-          <button className={styles.interstitialCta} onClick={goForward}>
-            {currentStep.ctaLabel}
+        <div className={styles.sectionScreen} key={animKey}>
+          <div className={styles.sectionLabel}>{sectionStep.label}</div>
+          {dim && (
+            <>
+              <h2 className={styles.sectionTitle}>{dim.label}</h2>
+              <p className={styles.sectionDesc}>{dim.description}</p>
+            </>
+          )}
+          {!dim && (
+            <>
+              <h2 className={styles.sectionTitle}>Final Assessment</h2>
+              <p className={styles.sectionDesc}>
+                The remaining items cross multiple dimensions. Answer based on
+                your overall experience.
+              </p>
+            </>
+          )}
+          <button className={styles.sectionCta} onClick={goForward}>
+            Continue
           </button>
         </div>
       </div>
@@ -363,16 +328,11 @@ export default function QuestionnaireForm({ hasExistingResults }: Props) {
   /* ─── Render: Question screen ─────────────────────────── */
 
   if (currentStep?.type === 'question') {
-    const question = questionsById[currentStep.questionId];
-    const selectedValue = answers[currentStep.questionId];
-    const isLastQuestion =
-      currentStepIdx === WIZARD_STEPS.length - 1 &&
-      answeredCount === TOTAL_QUESTIONS - 1 &&
-      selectedValue === undefined;
+    const item = itemsById[(currentStep as QuestionStep).itemId];
+    const selectedValue = answers[item.id];
 
     return portal(
       <div className={styles.page}>
-        {/* Top bar */}
         <div className={styles.topBar}>
           <button
             className={styles.backButton}
@@ -388,33 +348,36 @@ export default function QuestionnaireForm({ hasExistingResults }: Props) {
             />
           </div>
           <span className={styles.stepCounter}>
-            {currentQuestionNumber} / {TOTAL_QUESTIONS}
+            {String(currentQuestionNumber).padStart(2, '0')} / {TOTAL_ITEMS}
           </span>
         </div>
 
         <div className={styles.questionScreen} key={animKey}>
-          <h2 className={styles.questionStatement}>{question.statement}</h2>
-          <p className={styles.questionHint}>How strongly does this describe you?</p>
+          <div className={styles.questionCode}>{item.code}</div>
+          <h2 className={styles.questionStatement}>{item.statement}</h2>
 
-          <div className={styles.likertRow}>
-            {LIKERT_OPTIONS.map((opt) => (
+          <div className={styles.scaleRow}>
+            {SCALE_OPTIONS.map((opt) => (
               <button
                 key={opt.value}
                 type="button"
-                className={styles.likertButton}
+                className={styles.scaleButton}
                 data-selected={selectedValue === opt.value ? 'true' : undefined}
-                onClick={() => handleSelect(question.id, opt.value)}
+                onClick={() => handleSelect(item.id, opt.value)}
               >
-                <span className={styles.likertEmoji}>{opt.emoji}</span>
-                <span className={styles.likertLabel}>{opt.label}</span>
+                <span className={styles.scaleValue}>{opt.value}</span>
+                <span className={styles.scaleLabel}>{opt.label}</span>
               </button>
             ))}
+          </div>
+          <div className={styles.scaleAnchors}>
+            <span className={styles.scaleAnchor}>Disagree</span>
+            <span className={styles.scaleAnchor}>Agree</span>
           </div>
         </div>
       </div>
     );
   }
 
-  // Fallback (shouldn't reach here)
   return null;
 }

@@ -1,394 +1,201 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import {
-  STYLES,
-  TRAIT_QUESTIONS,
-  type StyleKey,
-  type StyleScores,
-} from '@/lib/know-thyself-data';
+  DIMENSIONS,
+  type DiagnosticScores,
+  type DimensionKey,
+} from '@/lib/diagnostic-data';
 import styles from './page.module.css';
 
 interface Props {
-  scores: StyleScores | null;
-  traitScores: Record<string, number> | null;
-  completedAt: string | null;
-  firstName: string;
+  scores: DiagnosticScores | null;
 }
 
-const STYLE_ORDER: StyleKey[] = ['dynamo', 'analyst', 'caretaker', 'energiser'];
+export default function ResultsView({ scores: serverScores }: Props) {
+  const [scores, setScores] = useState<DiagnosticScores | null>(serverScores);
+  const [email, setEmail] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [ready, setReady] = useState(false);
 
-function getScorePct(scores: StyleScores, key: StyleKey): number {
-  return scores[`${key}_pct` as keyof StyleScores] as number;
-}
-
-function formatDate(iso: string | null): string {
-  if (!iso) return '';
-  return new Date(iso).toLocaleDateString('en-GB', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
-}
-
-function generateHighlights(scores: StyleScores): { text: string; style: StyleKey }[] {
-  const dominant = scores.dominant_style.toLowerCase() as StyleKey;
-  const meta = STYLES[dominant];
-  const highlights: { text: string; style: StyleKey }[] = [];
-
-  highlights.push({
-    text: `Your dominant style is ${meta.label} (${meta.tagline}) at ${getScorePct(scores, dominant)}%`,
-    style: dominant,
-  });
-
-  const sorted = STYLE_ORDER
-    .map((k) => ({ key: k, pct: getScorePct(scores, k) }))
-    .sort((a, b) => b.pct - a.pct);
-
-  if (sorted.length > 1) {
-    const second = sorted[1];
-    highlights.push({
-      text: `Strong secondary ${STYLES[second.key].label} tendencies at ${second.pct}%`,
-      style: second.key,
-    });
-  }
-
-  const lowest = sorted[sorted.length - 1];
-  highlights.push({
-    text: `${STYLES[lowest.key].label} is your least expressed style at ${lowest.pct}% — a growth opportunity`,
-    style: lowest.key,
-  });
-
-  const range = sorted[0].pct - sorted[sorted.length - 1].pct;
-  if (range < 15) {
-    highlights.push({
-      text: 'Highly balanced profile — you adapt your style fluidly across situations',
-      style: dominant,
-    });
-  } else if (range > 35) {
-    highlights.push({
-      text: `Strong style polarity — ${range} point range between your highest and lowest`,
-      style: dominant,
-    });
-  }
-
-  return highlights;
-}
-
-function generateInsight(scores: StyleScores): string {
-  const dominant = scores.dominant_style.toLowerCase() as StyleKey;
-  const sorted = STYLE_ORDER
-    .map((k) => ({ key: k, pct: getScorePct(scores, k) }))
-    .sort((a, b) => b.pct - a.pct);
-
-  const d = STYLES[dominant];
-
-  let insight = d.description;
-
-  if (sorted.length > 1) {
-    const combos: Record<string, string> = {
-      'dynamo-analyst': 'Combined with your Analyst secondary, you bring both decisiveness and rigour — a potent combination for strategic leadership.',
-      'dynamo-caretaker': 'Your Caretaker secondary balances your drive with genuine care for people — you push hard but keep the team with you.',
-      'dynamo-energiser': 'Paired with Energiser tendencies, your leadership is both commanding and charismatic — you inspire action.',
-      'analyst-dynamo': 'Your Dynamo secondary means you don\'t just plan — you execute. You combine thoroughness with decisiveness.',
-      'analyst-caretaker': 'With Caretaker as your secondary, your analytical nature is warmed by empathy — you make decisions that account for people.',
-      'analyst-energiser': 'Your Energiser secondary brings creativity to your structured thinking — you find innovative solutions through careful analysis.',
-      'caretaker-dynamo': 'Your Dynamo secondary adds backbone to your empathy — you care deeply but aren\'t afraid to drive outcomes.',
-      'caretaker-analyst': 'Combined with Analyst tendencies, your support of others is thoughtful and strategic, not just instinctive.',
-      'caretaker-energiser': 'Your Energiser secondary makes your nurturing style vibrant and engaging — people are drawn to your warmth.',
-      'energiser-dynamo': 'With Dynamo as your secondary, your enthusiasm has real drive behind it — you don\'t just inspire, you deliver.',
-      'energiser-analyst': 'Your Analyst secondary grounds your creativity with structure — you bring ideas that are both exciting and well-thought-through.',
-      'energiser-caretaker': 'Paired with Caretaker tendencies, your enthusiasm is directed toward lifting others — a natural team motivator.',
-    };
-
-    const comboKey = `${dominant}-${sorted[1].key}`;
-    if (combos[comboKey]) {
-      insight += ' ' + combos[comboKey];
-    }
-  }
-
-  return insight;
-}
-
-export default function ResultsView({
-  scores: serverScores,
-  traitScores: serverTraitScores,
-  completedAt: serverCompletedAt,
-  firstName,
-}: Props) {
-  const router = useRouter();
-  const [activeTab, setActiveTab] = useState<StyleKey>('dynamo');
-  const [resolvedScores, setResolvedScores] = useState<StyleScores | null>(serverScores);
-  const [resolvedTraitScores, setResolvedTraitScores] = useState<Record<string, number> | null>(serverTraitScores);
-  const [resolvedCompletedAt, setResolvedCompletedAt] = useState<string | null>(serverCompletedAt);
-  const [ready, setReady] = useState(!!serverScores);
-
-  // Fall back to sessionStorage if no server data
   useEffect(() => {
-    if (resolvedScores) {
-      setActiveTab(resolvedScores.dominant_style.toLowerCase() as StyleKey);
-      setReady(true);
-      return;
-    }
-    try {
-      const stored = sessionStorage.getItem('knowThyselfResults');
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        setResolvedScores(parsed.scores);
-        setResolvedTraitScores(parsed.traitScores);
-        setResolvedCompletedAt(parsed.completedAt);
-        setActiveTab(parsed.scores.dominant_style.toLowerCase() as StyleKey);
-        setReady(true);
-      } else {
-        router.push('/assess/know-thyself');
+    if (!scores) {
+      try {
+        const saved = sessionStorage.getItem('diagnosticResults');
+        if (saved) {
+          const data = JSON.parse(saved);
+          setScores(data.scores);
+        }
+      } catch {
+        // ignore
       }
-    } catch {
-      router.push('/assess/know-thyself');
     }
-  }, [resolvedScores, router]);
+    setReady(true);
+  }, [scores]);
 
-  if (!ready || !resolvedScores) {
-    return <div className={styles.page} style={{ minHeight: '100vh' }} />;
+  if (!ready) return null;
+
+  if (!scores) {
+    return (
+      <div className={styles.page}>
+        <div className={styles.noResults}>
+          <h1 className={styles.noResultsTitle}>No Diagnostic Data Found</h1>
+          <p className={styles.noResultsDesc}>
+            Complete the Performance Diagnostic to see your results.
+          </p>
+          <a href="/assess/know-thyself" className={styles.noResultsCta}>
+            Start Diagnostic
+          </a>
+        </div>
+      </div>
+    );
   }
 
-  const scores = resolvedScores;
-  const traitScores = resolvedTraitScores;
-  const completedAt = resolvedCompletedAt;
-  const dominant = scores.dominant_style.toLowerCase() as StyleKey;
-  const dominantMeta = STYLES[dominant];
-  const dominantPct = getScorePct(scores, dominant);
-  const highlights = generateHighlights(scores);
-  const insight = generateInsight(scores);
-  const tabQuestions = TRAIT_QUESTIONS.filter((q) => q.style === activeTab);
+  const dimensions: { key: DimensionKey; score: number }[] = [
+    { key: 'SR', score: scores.SR },
+    { key: 'FE', score: scores.FE },
+    { key: 'LI', score: scores.LI },
+    { key: 'SA', score: scores.SA },
+  ];
+
+  const getScoreLabel = (pct: number) => {
+    if (pct >= 80) return 'OPTIMAL';
+    if (pct >= 60) return 'FUNCTIONAL';
+    if (pct >= 40) return 'COMPROMISED';
+    return 'CRITICAL';
+  };
+
+  const getScoreColor = (pct: number) => {
+    if (pct >= 80) return '#1d1d1f';
+    if (pct >= 60) return '#666';
+    if (pct >= 40) return '#c0392b';
+    return '#e74c3c';
+  };
+
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || submitting) return;
+    setSubmitting(true);
+    // TODO: Wire to Supabase / email service
+    await new Promise((r) => setTimeout(r, 1000));
+    setSubmitted(true);
+    setSubmitting(false);
+  };
 
   return (
     <div className={styles.page}>
-      {/* Header */}
-      <header className={styles.header}>
-        <p className={styles.headerEyebrow}>Know Thyself Results</p>
-        <h1 className={styles.headerTitle}>{firstName}&apos;s Profile</h1>
-        <p className={styles.headerSub}>
-          Your behavioural style assessment — the patterns driving how you
-          operate, lead, and connect.
-        </p>
-        {completedAt && (
-          <div className={styles.headerDate}>
-            Completed {formatDate(completedAt)}
-          </div>
-        )}
-        <div className={styles.headerActions}>
-          <Link
-            href="/assess/know-thyself"
-            className="btn btn--secondary"
-            style={{ borderColor: 'rgba(255,255,255,0.2)', color: '#fff' }}
-          >
-            Retake Assessment
-          </Link>
-          <Link href="/learn" className="btn btn--primary">
-            Continue Learning
-          </Link>
-        </div>
-      </header>
-
-      {/* Highlights strip */}
-      <div className={styles.highlights}>
-        <div className={styles.highlightsCard}>
-          <div className={styles.highlightsTitle}>Your Profile Highlights</div>
-          <ul className={styles.highlightsList}>
-            {highlights.map((h, i) => (
-              <li key={i} className={styles.highlightItem} data-style={h.style}>
-                {h.text}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      <div className={styles.content}>
-        {/* ─── Style Bars ──────────────────── */}
-        <div className={styles.card}>
-          <div className={styles.cardLabel}>Behavioural Profile</div>
-          <div className={styles.cardTitle}>Your Four Styles</div>
-          <div className={styles.cardDesc}>
-            The four dimensions of your behavioural style. Higher scores
-            indicate a stronger natural tendency.
-          </div>
-          <div className={styles.styleBars}>
-            {STYLE_ORDER.map((key) => {
-              const meta = STYLES[key];
-              const pct = getScorePct(scores, key);
-              return (
-                <div key={key} className={styles.styleBarRow}>
-                  <div
-                    className={styles.styleBarIcon}
-                    style={{ background: meta.colorLight }}
-                  >
-                    {meta.icon}
-                  </div>
-                  <div className={styles.styleBarInfo}>
-                    <div className={styles.styleBarHeader}>
-                      <span className={styles.styleBarName}>{meta.label}</span>
-                      <span className={styles.styleBarTagline}>
-                        {meta.tagline}
-                      </span>
-                    </div>
-                    <div className={styles.styleBarTrack}>
-                      <div
-                        className={styles.styleBarFill}
-                        style={{
-                          width: `${pct}%`,
-                          background: meta.color,
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <div className={styles.styleBarPct}>{pct}%</div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Insight box */}
-          <div className={styles.insightBox}>
-            <div className={styles.insightTitle}>What This Means</div>
-            <div className={styles.insightText}>{insight}</div>
+      <div className={styles.resultsContainer}>
+        {/* Header */}
+        <div className={styles.header}>
+          <div className={styles.headerBadge}>DIAGNOSTIC COMPLETE</div>
+          <h1 className={styles.headerTitle}>Performance Profile</h1>
+          <div className={styles.overallScore}>
+            <span className={styles.overallNumber}>{scores.overall}</span>
+            <span className={styles.overallLabel}>Overall Performance Index</span>
           </div>
         </div>
 
-        {/* ─── Quadrant Visual ─────────────── */}
-        <div className={styles.card}>
-          <div className={styles.cardLabel}>Style Map</div>
-          <div className={styles.cardTitle}>At a Glance</div>
-          <div className={styles.cardDesc}>
-            Your style balance across the four dimensions. Your dominant style
-            is highlighted.
-          </div>
-          <div className={styles.quadrant}>
-            <div className={styles.quadrantGrid}>
-              {STYLE_ORDER.map((key) => {
-                const meta = STYLES[key];
-                const pct = getScorePct(scores, key);
-                const isDominant = key === dominant;
-                return (
-                  <div
-                    key={key}
-                    className={styles.quadrantCell}
-                    data-dominant={isDominant ? 'true' : undefined}
-                    style={{ background: meta.colorLight }}
-                  >
-                    <div className={styles.quadrantCellIcon}>{meta.icon}</div>
-                    <div className={styles.quadrantCellLabel}>{meta.label}</div>
-                    <div className={styles.quadrantCellPct}>{pct}%</div>
-                  </div>
-                );
-              })}
-            </div>
-            <div className={styles.quadrantNote}>
-              Scores represent your natural tendency toward each style. Everyone
-              is a blend — your unique combination is what makes you, you.
-            </div>
-          </div>
-        </div>
+        {/* Dimension Bars */}
+        <div className={styles.dimensionGrid}>
+          {dimensions.map(({ key, score }) => {
+            const dim = DIMENSIONS[key];
+            const label = getScoreLabel(score);
+            const isWeakest = key === scores.weakest;
 
-        {/* ─── Dominant Style Deep Dive ────── */}
-        <div className={`${styles.card} ${styles.dominantCard}`}>
-          <div className={styles.cardLabel}>Your Dominant Style</div>
-          <div className={styles.dominantIcon}>{dominantMeta.icon}</div>
-          <div className={styles.cardTitle}>
-            {dominantMeta.label}: {dominantMeta.tagline}
-          </div>
-          <div className={styles.dominantPct}>{dominantPct}%</div>
-          <div className={styles.dominantDesc}>{dominantMeta.description}</div>
-
-          <div className={styles.dominantTraits}>
-            <div className={styles.traitSection}>
-              <div className={styles.traitSectionLabel}>Strengths</div>
-              {dominantMeta.strengths.map((s, i) => (
-                <div key={i} className={styles.traitItem}>
-                  {s}
-                </div>
-              ))}
-            </div>
-            <div className={styles.traitSection}>
-              <div className={styles.traitSectionLabel}>Watch For</div>
-              {dominantMeta.watchFor.map((w, i) => (
-                <div key={i} className={styles.traitItemWarn}>
-                  {w}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* ─── Trait Breakdown by Style ────── */}
-        <div className={styles.card}>
-          <div className={styles.cardLabel}>Trait Breakdown</div>
-          <div className={styles.cardTitle}>Individual Responses</div>
-          <div className={styles.cardDesc}>
-            How you scored on each of the 9 traits within each style.
-          </div>
-
-          <div className={styles.tabRow}>
-            {STYLE_ORDER.map((key) => (
-              <button
+            return (
+              <div
                 key={key}
-                type="button"
-                className={styles.tab}
-                data-active={activeTab === key ? 'true' : undefined}
-                onClick={() => setActiveTab(key)}
+                className={styles.dimensionCard}
+                data-weakest={isWeakest ? 'true' : undefined}
               >
-                {STYLES[key].icon} {STYLES[key].label}
-              </button>
-            ))}
-          </div>
-
-          <div className={styles.traitBreakdown}>
-            {tabQuestions.map((q) => {
-              const score = traitScores ? (traitScores[`q${q.id}`] || 3) : 3;
-              const pct = (score / 5) * 100;
-              const meta = STYLES[activeTab];
-              return (
-                <div key={q.id} className={styles.traitRow}>
-                  <div className={styles.traitStatement}>{q.statement}</div>
-                  <div className={styles.traitScore}>{score}/5</div>
-                  <div className={styles.traitMiniBar}>
-                    <div
-                      className={styles.traitMiniBarFill}
-                      style={{
-                        width: `${pct}%`,
-                        background: meta.color,
-                      }}
-                    />
-                  </div>
+                <div className={styles.dimHeader}>
+                  <span className={styles.dimCode}>{key}</span>
+                  <span className={styles.dimName}>{dim.label}</span>
+                  <span
+                    className={styles.dimStatus}
+                    style={{ color: getScoreColor(score) }}
+                  >
+                    {label}
+                  </span>
                 </div>
-              );
-            })}
-          </div>
-
-          <div className={styles.insightBox} style={{ marginTop: 24 }}>
-            <div className={styles.insightTitle}>
-              {STYLES[activeTab].label} Summary
-            </div>
-            <div className={styles.insightText}>
-              Your {STYLES[activeTab].label} score of{' '}
-              {getScorePct(scores, activeTab)}% places you{' '}
-              {getScorePct(scores, activeTab) >= 70
-                ? 'in the high range — this is a core part of how you show up'
-                : getScorePct(scores, activeTab) >= 40
-                  ? 'in the moderate range — you draw on this style when the situation calls for it'
-                  : 'in the lower range — this style doesn\'t come naturally but can be developed'}
-              . {STYLES[activeTab].description.split('.')[0]}.
-            </div>
-          </div>
+                <div className={styles.dimBarTrack}>
+                  <div
+                    className={styles.dimBarFill}
+                    style={{
+                      width: `${score}%`,
+                      background: getScoreColor(score),
+                    }}
+                  />
+                </div>
+                <div className={styles.dimScore}>{score}%</div>
+                {isWeakest && (
+                  <div className={styles.dimFlag}>▸ Primary area of concern</div>
+                )}
+              </div>
+            );
+          })}
         </div>
 
-        {/* ─── Bottom CTA ─────────────────── */}
-        <div className={styles.bottomCta}>
-          <Link href="/assess/know-thyself" className={styles.retakeLink}>
-            Retake Assessment
-          </Link>
+        {/* Weakest dimension insight */}
+        <div className={styles.insightTeaser}>
+          <div className={styles.insightLabel}>PRELIMINARY FINDING</div>
+          <p className={styles.insightText}>
+            {DIMENSIONS[scores.weakest].lowScoreInsight}
+          </p>
+        </div>
+
+        {/* Email gate */}
+        <div className={styles.emailGate}>
+          {!submitted ? (
+            <>
+              <div className={styles.gateLabel}>FULL REPORT</div>
+              <h2 className={styles.gateTitle}>
+                Get your detailed diagnostic report
+              </h2>
+              <p className={styles.gateDesc}>
+                Receive a personalised breakdown of all four dimensions with
+                specific recommendations for your profile.
+              </p>
+              <form onSubmit={handleEmailSubmit} className={styles.gateForm}>
+                <input
+                  type="email"
+                  placeholder="your@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={styles.gateInput}
+                  required
+                />
+                <button
+                  type="submit"
+                  className={styles.gateButton}
+                  disabled={submitting}
+                >
+                  {submitting ? 'Sending...' : 'Send My Report'}
+                </button>
+              </form>
+            </>
+          ) : (
+            <div className={styles.gateSuccess}>
+              <div className={styles.gateSuccessIcon}>✓</div>
+              <h3 className={styles.gateSuccessTitle}>Report Sent</h3>
+              <p className={styles.gateSuccessDesc}>
+                Check your inbox for your full diagnostic report.
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* Footer CTA */}
+        <div className={styles.footerCta}>
+          <div className={styles.footerLabel}>READY TO CLOSE THE GAPS?</div>
+          <p className={styles.footerDesc}>
+            The LMNTARY Limitless programme addresses all four performance
+            dimensions through a structured system of training and coaching.
+          </p>
+          <a href="/learn/limitless" className={styles.footerButton}>
+            Explore Limitless
+          </a>
         </div>
       </div>
     </div>
